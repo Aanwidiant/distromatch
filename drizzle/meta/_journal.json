@@ -1,0 +1,62 @@
+{
+    "version": "7",
+    "dialect": "postgresql",
+    "entries": [
+        {
+            "idx": 0,
+            "version": "7",
+            "when": 1777177512769,
+            "tag": "0000_overconfident_marvel_boy",
+            "breakpoints": true
+        },
+        {
+            "idx": 1,
+            "version": "7",
+            "when": 1777181012847,
+            "tag": "0001_reflective_manta",
+            "breakpoints": true
+        },
+        {
+            "idx": 2,
+            "version": "7",
+            "when": 1777190666492,
+            "tag": "0002_eminent_the_phantom",
+            "breakpoints": true
+        },
+        {
+            "idx": 3,
+            "version": "7",
+            "when": 1777194351391,
+            "tag": "0003_known_mockingbird",
+            "breakpoints": true
+        },
+        {
+            "idx": 4,
+            "version": "7",
+            "when": 1777206633797,
+            "tag": "0004_perpetual_hulk",
+            "breakpoints": true
+        },
+        {
+            "idx": 5,
+            "version": "7",
+            "when": 1777207653911,
+            "tag": "0005_serious_james_howlett",
+            "breakpoints": true
+        },
+        {
+            "idx": 6,
+            "version": "7",
+            "when": 1777219849826,
+            "tag": "0006_smart_lionheart",
+            "breakpoints": true
+        },
+        {
+            "idx": 7,
+            "version": "7",
+            "when": 1777221103284,
+            "tag": "0007_cynical_human_robot",
+            "breakpoints": true
+        }
+    ]
+}

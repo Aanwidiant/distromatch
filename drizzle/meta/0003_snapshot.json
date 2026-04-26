@@ -1,0 +1,1300 @@
+{
+    "id": "7c7607b4-ef77-446f-b631-d43a005b7ac3",
+    "prevId": "1047a92b-baf3-4e56-997a-ee24ab655974",
+    "version": "7",
+    "dialect": "postgresql",
+    "tables": {
+        "public.bayesian_results": {
+            "name": "bayesian_results",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "type": "uuid",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "distro_id": {
+                    "name": "distro_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "shrinkage_coefficient": {
+                    "name": "shrinkage_coefficient",
+                    "type": "numeric(5, 4)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "confidence_adjusted_score": {
+                    "name": "confidence_adjusted_score",
+                    "type": "numeric(6, 4)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                }
+            },
+            "indexes": {
+                "idx_bayesian_user": {
+                    "name": "idx_bayesian_user",
+                    "columns": [
+                        {
+                            "expression": "user_id",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                },
+                "idx_bayesian_distro": {
+                    "name": "idx_bayesian_distro",
+                    "columns": [
+                        {
+                            "expression": "distro_id",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                },
+                "idx_bayesian_confidence": {
+                    "name": "idx_bayesian_confidence",
+                    "columns": [
+                        {
+                            "expression": "confidence_adjusted_score",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                }
+            },
+            "foreignKeys": {
+                "bayesian_results_user_id_users_id_fk": {
+                    "name": "bayesian_results_user_id_users_id_fk",
+                    "tableFrom": "bayesian_results",
+                    "tableTo": "users",
+                    "columnsFrom": ["user_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                },
+                "bayesian_results_distro_id_distros_id_fk": {
+                    "name": "bayesian_results_distro_id_distros_id_fk",
+                    "tableFrom": "bayesian_results",
+                    "tableTo": "distros",
+                    "columnsFrom": ["distro_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "bayesian_results_user_id_distro_id_unique": {
+                    "name": "bayesian_results_user_id_distro_id_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["user_id", "distro_id"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.distros": {
+            "name": "distros",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "varchar(100)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "logo": {
+                    "name": "logo",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "homepage_url": {
+                    "name": "homepage_url",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "docs_url": {
+                    "name": "docs_url",
+                    "type": "text[]",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "total_reviews": {
+                    "name": "total_reviews",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": 0
+                },
+                "ux_experience_rating": {
+                    "name": "ux_experience_rating",
+                    "type": "numeric(3, 2)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "performance_rating": {
+                    "name": "performance_rating",
+                    "type": "numeric(3, 2)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "stability_rating": {
+                    "name": "stability_rating",
+                    "type": "numeric(3, 2)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "features_rating": {
+                    "name": "features_rating",
+                    "type": "numeric(3, 2)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "support_rating": {
+                    "name": "support_rating",
+                    "type": "numeric(3, 2)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "target_user_level": {
+                    "name": "target_user_level",
+                    "type": "distro_level",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "distro_type": {
+                    "name": "distro_type",
+                    "type": "text[]",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "based_on": {
+                    "name": "based_on",
+                    "type": "text[]",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "origin_country": {
+                    "name": "origin_country",
+                    "type": "text[]",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "architectures": {
+                    "name": "architectures",
+                    "type": "text[]",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "desktop_environments": {
+                    "name": "desktop_environments",
+                    "type": "text[]",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "categories": {
+                    "name": "categories",
+                    "type": "text[]",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "status": {
+                    "name": "status",
+                    "type": "distro_status",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "'ACTIVE'"
+                },
+                "description": {
+                    "name": "description",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "source_url": {
+                    "name": "source_url",
+                    "type": "text[]",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "taken_at": {
+                    "name": "taken_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                }
+            },
+            "indexes": {
+                "idx_distros_name": {
+                    "name": "idx_distros_name",
+                    "columns": [
+                        {
+                            "expression": "name",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": true,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                },
+                "idx_distros_status": {
+                    "name": "idx_distros_status",
+                    "columns": [
+                        {
+                            "expression": "status",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                },
+                "idx_distros_target_level": {
+                    "name": "idx_distros_target_level",
+                    "columns": [
+                        {
+                            "expression": "target_user_level",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                }
+            },
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "distros_name_unique": {
+                    "name": "distros_name_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["name"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.penalty_results": {
+            "name": "penalty_results",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "type": "uuid",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "distro_id": {
+                    "name": "distro_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "distance": {
+                    "name": "distance",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "distance_normalized": {
+                    "name": "distance_normalized",
+                    "type": "numeric(3, 2)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "penalty_value": {
+                    "name": "penalty_value",
+                    "type": "numeric(6, 4)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "utility_score": {
+                    "name": "utility_score",
+                    "type": "numeric(6, 4)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                }
+            },
+            "indexes": {
+                "idx_penalty_user": {
+                    "name": "idx_penalty_user",
+                    "columns": [
+                        {
+                            "expression": "user_id",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                },
+                "idx_penalty_distro": {
+                    "name": "idx_penalty_distro",
+                    "columns": [
+                        {
+                            "expression": "distro_id",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                },
+                "idx_penalty_utility": {
+                    "name": "idx_penalty_utility",
+                    "columns": [
+                        {
+                            "expression": "utility_score",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                }
+            },
+            "foreignKeys": {
+                "penalty_results_user_id_users_id_fk": {
+                    "name": "penalty_results_user_id_users_id_fk",
+                    "tableFrom": "penalty_results",
+                    "tableTo": "users",
+                    "columnsFrom": ["user_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                },
+                "penalty_results_distro_id_distros_id_fk": {
+                    "name": "penalty_results_distro_id_distros_id_fk",
+                    "tableFrom": "penalty_results",
+                    "tableTo": "distros",
+                    "columnsFrom": ["distro_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "penalty_results_user_id_distro_id_unique": {
+                    "name": "penalty_results_user_id_distro_id_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["user_id", "distro_id"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.rankings": {
+            "name": "rankings",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "type": "uuid",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "distro_id": {
+                    "name": "distro_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "rank_position": {
+                    "name": "rank_position",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                }
+            },
+            "indexes": {
+                "idx_rankings_user_position": {
+                    "name": "idx_rankings_user_position",
+                    "columns": [
+                        {
+                            "expression": "user_id",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        },
+                        {
+                            "expression": "rank_position",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                },
+                "idx_rankings_distro": {
+                    "name": "idx_rankings_distro",
+                    "columns": [
+                        {
+                            "expression": "distro_id",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                }
+            },
+            "foreignKeys": {
+                "rankings_user_id_users_id_fk": {
+                    "name": "rankings_user_id_users_id_fk",
+                    "tableFrom": "rankings",
+                    "tableTo": "users",
+                    "columnsFrom": ["user_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                },
+                "rankings_distro_id_distros_id_fk": {
+                    "name": "rankings_distro_id_distros_id_fk",
+                    "tableFrom": "rankings",
+                    "tableTo": "distros",
+                    "columnsFrom": ["distro_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "rankings_user_id_distro_id_unique": {
+                    "name": "rankings_user_id_distro_id_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["user_id", "distro_id"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.surveys": {
+            "name": "surveys",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "type": "uuid",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q1_ux_experience": {
+                    "name": "q1_ux_experience",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q2_ux_experience": {
+                    "name": "q2_ux_experience",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q3_performance": {
+                    "name": "q3_performance",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q4_performance": {
+                    "name": "q4_performance",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q5_stability": {
+                    "name": "q5_stability",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q6_stability": {
+                    "name": "q6_stability",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q7_features": {
+                    "name": "q7_features",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q8_features": {
+                    "name": "q8_features",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q9_support": {
+                    "name": "q9_support",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q10_support": {
+                    "name": "q10_support",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q11_level_pref": {
+                    "name": "q11_level_pref",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "q12_level_pref": {
+                    "name": "q12_level_pref",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                }
+            },
+            "indexes": {
+                "idx_surveys_user": {
+                    "name": "idx_surveys_user",
+                    "columns": [
+                        {
+                            "expression": "user_id",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                }
+            },
+            "foreignKeys": {
+                "surveys_user_id_users_id_fk": {
+                    "name": "surveys_user_id_users_id_fk",
+                    "tableFrom": "surveys",
+                    "tableTo": "users",
+                    "columnsFrom": ["user_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "surveys_user_id_unique": {
+                    "name": "surveys_user_id_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["user_id"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.system_settings": {
+            "name": "system_settings",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "varchar(100)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "lambda_param": {
+                    "name": "lambda_param",
+                    "type": "numeric(3, 2)",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "'0.5'"
+                },
+                "max_distance": {
+                    "name": "max_distance",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": 2
+                },
+                "median_reviews": {
+                    "name": "median_reviews",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "total_distros": {
+                    "name": "total_distros",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": 30
+                },
+                "top_n_recommendations": {
+                    "name": "top_n_recommendations",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": 5
+                },
+                "status": {
+                    "name": "status",
+                    "type": "system_setting_status_enum",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "'ACTIVE'"
+                },
+                "updated_by": {
+                    "name": "updated_by",
+                    "type": "uuid",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                }
+            },
+            "indexes": {
+                "idx_settings_status": {
+                    "name": "idx_settings_status",
+                    "columns": [
+                        {
+                            "expression": "status",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                },
+                "idx_settings_updated_by": {
+                    "name": "idx_settings_updated_by",
+                    "columns": [
+                        {
+                            "expression": "updated_by",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                }
+            },
+            "foreignKeys": {
+                "system_settings_updated_by_users_id_fk": {
+                    "name": "system_settings_updated_by_users_id_fk",
+                    "tableFrom": "system_settings",
+                    "tableTo": "users",
+                    "columnsFrom": ["updated_by"],
+                    "columnsTo": ["id"],
+                    "onDelete": "set null",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "system_settings_name_unique": {
+                    "name": "system_settings_name_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["name"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.topsis_result": {
+            "name": "topsis_result",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "type": "uuid",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "distro_id": {
+                    "name": "distro_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "normalized_value": {
+                    "name": "normalized_value",
+                    "type": "numeric(6, 4)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "weighted_value": {
+                    "name": "weighted_value",
+                    "type": "numeric(6, 4)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "distance_ideal_positive": {
+                    "name": "distance_ideal_positive",
+                    "type": "numeric(6, 4)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "distance_ideal_negative": {
+                    "name": "distance_ideal_negative",
+                    "type": "numeric(6, 4)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "cc_score": {
+                    "name": "cc_score",
+                    "type": "numeric(6, 4)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                }
+            },
+            "indexes": {
+                "idx_topsis_user": {
+                    "name": "idx_topsis_user",
+                    "columns": [
+                        {
+                            "expression": "user_id",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                },
+                "idx_topsis_distro": {
+                    "name": "idx_topsis_distro",
+                    "columns": [
+                        {
+                            "expression": "distro_id",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                },
+                "idx_topsis_cc": {
+                    "name": "idx_topsis_cc",
+                    "columns": [
+                        {
+                            "expression": "cc_score",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                }
+            },
+            "foreignKeys": {
+                "topsis_result_user_id_users_id_fk": {
+                    "name": "topsis_result_user_id_users_id_fk",
+                    "tableFrom": "topsis_result",
+                    "tableTo": "users",
+                    "columnsFrom": ["user_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                },
+                "topsis_result_distro_id_distros_id_fk": {
+                    "name": "topsis_result_distro_id_distros_id_fk",
+                    "tableFrom": "topsis_result",
+                    "tableTo": "distros",
+                    "columnsFrom": ["distro_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "topsis_result_user_id_distro_id_unique": {
+                    "name": "topsis_result_user_id_distro_id_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["user_id", "distro_id"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.users": {
+            "name": "users",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "uuid",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "default": "gen_random_uuid()"
+                },
+                "email": {
+                    "name": "email",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "username": {
+                    "name": "username",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "password": {
+                    "name": "password",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "photo": {
+                    "name": "photo",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "role": {
+                    "name": "role",
+                    "type": "user_role",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "'USER'"
+                },
+                "status": {
+                    "name": "status",
+                    "type": "user_status",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "'ACTIVE'"
+                },
+                "email_verified": {
+                    "name": "email_verified",
+                    "type": "boolean",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": false
+                },
+                "refresh_token": {
+                    "name": "refresh_token",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "session_expired_at": {
+                    "name": "session_expired_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "provider": {
+                    "name": "provider",
+                    "type": "auth_provider",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "'SYSTEM'"
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "users_email_unique": {
+                    "name": "users_email_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["email"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.weight_survey": {
+            "name": "weight_survey",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "type": "uuid",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "ux_experience_weight": {
+                    "name": "ux_experience_weight",
+                    "type": "numeric(5, 4)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "performance_weight": {
+                    "name": "performance_weight",
+                    "type": "numeric(5, 4)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "stability_weight": {
+                    "name": "stability_weight",
+                    "type": "numeric(5, 4)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "features_weight": {
+                    "name": "features_weight",
+                    "type": "numeric(5, 4)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "support_weight": {
+                    "name": "support_weight",
+                    "type": "numeric(5, 4)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "total_weight": {
+                    "name": "total_weight",
+                    "type": "numeric(5, 4)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "user_pref_score": {
+                    "name": "user_pref_score",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "user_pref_level": {
+                    "name": "user_pref_level",
+                    "type": "distro_level",
+                    "typeSchema": "public",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                }
+            },
+            "indexes": {
+                "idx_weight_survey_user": {
+                    "name": "idx_weight_survey_user",
+                    "columns": [
+                        {
+                            "expression": "user_id",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                },
+                "idx_weight_survey_pref_level": {
+                    "name": "idx_weight_survey_pref_level",
+                    "columns": [
+                        {
+                            "expression": "user_pref_level",
+                            "isExpression": false,
+                            "asc": true,
+                            "nulls": "last"
+                        }
+                    ],
+                    "isUnique": false,
+                    "concurrently": false,
+                    "method": "btree",
+                    "with": {}
+                }
+            },
+            "foreignKeys": {
+                "weight_survey_user_id_users_id_fk": {
+                    "name": "weight_survey_user_id_users_id_fk",
+                    "tableFrom": "weight_survey",
+                    "tableTo": "users",
+                    "columnsFrom": ["user_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "weight_survey_user_id_unique": {
+                    "name": "weight_survey_user_id_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["user_id"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        }
+    },
+    "enums": {
+        "public.auth_provider": {
+            "name": "auth_provider",
+            "schema": "public",
+            "values": ["SYSTEM", "GOOGLE"]
+        },
+        "public.distro_level": {
+            "name": "distro_level",
+            "schema": "public",
+            "values": [
+                "Beginner Friendly",
+                "Intermediate Experience Required",
+                "Advanced Experience Required"
+            ]
+        },
+        "public.distro_status": {
+            "name": "distro_status",
+            "schema": "public",
+            "values": ["ACTIVE", "INACTIVE", "DEPRECATED"]
+        },
+        "public.system_setting_status_enum": {
+            "name": "system_setting_status_enum",
+            "schema": "public",
+            "values": ["ACTIVE", "INACTIVE"]
+        },
+        "public.user_role": {
+            "name": "user_role",
+            "schema": "public",
+            "values": ["ADMIN", "USER"]
+        },
+        "public.user_status": {
+            "name": "user_status",
+            "schema": "public",
+            "values": ["ACTIVE", "INACTIVE", "SUSPENDED"]
+        }
+    },
+    "schemas": {},
+    "sequences": {},
+    "roles": {},
+    "policies": {},
+    "views": {},
+    "_meta": {
+        "columns": {},
+        "schemas": {},
+        "tables": {}
+    }
+}

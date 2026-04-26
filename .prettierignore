@@ -1,0 +1,30 @@
+# assets
+public/
+node_modules/
+.pnpm-store
+
+# build output
+.next
+dist
+build
+
+# Configuration files
+*.config.js
+*.config.mjs
+*.config.ts
+*.config.cjs
+tsconfig*.json
+package.json
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+.eslintrc*
+.prettierrc*
+components.json
+
+# Keys
+key
+key.pub
+
+.gitlab-ci.yml
+README.md
