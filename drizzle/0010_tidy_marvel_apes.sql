@@ -1,0 +1,1 @@
+DROP INDEX "uniq_rankings_run_position";

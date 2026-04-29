@@ -23,9 +23,9 @@ export const authProviderEnum = pgEnum('auth_provider', ['SYSTEM', 'GOOGLE']);
 export const distroStatusEnum = pgEnum('distro_status', ['ACTIVE', 'INACTIVE', 'DEPRECATED']);
 export const systemSettingStatusEnum = pgEnum('system_setting_status_enum', ['ACTIVE', 'INACTIVE']);
 export const distroLevelEnum = pgEnum('distro_level', [
-    'Beginner Friendly',
-    'Intermediate Experience Required',
     'Advanced Experience Required',
+    'Intermediate Experience Required',
+    'Beginner Friendly',
 ]);
 
 // USERS TABLE
@@ -53,76 +53,59 @@ export const distros = pgTable(
     'distros',
     {
         id: serial('id').primaryKey(),
-
         name: varchar('name', { length: 100 }).notNull().unique(),
         slug: varchar('slug', { length: 100 }).notNull().unique(),
-
         logo: varchar('logo', { length: 255 }),
         homepage_url: varchar('homepage_url', { length: 255 }),
-
         docs_url: text('docs_url').array().notNull().default([]),
-
         total_reviews: integer('total_reviews').notNull().default(0),
-
         overall_rating: numeric('overall_rating', {
             precision: 3,
             scale: 2,
         })
             .notNull()
             .default('0'),
-
         ux_rating: numeric('ux_rating', {
             precision: 3,
             scale: 2,
         })
             .notNull()
             .default('0'),
-
         performance_rating: numeric('performance_rating', {
             precision: 3,
             scale: 2,
         })
             .notNull()
             .default('0'),
-
         stability_rating: numeric('stability_rating', {
             precision: 3,
             scale: 2,
         })
             .notNull()
             .default('0'),
-
         features_rating: numeric('features_rating', {
             precision: 3,
             scale: 2,
         })
             .notNull()
             .default('0'),
-
         support_rating: numeric('support_rating', {
             precision: 3,
             scale: 2,
         })
             .notNull()
             .default('0'),
-
         target_user_level: distroLevelEnum('target_user_level').notNull(),
-
         distro_type: text('distro_type').array().notNull().default([]),
         based_on: text('based_on').array().notNull().default([]),
         origin_country: text('origin_country').array().notNull().default([]),
         architectures: text('architectures').array().notNull().default([]),
         desktop_environments: text('desktop_environments').array().notNull().default([]),
         categories: text('categories').array().notNull().default([]),
-
         status: distroStatusEnum('status').notNull().default('ACTIVE'),
-
         description: text('description').notNull().default(''),
-
         source_url: text('source_url').array().notNull().default([]),
-
         taken_at: timestamp('taken_at').notNull(),
-
         created_at: timestamp('created_at').notNull().defaultNow(),
         updated_at: timestamp('updated_at').notNull().defaultNow(),
     },
@@ -159,7 +142,6 @@ export const surveys = pgTable(
         dss_run_id: uuid('dss_run_id')
             .notNull()
             .references(() => dss_runs.id, { onDelete: 'cascade' }),
-
         q1_ux: integer('q1_ux').notNull(),
         q2_ux: integer('q2_ux').notNull(),
         q3_performance: integer('q3_performance').notNull(),
@@ -172,12 +154,12 @@ export const surveys = pgTable(
         q10_support: integer('q10_support').notNull(),
         q11_level_pref: integer('q11_level_pref').notNull(),
         q12_level_pref: integer('q12_level_pref').notNull(),
-
         created_at: timestamp('created_at').defaultNow(),
         updated_at: timestamp('updated_at').defaultNow(),
     },
     (table) => ({
         dssRunIdx: index('idx_surveys_dss_run').on(table.dss_run_id),
+        uniqueRun: uniqueIndex('uniq_surveys_run').on(table.dss_run_id),
     })
 );
 
@@ -192,34 +174,32 @@ export const weight_survey = pgTable(
             .references(() => dss_runs.id, { onDelete: 'cascade' }),
         ux_weight: numeric('ux_weight', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }).notNull(),
         performance_weight: numeric('performance_weight', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }).notNull(),
         stability_weight: numeric('stability_weight', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }).notNull(),
         features_weight: numeric('features_weight', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }).notNull(),
         support_weight: numeric('support_weight', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }).notNull(),
-
         user_pref_score: integer('user_pref_score').notNull(),
         user_pref_level: distroLevelEnum('user_pref_level').notNull(),
-
         created_at: timestamp('created_at').defaultNow(),
-        updated_at: timestamp('updated_at').defaultNow(),
     },
     (table) => ({
         dssRunIdx: index('idx_weight_survey_dss_run').on(table.dss_run_id),
         prefLevelIdx: index('idx_weight_survey_pref_level').on(table.user_pref_level),
+        uniqueRun: uniqueIndex('uniq_weight_survey_run').on(table.dss_run_id),
     })
 );
 
@@ -235,28 +215,25 @@ export const topsis_result = pgTable(
         distro_id: integer('distro_id')
             .notNull()
             .references(() => distros.id, { onDelete: 'cascade' }),
-
-        normalized_ux: numeric('normalized_ux', { precision: 14, scale: 10 }),
-        normalized_performance: numeric('normalized_performance', { precision: 14, scale: 10 }),
-        normalized_stability: numeric('normalized_stability', { precision: 14, scale: 10 }),
-        normalized_features: numeric('normalized_features', { precision: 14, scale: 10 }),
-        normalized_support: numeric('normalized_support', { precision: 14, scale: 10 }),
-
-        weighted_ux: numeric('weighted_ux', { precision: 14, scale: 10 }),
-        weighted_performance: numeric('weighted_performance', { precision: 14, scale: 10 }),
-        weighted_stability: numeric('weighted_stability', { precision: 14, scale: 10 }),
-        weighted_features: numeric('weighted_features', { precision: 14, scale: 10 }),
-        weighted_support: numeric('weighted_support', { precision: 14, scale: 10 }),
-
+        normalized_ux: numeric('normalized_ux', { precision: 14, scale: 12 }),
+        normalized_performance: numeric('normalized_performance', { precision: 14, scale: 12 }),
+        normalized_stability: numeric('normalized_stability', { precision: 14, scale: 12 }),
+        normalized_features: numeric('normalized_features', { precision: 14, scale: 12 }),
+        normalized_support: numeric('normalized_support', { precision: 14, scale: 12 }),
+        weighted_ux: numeric('weighted_ux', { precision: 14, scale: 12 }),
+        weighted_performance: numeric('weighted_performance', { precision: 14, scale: 12 }),
+        weighted_stability: numeric('weighted_stability', { precision: 14, scale: 12 }),
+        weighted_features: numeric('weighted_features', { precision: 14, scale: 12 }),
+        weighted_support: numeric('weighted_support', { precision: 14, scale: 12 }),
         distance_ideal_positive: numeric('distance_ideal_positive', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
         distance_ideal_negative: numeric('distance_ideal_negative', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-        cc_score: numeric('cc_score', { precision: 14, scale: 10 }).notNull(),
+        cc_score: numeric('cc_score', { precision: 14, scale: 12 }).notNull(),
         created_at: timestamp('created_at').defaultNow(),
     },
     (table) => ({
@@ -281,82 +258,66 @@ export const topsis_meta = pgTable(
         dss_run_id: uuid('dss_run_id')
             .notNull()
             .references(() => dss_runs.id, { onDelete: 'cascade' }),
-
         denominator_ux: numeric('denominator_ux', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         denominator_performance: numeric('denominator_performance', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         denominator_stability: numeric('denominator_stability', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         denominator_features: numeric('denominator_features', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         denominator_support: numeric('denominator_support', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         positive_ux: numeric('positive_ux', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         positive_performance: numeric('positive_performance', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         positive_stability: numeric('positive_stability', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         positive_features: numeric('positive_features', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         positive_support: numeric('positive_support', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         negative_ux: numeric('negative_ux', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         negative_performance: numeric('negative_performance', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         negative_stability: numeric('negative_stability', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         negative_features: numeric('negative_features', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         negative_support: numeric('negative_support', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }),
-
         created_at: timestamp('created_at').defaultNow(),
     },
     (table) => ({
@@ -378,24 +339,19 @@ export const penalty_results = pgTable(
         distro_id: integer('distro_id')
             .notNull()
             .references(() => distros.id, { onDelete: 'cascade' }),
-
         distance: numeric('distance', { precision: 5, scale: 2 }).notNull(),
         distance_normalized: numeric('distance_normalized', {
-            precision: 5,
-            scale: 2,
+            precision: 14,
+            scale: 12,
         }).notNull(),
-
-        penalty_value: numeric('penalty_value', { precision: 6, scale: 4 }).notNull(),
-
-        utility_score: numeric('utility_score', { precision: 14, scale: 10 }).notNull(),
-
+        penalty_value: numeric('penalty_value', { precision: 14, scale: 12 }).notNull(),
+        utility_score: numeric('utility_score', { precision: 14, scale: 12 }).notNull(),
         created_at: timestamp('created_at').defaultNow(),
     },
     (table) => ({
         dssRunIdx: index('idx_penalty_dss_run').on(table.dss_run_id),
         distroIdx: index('idx_penalty_distro').on(table.distro_id),
         utilityIdx: index('idx_penalty_utility').on(table.utility_score),
-
         uniqueRunDistro: uniqueIndex('uniq_penalty_run_distro').on(
             table.dss_run_id,
             table.distro_id
@@ -417,14 +373,13 @@ export const bayesian_results = pgTable(
             .references(() => distros.id, { onDelete: 'cascade' }),
         shrinkage_coefficient: numeric('shrinkage_coefficient', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }).notNull(),
 
         confidence_adjusted_score: numeric('confidence_adjusted_score', {
             precision: 14,
-            scale: 10,
+            scale: 12,
         }).notNull(),
-
         created_at: timestamp('created_at').defaultNow(),
     },
     (table) => ({
@@ -451,20 +406,19 @@ export const rankings = pgTable(
         distro_id: integer('distro_id')
             .notNull()
             .references(() => distros.id, { onDelete: 'cascade' }),
-
         rank_position: integer('rank_position').notNull(),
-
         created_at: timestamp('created_at').defaultNow(),
-        updated_at: timestamp('updated_at').defaultNow(),
     },
     (table) => ({
-        dssRunIdx: index('idx_rankings_dss_run').on(table.dss_run_id),
         distroIdx: index('idx_rankings_distro').on(table.distro_id),
-        rankIdx: index('idx_rankings_position').on(table.rank_position),
-
+        runRankIdx: index('idx_rankings_run_rank').on(table.dss_run_id, table.rank_position),
         uniqueRunDistro: uniqueIndex('uniq_rankings_run_distro').on(
             table.dss_run_id,
             table.distro_id
+        ),
+        uniqueRankPosition: uniqueIndex('uniq_rankings_run_position').on(
+            table.dss_run_id,
+            table.rank_position
         ),
     })
 );
@@ -476,18 +430,14 @@ export const system_settings = pgTable(
     {
         id: serial('id').primaryKey(),
         name: varchar('name', { length: 100 }).notNull().unique(),
-
         lambda_param: numeric('lambda_param', { precision: 3, scale: 2 }).default('-0.5').notNull(),
         max_distance: integer('max_distance').default(2).notNull(),
-        median_reviews: integer('median_reviews'),
+        prior_count: integer('prior_count').default(5).notNull(),
+        scale: numeric('scale', { precision: 5, scale: 3 }).default('1.000').notNull(),
         total_distros: integer('total_distros').default(30).notNull(),
         top_n_recommendations: integer('top_n_recommendations').default(5).notNull(),
-
         status: systemSettingStatusEnum('status').default('INACTIVE'),
-
-        updated_by: uuid('updated_by').references(() => users.id, {
-            onDelete: 'set null',
-        }),
+        updated_by: uuid('updated_by').references(() => users.id, { onDelete: 'set null' }),
         created_at: timestamp('created_at').defaultNow(),
         updated_at: timestamp('updated_at').defaultNow(),
     },

@@ -6,6 +6,7 @@ import { buildPaginationMeta, getPagination } from '../lib';
 import { and, desc, asc, eq, ilike, or, sql } from 'drizzle-orm';
 import { distros, distroStatusEnum, distroLevelEnum } from '@/db/schema';
 import { calculateOverallRating } from '../lib/overall-rating';
+import { s3CreateDocument, s3DeleteDocument } from '../lib/s3';
 
 export async function createDistro(c: Context) {
     try {
@@ -62,6 +63,7 @@ export async function createDistro(c: Context) {
             stability_rating: String(data.stability_rating ?? 0),
             features_rating: String(data.features_rating ?? 0),
             support_rating: String(data.support_rating ?? 0),
+            total_reviews: Number(data.total_reviews ?? 0),
             target_user_level:
                 data.target_user_level as (typeof distroLevelEnum.enumValues)[number],
             distro_type: data.distro_type ?? [],
@@ -81,6 +83,114 @@ export async function createDistro(c: Context) {
         return c.json({
             success: true,
             message: 'Distro created successfully',
+        });
+    } catch (error) {
+        return c.json(
+            {
+                success: false,
+                message: error instanceof Error ? error.message : 'Internal server error',
+            },
+            500
+        );
+    }
+}
+
+export async function createDistrosBulk(c: Context) {
+    try {
+        const body = await c.req.json();
+
+        if (!Array.isArray(body)) {
+            return c.json(
+                {
+                    success: false,
+                    message: 'Payload must be an array',
+                },
+                400
+            );
+        }
+
+        const results = [];
+
+        for (const item of body) {
+            const parsed = createDistroSchema.safeParse(item);
+
+            if (!parsed.success) {
+                results.push({
+                    success: false,
+                    name: item.name,
+                    error: parsed.error.flatten(),
+                });
+                continue;
+            }
+
+            const data = parsed.data;
+
+            const slug = await generateUniqueSlug(data.name);
+
+            const existing = await db.query.distros.findFirst({
+                where: eq(distros.slug, slug),
+            });
+
+            if (existing) {
+                results.push({
+                    success: false,
+                    name: data.name,
+                    message: 'Distro already exists',
+                });
+                continue;
+            }
+
+            const ratingInput = {
+                ux_rating: Number(data.ux_rating ?? 0),
+                performance_rating: Number(data.performance_rating ?? 0),
+                stability_rating: Number(data.stability_rating ?? 0),
+                features_rating: Number(data.features_rating ?? 0),
+                support_rating: Number(data.support_rating ?? 0),
+            };
+
+            const payload = {
+                name: data.name,
+                slug,
+                logo: data.logo ?? null,
+                homepage_url: data.homepage_url ?? null,
+                docs_url: data.docs_url ?? [],
+                overall_rating: calculateOverallRating(ratingInput),
+
+                ux_rating: String(data.ux_rating ?? 0),
+                performance_rating: String(data.performance_rating ?? 0),
+                stability_rating: String(data.stability_rating ?? 0),
+                features_rating: String(data.features_rating ?? 0),
+                support_rating: String(data.support_rating ?? 0),
+                total_reviews: Number(data.total_reviews ?? 0),
+
+                target_user_level:
+                    data.target_user_level as (typeof distroLevelEnum.enumValues)[number],
+
+                distro_type: data.distro_type ?? [],
+                based_on: data.based_on ?? [],
+                origin_country: data.origin_country ?? [],
+                architectures: data.architectures ?? [],
+                desktop_environments: data.desktop_environments ?? [],
+                categories: data.categories ?? [],
+
+                status: data.status ?? 'ACTIVE',
+                description: data.description ?? '',
+                source_url: data.source_url ?? [],
+                taken_at: data.taken_at ? new Date(data.taken_at) : new Date(),
+            };
+
+            const [created] = await db.insert(distros).values(payload).returning();
+
+            results.push({
+                success: true,
+                name: created.name,
+            });
+        }
+
+        return c.json({
+            success: true,
+            message: 'Bulk distro import completed',
+            results,
         });
     } catch (error) {
         return c.json(
@@ -360,6 +470,122 @@ export async function deleteDistro(c: Context) {
         return c.json({
             success: true,
             message: 'Distro deleted successfully',
+        });
+    } catch (error) {
+        return c.json(
+            {
+                success: false,
+                message: error instanceof Error ? error.message : 'Internal server error',
+            },
+            500
+        );
+    }
+}
+
+export async function changeDistroLogo(c: Context) {
+    try {
+        const distroId = Number(c.req.param('id'));
+
+        const formData = await c.req.formData();
+        const file = formData.get('logo');
+
+        if (!file || !(file instanceof File)) {
+            return c.json(
+                {
+                    success: false,
+                    message: 'Logo file is required',
+                },
+                400
+            );
+        }
+
+        const currentDistro = await db.query.distros.findFirst({
+            where: eq(distros.id, distroId),
+        });
+
+        if (!currentDistro) {
+            return c.json(
+                {
+                    success: false,
+                    message: 'Distro not found',
+                },
+                404
+            );
+        }
+
+        const uploaded = await s3CreateDocument(file, 'distros');
+
+        if (currentDistro.logo) {
+            try {
+                await s3DeleteDocument('distros', currentDistro.logo);
+            } catch {
+                //
+            }
+        }
+
+        await db
+            .update(distros)
+            .set({
+                logo: uploaded.filename,
+            })
+            .where(eq(distros.id, distroId));
+
+        return c.json({
+            success: true,
+            message: 'Distro logo updated successfully',
+        });
+    } catch (error) {
+        return c.json(
+            {
+                success: false,
+                message: error instanceof Error ? error.message : 'Internal server error',
+            },
+            500
+        );
+    }
+}
+
+export async function removeDistroLogo(c: Context) {
+    try {
+        const distroId = Number(c.req.param('id'));
+
+        const distro = await db.query.distros.findFirst({
+            where: eq(distros.id, distroId),
+        });
+
+        if (!distro) {
+            return c.json(
+                {
+                    success: false,
+                    message: 'Distro not found',
+                },
+                404
+            );
+        }
+
+        if (!distro.logo) {
+            return c.json({
+                success: true,
+                message: 'No distro logo to remove',
+            });
+        }
+
+        try {
+            await s3DeleteDocument('distros', distro.logo);
+        } catch {
+            //
+        }
+
+        await db
+            .update(distros)
+            .set({
+                logo: null,
+            })
+            .where(eq(distros.id, distroId));
+
+        return c.json({
+            success: true,
+            message: 'Distro logo removed successfully',
         });
     } catch (error) {
         return c.json(

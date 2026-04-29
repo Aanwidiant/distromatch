@@ -1,0 +1,1 @@
+ALTER TABLE "penalty_results" ALTER COLUMN "penalty_value" SET DATA TYPE numeric(8, 6);

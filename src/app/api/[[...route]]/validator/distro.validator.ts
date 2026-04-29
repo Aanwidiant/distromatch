@@ -13,6 +13,7 @@ export const createDistroSchema = z.object({
     stability_rating: z.number().min(0).max(5).optional(),
     features_rating: z.number().min(0).max(5).optional(),
     support_rating: z.number().min(0).max(5).optional(),
+    total_reviews: z.number().int().min(0).optional(),
 
     target_user_level: z.enum([
         'Beginner Friendly',
