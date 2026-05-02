@@ -14,7 +14,7 @@ const users = new Hono();
 
 users.get('/', protect, getMe);
 users.patch('/', protect, updateProfile);
-users.put('/', protect, changeProfilePhoto);
+users.post('/photos', protect, changeProfilePhoto);
 users.delete('/', protect, removeProfilePhoto);
 
 users.get('/list', protect, admin, getUsers);

@@ -130,6 +130,7 @@ export async function changeProfilePhoto(c: Context) {
         return c.json({
             success: true,
             message: 'Profile photo updated successfully',
+            photo: uploaded.filename,
         });
     } catch (error) {
         return c.json(

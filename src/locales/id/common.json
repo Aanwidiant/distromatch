@@ -1,0 +1,37 @@
+{
+    "test": "tes",
+    "themeColorMapping": "Pemetaan Warna Tema",
+    "light": "Terang",
+    "dark": "Gelap",
+    "navigation": {
+        "title": "Navigasi",
+        "features": "Fitur",
+        "packages": "Paket",
+        "blog": "Blog",
+        "about": "Tentang Kami",
+        "privacyPolicy": "Kebijakan Privasi",
+        "task": "Tugas",
+        "feature": "Fitur"
+    },
+    "contact": {
+        "title": "Kontak",
+        "location": "Lokasi",
+        "openMap": "Buka di Peta",
+        "phoneNumber": "Nomor HP",
+        "email": "Email"
+    },
+    "footer": {
+        "tagline": "Karena setiap progres berarti. Tugasin membantu tim tetap selaras, tepat waktu, dan terkontrol—semua dalam satu tempat.",
+        "allRightsReserved": "Hak cipta dilindungi undang-undang."
+    },
+    "auth": {
+        "signIn": "Masuk",
+        "signUp": "Daftar"
+    },
+    "banner": {
+        "bannerTitle": "Wujudkan Produktivitas Tim yang Lebih Baik!",
+        "bannerSubtitle": "Bergabunglah dengan ribuan tim yang sudah beralih ke manajemen tugas modern bersama Tugasin.",
+        "bannerPrimaryCta": "Jadwalkan Demo",
+        "bannerSecondaryCta": "Uji Coba Gratis"
+    }
+}

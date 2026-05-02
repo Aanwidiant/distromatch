@@ -626,7 +626,7 @@ export async function changePassword(c: Context) {
 
         return c.json({
             success: true,
-            message: 'Password changed successfully',
+            message: 'Password changed successfully, please re-login with new password.',
         });
     } catch (error) {
         return c.json(

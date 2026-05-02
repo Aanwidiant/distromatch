@@ -1,0 +1,37 @@
+{
+    "test": "test",
+    "themeColorMapping": "Theme Color Mapping",
+    "light": "Light",
+    "dark": "Dark",
+    "navigation": {
+        "title": "Navigation",
+        "features": "Features",
+        "packages": "Packages",
+        "blog": "Blog",
+        "about": "About Us",
+        "privacyPolicy": "Privacy Policy",
+        "task": "Task",
+        "feature": "Feature"
+    },
+    "contact": {
+        "title": "Contact",
+        "location": "Location",
+        "openMap": "Open Map",
+        "phoneNumber": "Phone Number",
+        "email": "Email"
+    },
+    "footer": {
+        "tagline": "Because every step forward matters. Tugasin helps teams stay aligned, on schedule, and in control—all in one place.",
+        "allRightsReserved": "All rights reserved"
+    },
+    "auth": {
+        "signIn": "Sign In",
+        "signUp": "Sign Up"
+    },
+    "banner": {
+        "bannerTitle": "Build Better Team Productivity!",
+        "bannerSubtitle": "Join thousands of teams that have switched to modern task management with Tugasin.",
+        "bannerPrimaryCta": "Schedule a Demo",
+        "bannerSecondaryCta": "Free Trial"
+    }
+}
