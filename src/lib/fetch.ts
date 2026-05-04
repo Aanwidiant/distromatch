@@ -8,10 +8,9 @@ interface RefreshResponse {
 const instance: AxiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_FETCH_URL,
     timeout: 30000,
-    withCredentials: true, // 🔥 penting untuk refresh token via cookie
+    withCredentials: true,
 });
 
-// REQUEST INTERCEPTOR
 instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
         const token = useAuthStore.getState().accessToken;
@@ -29,7 +28,6 @@ instance.interceptors.request.use(
     (error: AxiosError) => Promise.reject(error)
 );
 
-// REFRESH TOKEN LOGIC
 let isRefreshing = false;
 let failedQueue: {
     resolve: (token: string) => void;
@@ -44,7 +42,6 @@ const processQueue = (error: unknown, token: string | null) => {
     failedQueue = [];
 };
 
-// RESPONSE INTERCEPTOR
 instance.interceptors.response.use(
     (response: AxiosResponse) => response,
     async (error: AxiosError) => {
@@ -54,19 +51,15 @@ instance.interceptors.response.use(
 
         const status = error.response?.status;
 
-        // ❌ bukan 401 → langsung lempar error
         if (status !== 401 || originalRequest._retry) {
             return Promise.reject(error);
         }
 
-        // ❌ jangan refresh kalau login endpoint
         if (originalRequest.url?.includes('/login')) {
             return Promise.reject(error);
         }
 
         const { logout } = useAuthStore.getState();
-
-        // HANDLE QUEUE
 
         if (isRefreshing) {
             return new Promise((resolve, reject) => {
@@ -86,7 +79,6 @@ instance.interceptors.response.use(
         isRefreshing = true;
 
         try {
-            // 🔥 endpoint refresh (sesuaikan backend kamu)
             const res = await axios.post<RefreshResponse>(
                 `${process.env.NEXT_PUBLIC_FETCH_URL}/auth/token/refresh`,
                 {},
@@ -95,10 +87,9 @@ instance.interceptors.response.use(
 
             const newToken = res.data.accessToken;
 
-            // update zustand
             useAuthStore.getState().login({
                 accessToken: newToken,
-                user: useAuthStore.getState().user!, // tetap pakai user lama
+                user: useAuthStore.getState().user!,
             });
 
             processQueue(null, newToken);
@@ -111,7 +102,6 @@ instance.interceptors.response.use(
         } catch (refreshError) {
             processQueue(refreshError, null);
 
-            // logout kalau refresh gagal
             logout();
 
             return Promise.reject(refreshError);
@@ -121,10 +111,8 @@ instance.interceptors.response.use(
     }
 );
 
-// RESPONSE HELPER
 const responseBody = (response: AxiosResponse) => response.data;
 
-// EXPORT API
 const Fetch = {
     GET: <T = unknown>(url: string, config?: object) =>
         instance.get<T>(url, config).then(responseBody),

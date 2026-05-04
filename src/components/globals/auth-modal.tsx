@@ -77,7 +77,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                 });
             }
 
-            toast.success('Login berhasil 🎉');
+            toast.success(data.message);
             resetForm();
         } catch (err: unknown) {
             handleError(err);
@@ -172,6 +172,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                 }
 
                 toast.success(response.message);
+                resetForm();
             } catch (err: unknown) {
                 handleError(err);
             } finally {

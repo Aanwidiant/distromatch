@@ -254,7 +254,6 @@ export async function getDistros(c: Context) {
                 slug: distros.slug,
                 logo: distros.logo,
                 status: distros.status,
-                homepage_url: distros.homepage_url,
                 total_reviews: distros.total_reviews,
                 overall_rating: distros.overall_rating,
             })

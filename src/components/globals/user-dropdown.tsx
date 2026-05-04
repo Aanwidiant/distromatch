@@ -13,10 +13,13 @@ import { toast } from 'sonner';
 import { AxiosError } from 'axios';
 import { LogoutResponse } from '@/types';
 import { useDialog } from '@/hooks/use-dialog';
+import { useRouter } from '@/lib/i18n/navigation';
+import { BarChart3, User, LogOut } from 'lucide-react';
 
 export default function UserDropdown() {
     const { profile, logout } = useAuthStore();
     const profileDialog = useDialog('profile');
+    const router = useRouter();
 
     const handleLogout = async () => {
         try {
@@ -47,10 +50,23 @@ export default function UserDropdown() {
                     />
                 </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align='end' className='w-44 space-y-1'>
-                <DropdownMenuItem>Hasil Rekomendasi</DropdownMenuItem>
-                <DropdownMenuItem onClick={profileDialog.open}>Profile</DropdownMenuItem>
-                <DropdownMenuItem onClick={handleLogout} className='text-red'>
+            <DropdownMenuContent align='end' className='bg-background w-44 space-y-1'>
+                <DropdownMenuItem
+                    onClick={() => router.push(`/${profile?.username}/results`)}
+                    className='flex items-center gap-2'
+                >
+                    <BarChart3 className='size-4' />
+                    Hasil Rekomendasi
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={profileDialog.open} className='flex items-center gap-2'>
+                    <User className='size-4' />
+                    Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    onClick={handleLogout}
+                    className='flex items-center gap-2 text-red-500'
+                >
+                    <LogOut className='size-4' />
                     Logout
                 </DropdownMenuItem>
             </DropdownMenuContent>

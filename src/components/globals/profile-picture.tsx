@@ -1,5 +1,10 @@
-import { ProfilePictureProps } from '@/types';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+
+type ProfilePictureProps = {
+    image?: string;
+    username?: string;
+    size?: string;
+};
 
 type SizeVariant = 'sm' | 'md' | 'lg' | 'xl';
 

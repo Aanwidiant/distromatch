@@ -23,11 +23,11 @@ export default function CategoryCard({ category }: Props) {
                         <div className='mb-5'>
                             <div className='mb-3 flex items-center gap-2'>
                                 <span className='text-grey-3 bg-accent-1 border-stroke rounded-md border px-2 py-0.5 font-mono text-xs'>
-                                    Q{globalIdx}
+                                    Question {globalIdx}
                                 </span>
                                 {selected !== undefined && (
                                     <span className='text-green inline-flex items-center gap-1 font-mono text-xs'>
-                                        <CircleCheck className='size-3.5' />
+                                        <CircleCheck className='size-5' />
                                         Terjawab
                                     </span>
                                 )}

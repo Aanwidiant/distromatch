@@ -24,13 +24,13 @@ export default function AnswerOption({ value, label, selected, onClick }: Props)
                     : 'bg-bg-2 text-grey-2 border-stroke hover:bg-accent-1 hover:border-primary/30 hover:text-foreground'
             } `}
         >
-            <div className='flex flex-col items-center gap-2'>
+            <div className='flex items-center gap-3 md:flex-col md:justify-center md:gap-2'>
                 <span
                     className={`flex size-8 items-center justify-center rounded-full font-mono text-sm font-bold transition-all ${selected ? 'bg-white/20 text-white' : 'bg-accent-1 text-grey-3 group-hover:bg-accent-2'} `}
                 >
                     {VALUE_EMOJIS[value] ?? value}
                 </span>
-                <span className='text-sm leading-snug font-medium'>{label}</span>
+                <span className='text-sm leading-snug font-medium md:text-center'>{label}</span>
             </div>
         </button>
     );
