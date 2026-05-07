@@ -30,11 +30,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                             <Toaster
                                 position='bottom-right'
                                 icons={{
-                                    success: <ChecklistCircle className='fill-primary size-6' />,
+                                    success: <ChecklistCircle className='size-6' />,
                                     error: <CircleInfo className='size-6' />,
                                     info: <CircleInfo className='size-6 rotate-180' />,
                                 }}
                                 duration={5000}
+                                toastOptions={{
+                                    classNames: {
+                                        toast: `${poppins.className} transition-all duration-500 bg-background text-foreground ease-in-out border border-stroke shadow-grey-1 shadow-sm min-h-16`,
+                                    },
+                                }}
                             />
                         </AuthProvider>
                     </GoogleOAuthProvider>

@@ -4,13 +4,20 @@ import { routing } from './lib/i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
-export function proxy(req: NextRequest) {
+export default function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
 
+    // 🔹 1. Exclude admin (tanpa i18n)
     if (pathname.startsWith('/admin')) {
-        return;
+        return NextResponse.next();
     }
 
+    // 🔹 2. Exclude verify email (tanpa i18n)
+    if (pathname.startsWith('/verify/email')) {
+        return NextResponse.next();
+    }
+
+    // 🔹 3. Auth check
     const hasRefreshToken = req.cookies.get('refresh_token')?.value;
 
     const isProtectedRoute = /^\/[^/]+\/[^/]+\/results/.test(pathname);
@@ -19,10 +26,9 @@ export function proxy(req: NextRequest) {
         return NextResponse.redirect(new URL('/', req.url));
     }
 
+    // 🔹 4. i18n middleware
     return intlMiddleware(req);
 }
-
-export default createMiddleware(routing);
 
 export const config = {
     matcher: [

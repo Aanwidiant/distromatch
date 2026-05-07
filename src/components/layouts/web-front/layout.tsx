@@ -5,10 +5,12 @@ import BackTop from './back-top';
 
 export default function WebFrontLayout({ children }: { children: React.ReactNode }) {
     return (
-        <NavLayout>
-            <main>{children}</main>
-            <Footer />
-            <BackTop />
-        </NavLayout>
+        <div className='container mx-auto'>
+            <NavLayout>
+                <main>{children}</main>
+                <Footer />
+                <BackTop />
+            </NavLayout>
+        </div>
     );
 }

@@ -1,0 +1,1 @@
+ALTER TABLE "dss_runs" DROP COLUMN "share";

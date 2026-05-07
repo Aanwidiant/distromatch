@@ -94,10 +94,8 @@ function mapScoreToPreferenceRaw(scoreAvg: number): number {
     return (scoreAvg - 1) / 2 + 1; // continuous 1..3
 }
 
-// 2) directional distance: penalize only when distro is "easier" (more beginner) than user's pref
-function getDistanceDirectional(userPrefRaw: number, targetUserLevel: number): number {
-    const diff = targetUserLevel - userPrefRaw; // can be fractional
-    return Math.max(0, diff); // penalize only if target is more 'beginner' than user preference
+function getDistanceSymmetric(userPrefRaw: number, targetUserLevel: number): number {
+    return Math.abs(targetUserLevel - userPrefRaw);
 }
 
 function getDistanceNorm(distance: number): number {
@@ -400,7 +398,7 @@ export async function runDssPipelineTest(ctx: Context) {
             );
 
             // use continuous + directional distance
-            const dist = getDistanceDirectional(userPrefRaw, targetLevelNum);
+            const dist = getDistanceSymmetric(userPrefRaw, targetLevelNum);
             const distNorm = getDistanceNorm(dist);
             const penalty = getPenalty(distNorm, lambdaParam); // exponent default 2
             const confAdj = parseNum(bp.confidence_adjusted_score);
@@ -1094,3 +1092,31 @@ export async function getPenaltyCalc(c: Context) {
         );
     }
 }
+
+export const handleDeleteDssRun = async (c: Context) => {
+    const user = c.get('user');
+
+    const dssRunId = String(c.req.param('id'));
+
+    const dssRun = await db.query.dss_runs.findFirst({
+        where: eq(dss_runs.id, dssRunId),
+    });
+
+    if (!dssRun) {
+        return c.json({ success: false, message: 'DSS run not found' }, 404);
+    }
+
+    const isOwner = dssRun.user_id === user.id;
+    const isAdmin = user.role === 'ADMIN';
+
+    if (!isOwner && !isAdmin) {
+        return c.json({ success: false, message: 'Forbidden' }, 403);
+    }
+
+    await db.delete(dss_runs).where(eq(dss_runs.id, dssRunId));
+
+    return c.json({
+        success: true,
+        message: 'DSS run deleted successfully',
+    });
+};

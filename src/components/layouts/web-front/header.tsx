@@ -20,7 +20,7 @@ export default function Header({ isSidebarOpen, toggleSidebar }: HeaderProps) {
     const isAuthenticated = !!accessToken;
 
     return (
-        <header className='bg-background/80 sticky top-0 z-20 px-6 shadow-xs backdrop-blur lg:px-22'>
+        <header className='bg-background/80 sticky top-0 z-20 px-6 shadow-xs backdrop-blur lg:px-18'>
             <div className='flex min-h-16 w-full items-center justify-between'>
                 <Link href={`/`}>
                     <LogoFull className='h-fit w-36' />

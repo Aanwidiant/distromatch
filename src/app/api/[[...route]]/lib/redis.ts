@@ -4,23 +4,24 @@ let redisInstance: Redis | null = null;
 
 export function getRedis(): Redis {
     if (!redisInstance) {
+        const isUpstash = process.env.REDIS_USE_TLS === 'true';
+
         redisInstance = new Redis({
             host: process.env.REDIS_HOST || 'localhost',
             port: Number.parseInt(process.env.REDIS_PORT || '6379', 10),
             password: process.env.REDIS_PASSWORD || undefined,
             db: Number.parseInt(process.env.REDIS_DB || '0', 10),
             maxRetriesPerRequest: 3,
+            ...(isUpstash && { tls: {} }),
         });
 
         redisInstance.on('connect', () => {
             console.log('Redis connected');
         });
-
         redisInstance.on('error', (err) => {
             console.error('Redis error:', err.message);
         });
     }
-
     return redisInstance;
 }
 

@@ -674,7 +674,7 @@ export async function forgotPassword(c: Context) {
 
         const resetToken = await generateToken(payload);
 
-        const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+        const resetLink = `${process.env.FRONTEND_URL}/verify/reset-password?token=${resetToken}`;
 
         await sendEmail({
             to: user.email,
@@ -805,7 +805,7 @@ export async function requestChangeEmail(c: Context) {
             exp: Math.floor(Date.now() / 1000) + 60 * 60,
         });
 
-        const verifyLink = `${process.env.FRONTEND_URL}/verify-change-email?token=${token}`;
+        const verifyLink = `${process.env.FRONTEND_URL}/verify/change-email?token=${token}`;
 
         await sendEmail({
             to: newEmail,

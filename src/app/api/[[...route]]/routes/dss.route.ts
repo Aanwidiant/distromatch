@@ -12,6 +12,7 @@ import {
     getSurveyData,
     getTopsisCalc,
     getWeightedData,
+    handleDeleteDssRun,
     runDssPipelineTest,
 } from '../handlers';
 import { protect } from '../middlewares';
@@ -31,5 +32,6 @@ dss.get('/:id/ideal', getIdealSolution);
 dss.get('/:id/topsis', getTopsisCalc);
 dss.get('/:id/bayesian', getBayesianCalc);
 dss.get('/:id/penalty', getPenaltyCalc);
+dss.delete('/:id', protect, handleDeleteDssRun);
 
 export default dss;

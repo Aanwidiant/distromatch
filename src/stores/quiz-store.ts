@@ -37,9 +37,15 @@ type QuizStore = {
     answers: QuizAnswers;
     currentStep: number; // 0-5 (6 categories)
     isSubmitting: boolean;
+    authOpen: boolean;
+    authMode: 'login' | 'register';
+    authRedirectTo: string | null;
     setAnswer: (key: QuestionKey, value: number) => void;
     setStep: (step: number) => void;
     setSubmitting: (v: boolean) => void;
+    setAuthOpen: (v: boolean) => void;
+    setAuthMode: (v: 'login' | 'register') => void;
+    setAuthRedirectTo: (v: string | null) => void;
     resetQuiz: () => void;
     isComplete: () => boolean;
     answeredCount: () => number;
@@ -51,6 +57,9 @@ export const useQuizStore = create<QuizStore>()(
             answers: {},
             currentStep: 0,
             isSubmitting: false,
+            authOpen: false,
+            authMode: 'login',
+            authRedirectTo: null,
 
             setAnswer: (key, value) =>
                 set((state) => ({ answers: { ...state.answers, [key]: value } })),
@@ -58,6 +67,12 @@ export const useQuizStore = create<QuizStore>()(
             setStep: (step) => set({ currentStep: step }),
 
             setSubmitting: (v) => set({ isSubmitting: v }),
+
+            setAuthOpen: (v) => set({ authOpen: v }),
+
+            setAuthMode: (v) => set({ authMode: v }),
+
+            setAuthRedirectTo: (v) => set({ authRedirectTo: v }),
 
             resetQuiz: () => set({ answers: {}, currentStep: 0, isSubmitting: false }),
 

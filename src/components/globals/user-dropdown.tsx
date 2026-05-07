@@ -14,12 +14,14 @@ import { AxiosError } from 'axios';
 import { LogoutResponse } from '@/types';
 import { useDialog } from '@/hooks/use-dialog';
 import { useRouter } from '@/lib/i18n/navigation';
-import { BarChart3, User, LogOut } from 'lucide-react';
+import { SquareChartGantt, User, LogOut, ShieldUser } from 'lucide-react';
+import Link from 'next/link';
 
 export default function UserDropdown() {
-    const { profile, logout } = useAuthStore();
+    const { user, profile, logout } = useAuthStore();
     const profileDialog = useDialog('profile');
     const router = useRouter();
+    const isAdmin = user?.role === 'ADMIN';
 
     const handleLogout = async () => {
         try {
@@ -50,12 +52,20 @@ export default function UserDropdown() {
                     />
                 </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align='end' className='bg-background w-44 space-y-1'>
+            <DropdownMenuContent align='end' className='bg-background w-fit min-w-44 space-y-1'>
+                {isAdmin && (
+                    <DropdownMenuItem asChild>
+                        <Link href='/admin/dashboard' className='flex items-center gap-2'>
+                            <ShieldUser className='size-4' />
+                            Admin Dashboard
+                        </Link>
+                    </DropdownMenuItem>
+                )}
                 <DropdownMenuItem
                     onClick={() => router.push(`/${profile?.username}/results`)}
                     className='flex items-center gap-2'
                 >
-                    <BarChart3 className='size-4' />
+                    <SquareChartGantt className='size-4' />
                     Hasil Rekomendasi
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={profileDialog.open} className='flex items-center gap-2'>

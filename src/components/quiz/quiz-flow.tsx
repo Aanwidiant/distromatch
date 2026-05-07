@@ -33,7 +33,7 @@ export default function QuizFlow({
     onNext,
 }: QuizFlowProps) {
     return (
-        <main className='flex min-h-screen flex-col p-6 md:px-12 lg:px-24 lg:py-12'>
+        <main className='flex min-h-screen flex-col p-6 md:px-12 lg:px-20 lg:py-12'>
             <div className='mx-auto w-full space-y-6'>
                 <QuizProgress answeredCount={answeredCount} />
                 <div className='grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr]'>

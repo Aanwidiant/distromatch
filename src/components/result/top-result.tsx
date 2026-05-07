@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { Star, UserStar, CalendarClock } from 'lucide-react';
 import Logo from '../globals/logo';
 import { Button } from '../ui/button';
+import { Link } from '@/lib/i18n/navigation';
 
 type Recommendation = {
     rank_position: number;
@@ -123,7 +124,9 @@ export default async function TopResult({ runId }: Props) {
                                 )}
                             </div>
                             <div className='flex justify-end'>
-                                <Button variant='outline'>Lihat detail</Button>
+                                <Button variant='outline' asChild size='sm'>
+                                    <Link href={`/distros/${item.slug}`}>Lihat detail</Link>
+                                </Button>
                             </div>
                         </div>
                     );

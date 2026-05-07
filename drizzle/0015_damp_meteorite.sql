@@ -1,0 +1,1 @@
+ALTER TABLE "dss_runs" ADD COLUMN "share" boolean DEFAULT false NOT NULL;

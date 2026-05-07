@@ -67,6 +67,20 @@ export default async function DistroListPage({
         );
     }
 
+    if (res.data.length === 0) {
+        return (
+            <main className='flex min-h-screen flex-col items-center justify-center gap-4 p-6'>
+                <h2 className='text-xl font-semibold'>Distro not found</h2>
+                <p className='text-muted-foreground text-sm'>
+                    {search ? `No results found for "${search}"` : 'No distro data available'}
+                </p>
+                <Button asChild variant='outline'>
+                    <Link href='?'>Back to list</Link>
+                </Button>
+            </main>
+        );
+    }
+
     const data: Distros[] = res.data;
     const meta: Pagination = res.meta;
     const pages = getPagination(meta.currentPage, meta.totalPages);
@@ -79,7 +93,7 @@ export default async function DistroListPage({
     };
 
     return (
-        <main className='flex min-h-screen flex-col gap-10 p-6 md:px-12 lg:px-24 lg:py-12'>
+        <main className='flex min-h-screen flex-col gap-10 p-6 md:px-12 lg:px-20 lg:py-12'>
             <div className='flex flex-wrap items-start justify-between gap-3'>
                 <div className='space-y-2'>
                     <h1 className='text-3xl font-bold'>Linux Distributions Explorer</h1>
@@ -100,8 +114,8 @@ export default async function DistroListPage({
                         >
                             <div className='flex items-center justify-between'>
                                 <Logo name={item.name} image={item.logo ?? undefined} size='md' />
-                                <Button variant='outline' size='sm'>
-                                    Detail
+                                <Button variant='outline' asChild size='sm'>
+                                    <Link href={`/distros/${item.slug}`}>Detail</Link>
                                 </Button>
                             </div>
                             <h2 className='mt-3 text-lg font-semibold'>{item.name}</h2>
@@ -117,7 +131,7 @@ export default async function DistroListPage({
                                                         className='absolute inset-0 overflow-hidden'
                                                         style={{ width: `${fill * 100}%` }}
                                                     >
-                                                        <Star className='size-4 fill-yellow-400 text-yellow-400' />
+                                                        <Star className='fill-yellow text-yellow size-4' />
                                                     </span>
                                                 </span>
                                             );
@@ -136,41 +150,43 @@ export default async function DistroListPage({
                     );
                 })}
             </div>
-            <div className='flex flex-wrap items-center justify-center gap-2'>
-                {meta.currentPage === 1 ? (
-                    <Button variant='outline' disabled>
-                        Prev
-                    </Button>
-                ) : (
-                    <Button variant='outline' asChild>
-                        <Link href={buildUrl(meta.currentPage - 1)}>Prev</Link>
-                    </Button>
-                )}
-                {pages.map((p, i) =>
-                    p === '...' ? (
-                        <span key={`ellipsis-${i}`} className='text-muted-foreground px-2'>
-                            ...
-                        </span>
-                    ) : p === meta.currentPage ? (
-                        <Button key={`page-${p}`} variant='default' disabled>
-                            {p}
+            {meta.totalPages > 1 && (
+                <div className='flex flex-wrap items-center justify-center gap-2'>
+                    {meta.currentPage === 1 ? (
+                        <Button variant='outline' disabled>
+                            Prev
                         </Button>
                     ) : (
-                        <Button key={`page-${p}`} variant='outline' asChild>
-                            <Link href={buildUrl(Number(p))}>{p}</Link>
+                        <Button variant='outline' asChild>
+                            <Link href={buildUrl(meta.currentPage - 1)}>Prev</Link>
                         </Button>
-                    )
-                )}
-                {meta.currentPage === meta.totalPages ? (
-                    <Button variant='outline' disabled>
-                        Next
-                    </Button>
-                ) : (
-                    <Button variant='outline' asChild>
-                        <Link href={buildUrl(meta.currentPage + 1)}>Next</Link>
-                    </Button>
-                )}
-            </div>
+                    )}
+                    {pages.map((p, i) =>
+                        p === '...' ? (
+                            <span key={`ellipsis-${i}`} className='text-muted-foreground px-2'>
+                                ...
+                            </span>
+                        ) : p === meta.currentPage ? (
+                            <Button key={`page-${p}`} variant='default' disabled>
+                                {p}
+                            </Button>
+                        ) : (
+                            <Button key={`page-${p}`} variant='outline' asChild>
+                                <Link href={buildUrl(Number(p))}>{p}</Link>
+                            </Button>
+                        )
+                    )}
+                    {meta.currentPage === meta.totalPages ? (
+                        <Button variant='outline' disabled>
+                            Next
+                        </Button>
+                    ) : (
+                        <Button variant='outline' asChild>
+                            <Link href={buildUrl(meta.currentPage + 1)}>Next</Link>
+                        </Button>
+                    )}
+                </div>
+            )}
         </main>
     );
 }

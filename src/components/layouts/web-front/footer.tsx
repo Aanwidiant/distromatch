@@ -11,7 +11,7 @@ export default function Footer() {
 
     return (
         <footer className='w-full'>
-            <div className='mx-auto flex flex-col gap-8 p-6 lg:flex-row lg:justify-between lg:px-24'>
+            <div className='flex flex-col gap-8 p-6 lg:flex-row lg:justify-between lg:px-20'>
                 <div className='flex flex-col gap-4 lg:w-1/2'>
                     <Link href='/'>
                         <LogoFull className='h-fit w-36' />
@@ -44,10 +44,10 @@ export default function Footer() {
                             <div className='space-y-1'>
                                 <p className='font-semibold'>{t('contact.email')}</p>
                                 <a
-                                    href='mailto:tugasinhelp@gmail.com'
+                                    href='mailto:info@distromatch.tech'
                                     className='hover:text-primary hover:underline'
                                 >
-                                    tugasinhelp@gmail.com
+                                    info@distromatch.tech
                                 </a>
                             </div>
                         </div>
@@ -56,7 +56,7 @@ export default function Footer() {
             </div>
 
             <div className='text-grey-2 flex justify-center border-t px-6 py-4 text-xs'>
-                © {currentYear} TugasIn. {t('footer.allRightsReserved')}
+                © {currentYear} Distromatch. {t('footer.allRightsReserved')}
             </div>
         </footer>
     );
