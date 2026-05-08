@@ -1,8 +1,10 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { useAuthStore } from '@/stores/auth-store';
+import { User } from '@/types';
 
 interface RefreshResponse {
     accessToken: string;
+    user: User;
 }
 
 const instance: AxiosInstance = axios.create({
@@ -86,10 +88,11 @@ instance.interceptors.response.use(
             );
 
             const newToken = res.data.accessToken;
+            const user = res.data.user;
 
             useAuthStore.getState().login({
                 accessToken: newToken,
-                user: useAuthStore.getState().user!,
+                user: user,
             });
 
             processQueue(null, newToken);

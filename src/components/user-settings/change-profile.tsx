@@ -200,9 +200,7 @@ export default function ChangeProfilePicture() {
                         tabIndex={0}
                     >
                         <Gallery className='size-24' />
-                        <span className='text-muted-foreground py-3 text-sm'>
-                            Click to upload image or drag and drop
-                        </span>
+                        <span className='py-3 text-sm'>Click to upload image or drag and drop</span>
                     </div>
                 ) : (
                     <>

@@ -72,7 +72,7 @@
     /* default border */
     --color-border: var(--stroke);
     /* default placeholder */
-    --color-placeholder: var(--grey-2);
+    --color-placeholder: var(--grey-1);
     /* default shadow */
     --shadow-default:
         0 1px 3px oklch(from var(--grey-2) l c h / 0.2),

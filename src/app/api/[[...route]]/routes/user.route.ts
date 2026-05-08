@@ -3,6 +3,7 @@ import {
     adminUpdateUser,
     changeProfilePhoto,
     createUserByAdmin,
+    getDashboardData,
     getMe,
     getUsers,
     removeProfilePhoto,
@@ -20,5 +21,6 @@ users.delete('/', protect, removeProfilePhoto);
 users.get('/list', protect, admin, getUsers);
 users.post('/', protect, admin, createUserByAdmin);
 users.patch('/:id', protect, admin, adminUpdateUser);
+users.get('/dashboard', protect, admin, getDashboardData);
 
 export default users;

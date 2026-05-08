@@ -137,7 +137,7 @@ export default function ResultListPage() {
     }
 
     return (
-        <main className='space-y-6 p-6 md:px-12 lg:px-20 lg:py-12'>
+        <main className='space-y-6'>
             <h1 className='text-2xl font-bold'>Your DSS Results</h1>
             <Table>
                 <TableHeader>
@@ -162,12 +162,10 @@ export default function ResultListPage() {
                                                 </Link>
                                             </Button>
                                         </TooltipTrigger>
-
                                         <TooltipContent>
                                             <p>View Result</p>
                                         </TooltipContent>
                                     </Tooltip>
-
                                     <Tooltip>
                                         <TooltipTrigger asChild>
                                             <div className='inline-block'>
@@ -189,7 +187,6 @@ export default function ResultListPage() {
                     ))}
                 </TableBody>
             </Table>
-
             <div className='flex flex-wrap items-center justify-center gap-2'>
                 <Button
                     variant='outline'
@@ -207,7 +204,6 @@ export default function ResultListPage() {
                         <span>...</span>
                     </>
                 )}
-
                 {getPages().map((p) => (
                     <Button
                         key={p}
@@ -217,7 +213,6 @@ export default function ResultListPage() {
                         {p}
                     </Button>
                 ))}
-
                 {meta.totalPages - page > 2 && (
                     <>
                         <span>...</span>
@@ -226,7 +221,6 @@ export default function ResultListPage() {
                         </Button>
                     </>
                 )}
-
                 <Button
                     variant='outline'
                     disabled={page === meta.totalPages}

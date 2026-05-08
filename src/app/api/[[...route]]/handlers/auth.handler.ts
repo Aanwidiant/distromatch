@@ -534,6 +534,7 @@ export async function refreshToken(c: Context) {
             success: true,
             message: 'Token refreshed successfully',
             accessToken: newAccessToken,
+            user: newPayload,
         });
     } catch {
         return c.json(

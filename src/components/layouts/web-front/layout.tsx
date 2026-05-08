@@ -7,7 +7,7 @@ export default function WebFrontLayout({ children }: { children: React.ReactNode
     return (
         <div className='container mx-auto'>
             <NavLayout>
-                <main>{children}</main>
+                <main className='p-6 md:p-16'>{children}</main>
                 <Footer />
                 <BackTop />
             </NavLayout>

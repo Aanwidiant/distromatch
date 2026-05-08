@@ -95,7 +95,7 @@ export default function ProfileModal() {
                             />
                             <div>
                                 <p className='text-sm font-semibold'>Profile Picture</p>
-                                <p className='text-muted-foreground text-xs'>PNG, JPG under 4MB</p>
+                                <p className='text-xs'>PNG, JPG under 4MB</p>
                             </div>
                         </div>
                         <div className='flex flex-wrap gap-2 sm:justify-end'>

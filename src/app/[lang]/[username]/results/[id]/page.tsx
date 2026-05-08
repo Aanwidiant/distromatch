@@ -37,7 +37,7 @@ export default async function ResultPage({ params }: Props) {
     }
 
     return (
-        <main className='space-y-12 p-6 md:px-12 lg:px-20 lg:py-12'>
+        <main className='space-y-12'>
             <TopResult runId={id} />
             <p>Detail Perhitugan</p>
             <Tabs defaultValue='survey' className='space-y-3'>

@@ -13,6 +13,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { Google } from '../icons';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '../ui/input-group';
 import { Eye, EyeOff } from 'lucide-react';
+import { Link } from '@/lib/i18n/navigation';
 
 interface AuthDialogProps {
     open: boolean;
@@ -28,6 +29,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const closeModal = () => onOpenChange(false);
 
     const [loading, setLoading] = useState(false);
 
@@ -184,70 +186,126 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
         },
     });
 
+    const isLogin = mode === 'login';
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className='sm:max-w-md'>
-                <DialogHeader>
-                    <DialogTitle>{mode === 'login' ? 'Login' : 'Register'}</DialogTitle>{' '}
-                </DialogHeader>
-
-                {mode === 'login' && (
-                    <Button variant='outline' onClick={() => loginGoogle()} disabled={loading}>
-                        <Google className='size-5' />
-                        {loading ? 'Loading...' : 'Login with Google'}
-                    </Button>
-                )}
-                <form onSubmit={handleSubmit} className='space-y-4'>
-                    {mode === 'register' && (
-                        <Input
-                            placeholder='Name'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
+            <DialogContent className='sm:max-w-3xl'>
+                <div className='grid gap-6 md:grid-cols-2'>
+                    {!isLogin && (
+                        <div className='bg-accent-1 text-secondary hidden items-center justify-center rounded-xl p-6 text-sm md:flex'>
+                            Ilustrasi placeholder (sign up)
+                        </div>
                     )}
-                    <Input
-                        type='email'
-                        placeholder='Email'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <InputGroup>
-                        <InputGroupInput
-                            placeholder='Password'
-                            type={showPassword ? 'text' : 'password'}
-                            id='password'
-                            name='password'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <InputGroupAddon align='inline-end' className='pr-4'>
+                    <div className='space-y-5'>
+                        <DialogHeader>
+                            <DialogTitle>{isLogin ? 'Sign in' : 'Sign up'}</DialogTitle>
+                            <p className='text-grey-2 text-sm'>
+                                {isLogin
+                                    ? 'Selamat datang kembali, lanjutkan ke Distromatch.'
+                                    : 'Buat akun untuk menyimpan hasil rekomendasi.'}
+                            </p>
+                        </DialogHeader>
+                        {isLogin && (
+                            <>
+                                <Button
+                                    variant='outline'
+                                    onClick={() => loginGoogle()}
+                                    disabled={loading}
+                                    className='w-full'
+                                >
+                                    <Google className='size-5' />
+                                    {loading ? 'Loading...' : 'Sign in with Google'}
+                                </Button>
+
+                                <div className='flex items-center gap-3'>
+                                    <span className='bg-stroke h-px w-full' />
+                                    <span className='text-grey-2 text-xs whitespace-nowrap'>
+                                        atau sign in dengan email
+                                    </span>
+                                    <span className='bg-stroke h-px w-full' />
+                                </div>
+                            </>
+                        )}
+                        <form onSubmit={handleSubmit} className='space-y-4'>
+                            {mode === 'register' && (
+                                <Input
+                                    placeholder='Name'
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            )}
+                            <Input
+                                type='email'
+                                placeholder='Email'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <InputGroup>
+                                <InputGroupInput
+                                    placeholder='Password'
+                                    type={showPassword ? 'text' : 'password'}
+                                    id='password'
+                                    name='password'
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <InputGroupAddon align='inline-end' className='pr-4'>
+                                    <button
+                                        type='button'
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        aria-label={
+                                            showPassword ? 'Hide password' : 'Show password'
+                                        }
+                                    >
+                                        {showPassword ? (
+                                            <EyeOff className='hover:stroke-primary size-5' />
+                                        ) : (
+                                            <Eye className='hover:stroke-primary size-5' />
+                                        )}
+                                    </button>
+                                </InputGroupAddon>
+                            </InputGroup>
+                            <Button type='submit' disabled={loading} className='w-full'>
+                                {loading ? 'Loading...' : isLogin ? 'Sign in' : 'Sign up'}
+                            </Button>
+                            <p className='text-grey-2 text-xs'>
+                                Dengan {isLogin ? 'sign in' : 'sign up'}, Anda sepakat menyetujui{' '}
+                                <Link
+                                    href='/privacy-policy'
+                                    className='text-primary'
+                                    onClick={closeModal}
+                                >
+                                    Privacy Policy
+                                </Link>{' '}
+                                dan{' '}
+                                <Link
+                                    href='/terms-conditions'
+                                    className='text-primary'
+                                    onClick={closeModal}
+                                >
+                                    Terms & Conditions
+                                </Link>
+                                .
+                            </p>
+                        </form>
+                        <p className='text-center text-sm'>
+                            {isLogin ? 'Belum punya akun?' : 'Sudah punya akun?'}{' '}
                             <button
                                 type='button'
-                                onClick={() => setShowPassword(!showPassword)}
-                                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                onClick={() => setMode(isLogin ? 'register' : 'login')}
+                                className='text-primary font-medium'
                             >
-                                {showPassword ? (
-                                    <EyeOff className='hover:stroke-primary size-5' />
-                                ) : (
-                                    <Eye className='hover:stroke-primary size-5' />
-                                )}
+                                {isLogin ? 'Sign up' : 'Sign in'}
                             </button>
-                        </InputGroupAddon>
-                    </InputGroup>
-                    <Button type='submit' disabled={loading} className='w-full'>
-                        {loading ? 'Loading...' : mode === 'login' ? 'Login' : 'Register'}
-                    </Button>
-                </form>
-                <p className='text-muted-foreground text-center text-sm'>
-                    {mode === 'login' ? 'Belum punya akun?' : 'Sudah punya akun?'}{' '}
-                    <button
-                        type='button'
-                        onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
-                        className='text-primary font-medium'
-                    >
-                        {mode === 'login' ? 'Register' : 'Login'}
-                    </button>
-                </p>
+                        </p>
+                    </div>
+                    {isLogin && (
+                        <div className='bg-accent-1 text-secondary hidden items-center justify-center rounded-xl p-6 text-sm md:flex'>
+                            Ilustrasi placeholder (sign in)
+                        </div>
+                    )}
+                </div>
             </DialogContent>
         </Dialog>
     );

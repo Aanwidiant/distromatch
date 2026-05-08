@@ -35,10 +35,10 @@ export function ContactSection() {
     };
 
     return (
-        <section className='space-y-6 border-t pt-12'>
+        <section className='mx-auto max-w-3xl space-y-6'>
             <div className='space-y-2'>
                 <h2 className='text-2xl font-semibold'>Kirim Pesan</h2>
-                <p className='text-muted-foreground text-sm'>
+                <p className='text-sm'>
                     Punya pertanyaan, saran, atau feedback? Kirimkan pesanmu di sini.
                 </p>
             </div>
@@ -59,7 +59,7 @@ export function ContactSection() {
                 {/* PHONE (OPTIONAL) */}
                 <div className='space-y-2 md:col-span-2'>
                     <label className='text-sm font-medium'>
-                        Nomor HP <span className='text-muted-foreground'>(opsional)</span>
+                        Nomor HP <span>(opsional)</span>
                     </label>
                     <Input name='phone' placeholder='+62 812 xxxx xxxx' />
                 </div>

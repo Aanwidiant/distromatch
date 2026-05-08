@@ -83,7 +83,7 @@ const sections: Section[] = [
 
 export default function PrivacyPolicyPage() {
     return (
-        <main className='space-y-16 p-6 md:px-12 lg:px-20 lg:py-12'>
+        <main className='space-y-16'>
             <div className='mx-auto flex w-full max-w-7xl flex-col justify-center gap-8 md:gap-10 lg:gap-12'>
                 <h1 className='block py-8 text-center text-3xl font-bold lg:text-5xl'>
                     Kebijakan Privasi

@@ -6,24 +6,31 @@ import { CATEGORY_ICONS } from '@/components/quiz/category-icons';
 export default function QuizPage() {
     return (
         <>
-            <main className='flex min-h-screen flex-col gap-12 p-6 md:flex-row md:px-12 lg:px-20 lg:py-12'>
+            <main className='flex min-h-screen flex-col gap-12 md:flex-row'>
                 <div className='w-full space-y-9 md:w-1/2'>
-                    <div className='space-y-12'>
-                        <h1 className='text-4xl leading-tight font-bold md:text-5xl'>
-                            Temukan distro Linux <span className='text-grey-3'>yang tepat</span>{' '}
-                            untukmu.
+                    <div className='space-y-8'>
+                        <span className='bg-accent-1 text-secondary inline-flex w-fit rounded-full px-3 py-1 text-xs font-semibold'>
+                            Survey → Bobot → TOPSIS → Bayesian → Penalti → Ranking
+                        </span>
+
+                        <h1 className='text-foreground text-4xl leading-tight font-bold md:text-5xl'>
+                            Temukan distro Linux{' '}
+                            <span className='text-primary'>paling selaras</span> dengan kebutuhanmu.
                         </h1>
-                        <QuizLandingActions />
+
                         <p className='text-grey-2 text-lg leading-relaxed'>
-                            Jawab 12 pertanyaan singkat tentang preferensimu. Sistem kami akan
-                            menganalisis dan merekomendasikan distro terbaik berdasarkan kebutuhan
-                            nyata kamu.
+                            Jawab 12 pertanyaan singkat. Sistem kami mengubah jawabanmu menjadi
+                            bobot, menghitung solusi ideal, menstabilkan skor dengan Bayesian, lalu
+                            memberi ranking akhir yang transparan.
                         </p>
+
+                        <QuizLandingActions />
                     </div>
+
                     <div className='grid grid-cols-3 gap-3 md:gap-4'>
                         {[
                             { value: '12', label: 'Pertanyaan' },
-                            { value: '6', label: 'Kriteria' },
+                            { value: '6', label: 'Dimensi' },
                             { value: '3', label: 'Menit' },
                         ].map((stat) => (
                             <div
@@ -39,6 +46,7 @@ export default function QuizPage() {
                             </div>
                         ))}
                     </div>
+
                     <div className='flex flex-wrap gap-3'>
                         {CATEGORIES.map((cat) => {
                             const Icon = CATEGORY_ICONS[cat.id as keyof typeof CATEGORY_ICONS];
@@ -54,8 +62,14 @@ export default function QuizPage() {
                         })}
                     </div>
                 </div>
-                <div className='bg-accent-1 hidden h-[calc(100vh-10rem)] w-1/2 rounded-2xl md:block'></div>
+
+                <div className='bg-primary/10 border-stroke hidden h-[calc(100vh-10rem)] w-1/2 rounded-2xl border p-6 md:block'>
+                    <div className='bg-accent-2/50 text-secondary flex h-full items-center justify-center rounded-xl text-sm font-medium'>
+                        Visualisasi proses perhitungan
+                    </div>
+                </div>
             </main>
+
             <QuizAuthModal />
         </>
     );

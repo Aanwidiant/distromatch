@@ -11,8 +11,8 @@ export const Logo = (props: SVGProps<SVGSVGElement>) => (
     >
         <g clipPath='url(#clip0_472_249)'>
             <path
-                fill-rule='evenodd'
-                clip-rule='evenodd'
+                fillRule='evenodd'
+                clipRule='evenodd'
                 d='M251.188 98.0471V200.141C251.188 228.314 228.315 251.188 200.141 251.188H98.047C69.874 251.188 47 228.315 47 200.141V98.0471C47 69.8741 69.873 47 98.047 47H200.141C228.314 47 251.188 69.8731 251.188 98.0471Z'
                 fill='url(#paint0_linear_472_249)'
             />

@@ -50,7 +50,7 @@ export default function ConfirmDeletePhoto() {
                         Delete Profile Picture?
                     </DialogTitle>
                 </DialogHeader>
-                <p className='text-muted-foreground text-sm'>
+                <p className='text-sm'>
                     Are you sure you want to delete your profile picture? This action cannot be
                     undone.
                 </p>
