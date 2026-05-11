@@ -11,8 +11,7 @@ export default function QuizLandingActions() {
     const params = useParams();
     const lang = params.lang as string;
 
-    const { accessToken } = useAuthStore();
-    const isLoggedIn = !!accessToken;
+    const { isAuthenticated } = useAuthStore();
 
     const {
         answers,
@@ -28,7 +27,7 @@ export default function QuizLandingActions() {
     const attemptPath = `/${lang}/quiz/attempt`;
 
     const handleStart = () => {
-        if (!isLoggedIn) {
+        if (!isAuthenticated) {
             setAuthMode('login');
             setAuthRedirectTo(attemptPath);
             setAuthOpen(true);

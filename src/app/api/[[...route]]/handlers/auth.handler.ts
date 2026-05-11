@@ -88,7 +88,7 @@ export async function register(c: Context) {
 
         const verifyToken = await generateToken(payload);
 
-        const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${verifyToken}`;
+        const verifyLink = `${process.env.FRONTEND_URL}/verify?token=${verifyToken}&type=email`;
 
         await sendEmail({
             to: newUser.email,
@@ -137,7 +137,7 @@ export async function resendVerification(c: Context) {
         exp: Math.floor(Date.now() / 1000) + 60 * 60,
     });
 
-    const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${token}`;
+    const verifyLink = `${process.env.FRONTEND_URL}/verify?token=${token}&type=email`;
 
     await sendEmail({
         to: user.email,
@@ -273,6 +273,16 @@ export async function loginBySystem(c: Context) {
             );
         }
 
+        if (user.status !== 'ACTIVE') {
+            return c.json(
+                {
+                    success: false,
+                    message: `Your account is currently ${user.status} and cannot access the system. Please contact the administrator.`,
+                },
+                401
+            );
+        }
+
         const isValidPassword = await comparePassword(password, user.password);
 
         if (!isValidPassword) {
@@ -312,10 +322,17 @@ export async function loginBySystem(c: Context) {
             path: '/',
         });
 
+        setCookie(c, 'access_token', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Lax',
+            path: '/',
+            maxAge: 60 * 15,
+        });
+
         return c.json({
             success: true,
             message: 'Login successful',
-            accessToken,
             user: payload,
         });
     } catch (error) {
@@ -415,10 +432,17 @@ export async function loginByGoogle(c: Context) {
                 maxAge: 60 * 60 * 24 * 7,
             });
 
+            setCookie(c, 'access_token', accessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Lax',
+                path: '/',
+                maxAge: 60 * 15,
+            });
+
             return c.json({
                 success: true,
                 message: 'User registered & logged in with Google',
-                accessToken,
                 user: payload,
             });
         }
@@ -428,6 +452,16 @@ export async function loginByGoogle(c: Context) {
             email: user.email,
             role: user.role ?? 'USER',
         };
+
+        if (user.status !== 'ACTIVE') {
+            return c.json(
+                {
+                    success: false,
+                    message: `Your account is currently ${user.status} and cannot access the system. Please contact the administrator.`,
+                },
+                401
+            );
+        }
 
         const accessToken = await generateAccessToken(payload);
         const refreshToken = await generateRefreshToken(payload);
@@ -444,10 +478,17 @@ export async function loginByGoogle(c: Context) {
             maxAge: 60 * 60 * 24 * 7,
         });
 
+        setCookie(c, 'access_token', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Lax',
+            path: '/',
+            maxAge: 60 * 15,
+        });
+
         return c.json({
             success: true,
             message: 'Login with Google successful',
-            accessToken,
             user: payload,
         });
     } catch (error) {
@@ -530,10 +571,17 @@ export async function refreshToken(c: Context) {
             path: '/',
         });
 
+        setCookie(c, 'access_token', newAccessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Lax',
+            path: '/',
+            maxAge: 60 * 15,
+        });
+
         return c.json({
             success: true,
             message: 'Token refreshed successfully',
-            accessToken: newAccessToken,
             user: newPayload,
         });
     } catch {
@@ -806,7 +854,7 @@ export async function requestChangeEmail(c: Context) {
             exp: Math.floor(Date.now() / 1000) + 60 * 60,
         });
 
-        const verifyLink = `${process.env.FRONTEND_URL}/verify/change-email?token=${token}`;
+        const verifyLink = `${process.env.FRONTEND_URL}/verify?token=${token}&type=change-email`;
 
         await sendEmail({
             to: newEmail,

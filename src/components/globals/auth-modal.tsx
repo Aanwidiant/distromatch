@@ -62,10 +62,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                 return;
             }
 
-            login({
-                accessToken: data.accessToken,
-                user: data.user,
-            });
+            login(data.user);
 
             const me = await Fetch.GET<UserProfile>('/users');
 
@@ -156,10 +153,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                     return;
                 }
 
-                login({
-                    accessToken: response.accessToken,
-                    user: response.user,
-                });
+                login(response.user);
 
                 const me = await Fetch.GET<UserProfile>('/users');
 
@@ -269,25 +263,27 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                             <Button type='submit' disabled={loading} className='w-full'>
                                 {loading ? 'Loading...' : isLogin ? 'Sign in' : 'Sign up'}
                             </Button>
-                            <p className='text-grey-2 text-xs'>
-                                Dengan {isLogin ? 'sign in' : 'sign up'}, Anda sepakat menyetujui{' '}
-                                <Link
-                                    href='/privacy-policy'
-                                    className='text-primary'
-                                    onClick={closeModal}
-                                >
-                                    Privacy Policy
-                                </Link>{' '}
-                                dan{' '}
-                                <Link
-                                    href='/terms-conditions'
-                                    className='text-primary'
-                                    onClick={closeModal}
-                                >
-                                    Terms & Conditions
-                                </Link>
-                                .
-                            </p>
+                            {mode === 'register' && (
+                                <p className='text-grey-2 text-xs'>
+                                    Dengan sign up, Anda sepakat menyetujui{' '}
+                                    <Link
+                                        href='/privacy-policy'
+                                        className='text-primary'
+                                        onClick={closeModal}
+                                    >
+                                        Privacy Policy
+                                    </Link>{' '}
+                                    dan{' '}
+                                    <Link
+                                        href='/terms-conditions'
+                                        className='text-primary'
+                                        onClick={closeModal}
+                                    >
+                                        Terms & Conditions
+                                    </Link>
+                                    .
+                                </p>
+                            )}
                         </form>
                         <p className='text-center text-sm'>
                             {isLogin ? 'Belum punya akun?' : 'Sudah punya akun?'}{' '}

@@ -7,13 +7,13 @@ import { useRouter } from 'next/navigation';
 
 export default function QuizAuthModal() {
     const router = useRouter();
-    const { accessToken } = useAuthStore();
+    const { isAuthenticated } = useAuthStore();
     const { authOpen, authMode, authRedirectTo, setAuthOpen, setAuthMode, setAuthRedirectTo } =
         useQuizStore();
 
     const handleAuthOpenChange = (open: boolean) => {
         setAuthOpen(open);
-        if (!open && !!accessToken && authRedirectTo) {
+        if (!open && isAuthenticated && authRedirectTo) {
             const redirect = authRedirectTo;
             setAuthRedirectTo(null);
             router.push(redirect);

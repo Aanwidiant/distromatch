@@ -1,6 +1,7 @@
 import { createMiddleware } from 'hono/factory';
 import { verifyAccessToken } from '../lib/jwt';
 import { redis } from '../lib/redis';
+import { getCookie } from 'hono/cookie';
 
 type AuthUser = {
     id: string;
@@ -10,19 +11,17 @@ type AuthUser = {
 
 export const protect = createMiddleware(async (c, next) => {
     try {
-        const authHeader = c.req.header('Authorization');
+        const token = getCookie(c, 'access_token');
 
-        if (!authHeader?.startsWith('Bearer ')) {
+        if (!token) {
             return c.json(
                 {
                     success: false,
-                    message: 'Unauthorized',
+                    message: 'Unauthorized: No token found',
                 },
                 401
             );
         }
-
-        const token = authHeader.split(' ')[1];
 
         const payload = await verifyAccessToken(token);
 

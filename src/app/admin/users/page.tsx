@@ -109,7 +109,7 @@ export default function AdminUsersPage() {
     };
 
     return (
-        <main>
+        <main className='bg-bg-2'>
             <Header icon={<Users className='size-6' />} title='User' />
             <div className='h-[calc(100vh-4.5rem)] overflow-y-auto'>
                 <div className='space-y-6 p-6'>

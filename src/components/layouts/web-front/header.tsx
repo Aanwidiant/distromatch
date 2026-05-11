@@ -16,8 +16,7 @@ interface HeaderProps {
 }
 
 export default function Header({ isSidebarOpen, toggleSidebar }: HeaderProps) {
-    const { accessToken } = useAuthStore();
-    const isAuthenticated = !!accessToken;
+    const { isAuthenticated } = useAuthStore();
 
     return (
         <header className='bg-background/80 sticky top-0 z-20 px-6 shadow-xs backdrop-blur lg:px-18'>

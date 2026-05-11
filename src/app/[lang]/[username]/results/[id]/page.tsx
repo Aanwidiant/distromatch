@@ -39,17 +39,18 @@ export default async function ResultPage({ params }: Props) {
     return (
         <main className='space-y-12'>
             <TopResult runId={id} />
-            <p>Detail Perhitugan</p>
             <Tabs defaultValue='survey' className='space-y-3'>
-                <TabsList variant='line'>
-                    <TabsTrigger value='survey'>Survey Result</TabsTrigger>
-                    <TabsTrigger value='distro'>Distro Data</TabsTrigger>
-                    <TabsTrigger value='normalize'>Vector Normalization</TabsTrigger>
-                    <TabsTrigger value='norm-weight'>Weighted Normalized</TabsTrigger>
-                    <TabsTrigger value='topsis'>Topsis Calculation</TabsTrigger>
-                    <TabsTrigger value='bayesian'>Bayesian Calculation</TabsTrigger>
-                    <TabsTrigger value='penalty'>Penalty Calculation & Rank</TabsTrigger>
-                </TabsList>
+                <div className='overflow-x-auto overflow-y-hidden'>
+                    <TabsList variant='line' className='flex h-fit w-max min-w-full gap-2'>
+                        <TabsTrigger value='survey'>Survey Result</TabsTrigger>
+                        <TabsTrigger value='distro'>Distro Data</TabsTrigger>
+                        <TabsTrigger value='normalize'>Vector Normalization</TabsTrigger>
+                        <TabsTrigger value='norm-weight'>Weighted Normalized</TabsTrigger>
+                        <TabsTrigger value='topsis'>TOPSIS Calculation</TabsTrigger>
+                        <TabsTrigger value='bayesian'>Bayesian Calculation</TabsTrigger>
+                        <TabsTrigger value='penalty'>Penalty & Rank</TabsTrigger>
+                    </TabsList>
+                </div>
                 <TabsContent value='survey'>
                     <SurveyResult runId={id} />
                 </TabsContent>

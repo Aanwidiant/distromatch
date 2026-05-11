@@ -448,6 +448,80 @@ export async function runDssPipelineTest(ctx: Context) {
     });
 }
 
+export async function getDssRunListAdmin(c: Context) {
+    try {
+        const { page, limit, sort_by, sort_order, user_id } = c.req.query();
+
+        const { currentPage, pageSize, offset } = getPagination(page, limit);
+
+        const authUser = c.get('user');
+
+        if (authUser.role !== 'ADMIN') {
+            return c.json(
+                {
+                    success: false,
+                    message: 'Forbidden',
+                },
+                403
+            );
+        }
+
+        const sortColumnMap = {
+            created_at: dss_runs.created_at,
+            name: users.name,
+            username: users.username,
+        } as const;
+
+        const orderColumn =
+            sortColumnMap[sort_by as keyof typeof sortColumnMap] ?? dss_runs.created_at;
+
+        const orderFn = sort_order === 'asc' ? asc(orderColumn) : desc(orderColumn);
+
+        const whereClause = user_id ? eq(dss_runs.user_id, user_id) : undefined;
+
+        const totalResult = await db
+            .select({
+                count: sql<number>`count(*)`,
+            })
+            .from(dss_runs)
+            .where(whereClause);
+
+        const total = Number(totalResult[0]?.count || 0);
+
+        const data = await db
+            .select({
+                id: dss_runs.id,
+                created_at: dss_runs.created_at,
+                user: {
+                    id: users.id,
+                    name: users.name,
+                    username: users.username,
+                    photo: users.photo,
+                },
+            })
+            .from(dss_runs)
+            .innerJoin(users, eq(dss_runs.user_id, users.id))
+            .where(whereClause)
+            .limit(pageSize)
+            .offset(offset)
+            .orderBy(orderFn);
+
+        return c.json({
+            success: true,
+            data,
+            meta: buildPaginationMeta(currentPage, pageSize, total),
+        });
+    } catch (error) {
+        return c.json(
+            {
+                success: false,
+                message: error instanceof Error ? error.message : 'Internal server error',
+            },
+            500
+        );
+    }
+}
+
 export async function getDssRunList(c: Context) {
     try {
         const { page, limit, sort_by, sort_order } = c.req.query();
@@ -533,6 +607,9 @@ export async function getDssRunMeta(c: Context) {
                 id: dss_runs.id,
                 created_at: dss_runs.created_at,
                 username: users.username,
+                name: users.name,
+                email: users.email,
+                photo: users.photo,
             })
             .from(dss_runs)
             .innerJoin(users, eq(dss_runs.user_id, users.id))

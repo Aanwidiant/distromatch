@@ -4,6 +4,7 @@ import {
     getDenominatorData,
     getDistroMatrix,
     getDssRunList,
+    getDssRunListAdmin,
     getDssRunMeta,
     getDssRunRecommendations,
     getIdealSolution,
@@ -15,11 +16,12 @@ import {
     handleDeleteDssRun,
     runDssPipelineTest,
 } from '../handlers';
-import { protect } from '../middlewares';
+import { admin, protect } from '../middlewares';
 
 const dss = new Hono();
 
 dss.post('/', protect, runDssPipelineTest);
+dss.get('/list', protect, admin, getDssRunListAdmin);
 dss.get('/list/:username', protect, getDssRunList);
 dss.get('/distro', getDistroMatrix);
 dss.get('/:id/meta/:username', getDssRunMeta);

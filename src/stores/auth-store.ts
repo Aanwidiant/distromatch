@@ -2,11 +2,11 @@ import { User, UserProfile } from '@/types';
 import { create } from 'zustand';
 
 type AuthState = {
-    accessToken: string | null;
+    isAuthenticated: boolean;
     user: User | null;
     profile: UserProfile | null;
 
-    login: (data: { accessToken: string; user: User }) => void;
+    login: (user: User) => void;
     setProfile: (profile: UserProfile) => void;
     updateProfile: (data: Partial<UserProfile>) => void;
     hydrateProfile: () => void;
@@ -14,13 +14,13 @@ type AuthState = {
 };
 
 export const useAuthStore = create<AuthState>((set, get) => ({
-    accessToken: null,
+    isAuthenticated: false,
     user: null,
     profile: null,
 
-    login: ({ accessToken, user }) => {
+    login: (user) => {
         set({
-            accessToken,
+            isAuthenticated: true,
             user,
         });
     },
@@ -58,7 +58,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
     logout: () => {
         set({
-            accessToken: null,
+            isAuthenticated: false,
             user: null,
             profile: null,
         });

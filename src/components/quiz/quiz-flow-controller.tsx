@@ -23,8 +23,7 @@ export default function QuizFlowController() {
         setAuthRedirectTo,
     } = useQuizStore();
 
-    const { accessToken, profile } = useAuthStore();
-    const isLoggedIn = !!accessToken;
+    const { isAuthenticated, profile } = useAuthStore();
 
     const category = CATEGORIES[currentStep];
     const answeredByCategory = CATEGORIES.map((cat) =>
@@ -60,7 +59,7 @@ export default function QuizFlowController() {
     };
 
     const handleSubmit = async () => {
-        if (!isLoggedIn) {
+        if (!isAuthenticated) {
             setAuthMode('login');
             setAuthRedirectTo(null);
             setAuthOpen(true);

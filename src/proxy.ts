@@ -13,7 +13,10 @@ export default function middleware(req: NextRequest) {
     }
 
     // 🔹 2. Exclude verify email (tanpa i18n)
-    if (pathname.startsWith('/verify/email')) {
+    if (pathname.startsWith('/verify')) {
+        return NextResponse.next();
+    }
+    if (pathname.startsWith('/reset-password')) {
         return NextResponse.next();
     }
 

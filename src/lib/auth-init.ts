@@ -12,10 +12,7 @@ export const initAuth = async () => {
             };
         }>('/auth/token/refresh');
 
-        useAuthStore.getState().login({
-            accessToken: data.accessToken,
-            user: data.user,
-        });
+        useAuthStore.getState().login(data.user);
     } catch {
         // silent (user memang belum login)
     }

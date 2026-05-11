@@ -374,10 +374,7 @@ export async function getUsers(c: Context) {
 
 export async function getDashboardData(c: Context) {
     try {
-        // =========================
         // STATS
-        // =========================
-
         const [
             totalUsersResult,
             activeUsersResult,
@@ -387,22 +384,14 @@ export async function getDashboardData(c: Context) {
             totalRunsResult,
         ] = await Promise.all([
             db.select({ count: count() }).from(users),
-
             db.select({ count: count() }).from(users).where(eq(users.status, 'ACTIVE')),
-
             db.select({ count: count() }).from(users).where(eq(users.email_verified, true)),
-
             db.select({ count: count() }).from(distros),
-
             db.select({ count: count() }).from(distros).where(eq(distros.status, 'ACTIVE')),
-
             db.select({ count: count() }).from(dss_runs),
         ]);
 
-        // =========================
         // TOP RECOMMENDED DISTROS
-        // =========================
-
         const topDistros = await db
             .select({
                 distro_id: distros.id,
@@ -416,10 +405,7 @@ export async function getDashboardData(c: Context) {
             .orderBy(desc(count()))
             .limit(5);
 
-        // =========================
         // RECENT USERS
-        // =========================
-
         const recentUsers = await db
             .select({
                 id: users.id,
@@ -433,10 +419,7 @@ export async function getDashboardData(c: Context) {
             .orderBy(desc(users.created_at))
             .limit(5);
 
-        // =========================
         // RECENT DSS RUNS
-        // =========================
-
         const recentRuns = await db
             .select({
                 id: dss_runs.id,
@@ -449,10 +432,7 @@ export async function getDashboardData(c: Context) {
             .orderBy(desc(dss_runs.created_at))
             .limit(5);
 
-        // =========================
         // RUNS TREND (LAST 7 DAYS)
-        // =========================
-
         const runsTrend = await db
             .select({
                 date: sql<string>`
@@ -481,7 +461,6 @@ export async function getDashboardData(c: Context) {
 
                     totalRuns: totalRunsResult[0]?.count ?? 0,
                 },
-
                 topDistros,
                 recentUsers,
                 recentRuns,
@@ -490,7 +469,6 @@ export async function getDashboardData(c: Context) {
         });
     } catch (error) {
         console.error(error);
-
         return c.json(
             {
                 success: false,

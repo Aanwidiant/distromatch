@@ -7,6 +7,9 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
+import { BlockMath } from 'react-katex';
+import { FORMULAS } from '@/lib/formulas';
+import 'katex/dist/katex.min.css';
 
 type SurveyQuestions = {
     q1_ux: number;
@@ -129,31 +132,95 @@ export default async function SurveyResult({ runId }: Props) {
     ];
 
     return (
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHead>QUESTIONS</TableHead>
-                    <TableHead>ANSWER POINT</TableHead>
-                    <TableHead>MEAN</TableHead>
-                    <TableHead className='text-right'>WEIGHT</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {rows.map((row, i) => (
-                    <TableRow key={i}>
-                        <TableCell className='font-medium'>{row.label}</TableCell>
-                        <TableCell>{row.answer}</TableCell>
-                        <TableCell>{row.mean ?? ''}</TableCell>
-                        <TableCell className='text-right'>
-                            {row.weight !== undefined
-                                ? typeof row.weight === 'number'
-                                    ? row.weight.toFixed(2)
-                                    : row.weight
-                                : ''}
-                        </TableCell>
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
+        <div className='grid w-full gap-6 lg:grid-cols-3'>
+            <div className='bg-background border-stroke overflow-x-auto rounded-2xl border lg:col-span-2'>
+                <div className='border-stroke border-b p-5'>
+                    <h2 className='text-xl font-semibold'>Survey Results</h2>
+                    <p className='text-muted-foreground text-sm'>
+                        User preference scoring and calculated weights.
+                    </p>
+                </div>
+
+                <Table>
+                    <TableHeader>
+                        <TableRow className='bg-bg-2 hover:bg-bg-2'>
+                            <TableHead className='min-w-55 font-semibold'>Questions</TableHead>
+                            <TableHead className='text-center font-semibold'>Answer</TableHead>
+                            <TableHead className='text-center font-semibold'>Mean</TableHead>
+                            <TableHead className='text-right font-semibold'>Weight</TableHead>
+                        </TableRow>
+                    </TableHeader>
+
+                    <TableBody>
+                        {rows.map((row, i) => (
+                            <TableRow key={i}>
+                                <TableCell className='font-medium'>{row.label}</TableCell>
+
+                                <TableCell className='text-center'>
+                                    <span className='bg-accent-1 inline-flex min-w-8 items-center justify-center rounded-md px-2 py-1 text-sm font-medium'>
+                                        {row.answer}
+                                    </span>
+                                </TableCell>
+
+                                <TableCell className='text-center'>
+                                    {row.mean !== undefined ? (
+                                        <span className='text-muted-foreground font-medium'>
+                                            {row.mean.toFixed(2)}
+                                        </span>
+                                    ) : (
+                                        '-'
+                                    )}
+                                </TableCell>
+
+                                <TableCell className='text-right font-medium'>
+                                    {row.weight !== undefined
+                                        ? typeof row.weight === 'number'
+                                            ? row.weight.toFixed(2)
+                                            : row.weight
+                                        : '-'}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+
+            {/* FORMULA CARD */}
+            <div className='space-y-5'>
+                <div className='bg-background border-stroke rounded-2xl border p-5'>
+                    <h2 className='mb-1 text-xl font-semibold'>Survey Calculation</h2>
+
+                    <p className='text-muted-foreground text-sm'>
+                        Formula used to calculate survey averages and weights.
+                    </p>
+                </div>
+
+                <div className='bg-background border-stroke space-y-6 rounded-2xl border p-5'>
+                    <div className='space-y-2'>
+                        <h3 className='text-base font-semibold'>Average per Dimension</h3>
+
+                        <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
+                            <BlockMath math={FORMULAS.surveyAverages} />
+                        </div>
+                    </div>
+
+                    <div className='space-y-2'>
+                        <h3 className='text-base font-semibold'>Total Score</h3>
+
+                        <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
+                            <BlockMath math={FORMULAS.surveyTotal} />
+                        </div>
+                    </div>
+
+                    <div className='space-y-2'>
+                        <h3 className='text-base font-semibold'>Weight Formula</h3>
+
+                        <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
+                            <BlockMath math={FORMULAS.weights} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }

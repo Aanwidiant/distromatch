@@ -15,12 +15,6 @@ const instance: AxiosInstance = axios.create({
 
 instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
-        const token = useAuthStore.getState().accessToken;
-
-        if (token && config.headers) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-
         if (!(config.data instanceof FormData)) {
             config.headers['Content-Type'] = 'application/json';
         }
@@ -53,25 +47,24 @@ instance.interceptors.response.use(
 
         const status = error.response?.status;
 
+        // Jika bukan 401 atau sudah pernah retry, langsung reject
         if (status !== 401 || originalRequest._retry) {
             return Promise.reject(error);
         }
 
+        // Jangan lakukan refresh jika error terjadi di endpoint login
         if (originalRequest.url?.includes('/login')) {
             return Promise.reject(error);
         }
 
-        const { logout } = useAuthStore.getState();
+        const { logout, login } = useAuthStore.getState();
 
+        // Jika sedang dalam proses refresh, masukkan request ke antrean
         if (isRefreshing) {
             return new Promise((resolve, reject) => {
                 failedQueue.push({
-                    resolve: (token: string) => {
-                        if (originalRequest.headers) {
-                            originalRequest.headers.Authorization = `Bearer ${token}`;
-                        }
-                        resolve(instance(originalRequest));
-                    },
+                    // Resolve tanpa parameter token karena kita pakai Cookie
+                    resolve: () => resolve(instance(originalRequest)),
                     reject,
                 });
             });
@@ -81,32 +74,27 @@ instance.interceptors.response.use(
         isRefreshing = true;
 
         try {
+            // Panggil endpoint refresh
+            // Backend akan otomatis set-cookie access_token baru
             const res = await axios.post<RefreshResponse>(
                 `${process.env.NEXT_PUBLIC_FETCH_URL}/auth/token/refresh`,
                 {},
                 { withCredentials: true }
             );
 
-            const newToken = res.data.accessToken;
             const user = res.data.user;
 
-            useAuthStore.getState().login({
-                accessToken: newToken,
-                user: user,
-            });
+            // Update Zustand: isAuthenticated jadi true & simpan data user terbaru
+            login(user);
 
-            processQueue(null, newToken);
+            // Kosongkan antrean (berhasil)
+            processQueue(null, 'success');
 
-            if (originalRequest.headers) {
-                originalRequest.headers.Authorization = `Bearer ${newToken}`;
-            }
-
+            // Ulangi request asli (otomatis membawa cookie baru dari browser)
             return instance(originalRequest);
         } catch (refreshError) {
             processQueue(refreshError, null);
-
-            logout();
-
+            logout(); // Hapus state user & isAuthenticated di Zustand
             return Promise.reject(refreshError);
         } finally {
             isRefreshing = false;

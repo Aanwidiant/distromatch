@@ -7,6 +7,9 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
+import { BlockMath } from 'react-katex';
+import { FORMULAS } from '@/lib/formulas';
+import 'katex/dist/katex.min.css';
 
 type TopsisRow = {
     distro: string;
@@ -49,25 +52,96 @@ export default async function TopsisResult({ runId }: Props) {
     }
 
     return (
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHead>DISTRO NAME</TableHead>
-                    <TableHead>JARAK SOLUSI IDEAL POSITIF</TableHead>
-                    <TableHead>JARAK SOLUSI IDEAL NEGATIF</TableHead>
-                    <TableHead>NILAI PREFERENSI (CC)</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {rows.map((row) => (
-                    <TableRow key={row.distro}>
-                        <TableCell className='font-medium'>{row.distro}</TableCell>
-                        <TableCell>{row.distance_ideal_positive}</TableCell>
-                        <TableCell>{row.distance_ideal_negative}</TableCell>
-                        <TableCell className='font-semibold'>{row.cc_score}</TableCell>
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
+        <div className='grid gap-6 lg:grid-cols-3'>
+            {/* TABLE SECTION */}
+            <div className='lg:col-span-2'>
+                <div className='bg-background border-stroke overflow-x-auto rounded-2xl border'>
+                    <div className='border-stroke border-b p-5'>
+                        <h2 className='text-xl font-semibold'>TOPSIS Final Result</h2>
+
+                        <p className='text-muted-foreground mt-1 text-sm'>
+                            Final TOPSIS ranking based on distance to positive and negative ideal
+                            solutions.
+                        </p>
+                    </div>
+
+                    <Table>
+                        <TableHeader>
+                            <TableRow className='bg-bg-2 hover:bg-bg-2'>
+                                <TableHead className='min-w-45 font-semibold'>
+                                    Distribution
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    Positive Ideal Distance
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    Negative Ideal Distance
+                                </TableHead>
+
+                                <TableHead className='text-right font-semibold'>
+                                    Preference Score (CC)
+                                </TableHead>
+                            </TableRow>
+                        </TableHeader>
+
+                        <TableBody>
+                            {rows.map((row) => (
+                                <TableRow key={row.distro}>
+                                    <TableCell className='font-medium'>
+                                        <div className='flex items-center gap-3'>{row.distro}</div>
+                                    </TableCell>
+
+                                    <TableCell className='text-center'>
+                                        {row.distance_ideal_positive}
+                                    </TableCell>
+
+                                    <TableCell className='text-center'>
+                                        {row.distance_ideal_negative}
+                                    </TableCell>
+
+                                    <TableCell className='text-right'>
+                                        <span className='bg-primary inline-flex rounded-lg px-3 py-1 text-sm font-semibold text-white'>
+                                            {row.cc_score}
+                                        </span>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+            </div>
+
+            {/* FORMULA SECTION */}
+            <div className='space-y-5'>
+                <div className='bg-background border-stroke rounded-2xl border p-5'>
+                    <h2 className='text-xl font-semibold'>TOPSIS Calculation</h2>
+
+                    <p className='text-muted-foreground mt-1 text-sm'>
+                        Mathematical formulas used to calculate TOPSIS distances and preference
+                        scores.
+                    </p>
+                </div>
+
+                <div className='bg-background border-stroke space-y-6 rounded-2xl border p-5'>
+                    <div className='space-y-3'>
+                        <h3 className='text-base font-semibold'>Ideal Distance Formula</h3>
+
+                        <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
+                            <BlockMath math={FORMULAS.topsisDistances} />
+                        </div>
+                    </div>
+
+                    <div className='space-y-3'>
+                        <h3 className='text-base font-semibold'>Closeness Coefficient Formula</h3>
+
+                        <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
+                            <BlockMath math={FORMULAS.topsisCcScore} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
