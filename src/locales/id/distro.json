@@ -1,0 +1,37 @@
+{
+    "linuxDistributionsExplorer": "Penjelajah Distribusi Linux",
+    "searchAndExploreLinuxDistributions": "Cari dan jelajahi berbagai distribusi Linux.",
+    "searchDistro": "Cari Distro ...",
+    "detail": "Detail",
+    "prev": "Sebelumnya",
+    "next": "Selanjutnya",
+    "failedToLoadData": "Gagal memuat data",
+    "anErrorOccurredWhileLoadingDataPleaseTryAgainLater": "Terjadi kesalahan saat memuat data. Silakan coba lagi nanti.",
+    "reload": "Muat Ulang",
+    "distroNotFound": "Distro tidak ditemukan",
+    "noResultsFoundFor": "Hasil pencarian tidak ditemukan untuk",
+    "noDistroDataAvailable": "Data distro tidak tersedia",
+    "backToList": "Kembali ke daftar",
+    "detailPage": {
+        "about": "Tentang",
+        "ratingBreakdown": "Rincian Penilaian",
+        "links": "Tautan",
+        "documentation": "Dokumentasi",
+        "sources": "Sumber",
+        "officialWebsite": "Situs Web Resmi",
+        "reviews": "{count, plural, other {# ulasan}}",
+        "ratings": {
+            "ux": "Antarmuka (UX)",
+            "performance": "Performa",
+            "stability": "Stabilitas",
+            "features": "Fitur",
+            "support": "Dukungan"
+        },
+        "details": {
+            "basedOn": "Berbasis",
+            "architecture": "Arsitektur",
+            "desktop": "Desktop",
+            "origin": "Asal"
+        }
+    }
+}

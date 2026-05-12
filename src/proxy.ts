@@ -7,12 +7,10 @@ const intlMiddleware = createMiddleware(routing);
 export default function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
 
-    // 🔹 1. Exclude admin (tanpa i18n)
     if (pathname.startsWith('/admin')) {
         return NextResponse.next();
     }
 
-    // 🔹 2. Exclude verify email (tanpa i18n)
     if (pathname.startsWith('/verify')) {
         return NextResponse.next();
     }
@@ -20,16 +18,14 @@ export default function middleware(req: NextRequest) {
         return NextResponse.next();
     }
 
-    // 🔹 3. Auth check
     const hasRefreshToken = req.cookies.get('refresh_token')?.value;
 
     const isProtectedRoute = /^\/[^/]+\/[^/]+\/results/.test(pathname);
 
     if (isProtectedRoute && !hasRefreshToken) {
-        return NextResponse.redirect(new URL('/', req.url));
+        return intlMiddleware(req);
     }
 
-    // 🔹 4. i18n middleware
     return intlMiddleware(req);
 }
 

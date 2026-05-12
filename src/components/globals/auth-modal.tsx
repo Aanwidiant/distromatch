@@ -1,7 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import { useAuthStore } from '@/stores/auth-store';
 import Fetch from '@/lib/fetch';
 import { toast } from 'sonner';
@@ -14,6 +20,7 @@ import { Google } from '../icons';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '../ui/input-group';
 import { Eye, EyeOff } from 'lucide-react';
 import { Link } from '@/lib/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 interface AuthDialogProps {
     open: boolean;
@@ -22,19 +29,33 @@ interface AuthDialogProps {
     setMode: (mode: Mode) => void;
 }
 
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDialogProps) {
     const { login, setProfile } = useAuthStore();
+    const t = useTranslations('common.auth');
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [isSubmitAttempted, setIsSubmitAttempted] = useState(false);
     const closeModal = () => onOpenChange(false);
 
     const [loading, setLoading] = useState(false);
 
+    const showPasswordRuleError =
+        mode === 'register' &&
+        isSubmitAttempted &&
+        password.length > 0 &&
+        !PASSWORD_REGEX.test(password);
+    const showEmailRuleError =
+        mode === 'register' && isSubmitAttempted && email.length > 0 && !EMAIL_REGEX.test(email);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSubmitAttempted(true);
 
         if (mode === 'login') {
             await handleLogin();
@@ -45,7 +66,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
 
     const handleLogin = async () => {
         if (!email || !password) {
-            toast.error('Email dan password wajib diisi');
+            toast.error(t('requiredEmailPassword'));
             return;
         }
 
@@ -58,7 +79,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
             });
 
             if (!data.success) {
-                toast.error(data.message || 'Login gagal');
+                toast.error(data.message || t('loginFailed'));
                 return;
             }
 
@@ -87,7 +108,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
 
     const handleRegister = async () => {
         if (!email || !password || !name) {
-            toast.error('Semua field wajib diisi');
+            toast.error(t('requiredAllFields'));
             return;
         }
 
@@ -104,13 +125,14 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
             });
 
             if (!data.success) {
-                toast.error(data.message || 'Register gagal');
+                toast.error(data.message || t('registerFailed'));
                 return;
             }
 
             toast.success(data.message);
             setMode('login');
             setPassword('');
+            setIsSubmitAttempted(false);
         } catch (err: unknown) {
             handleError(err);
         } finally {
@@ -119,7 +141,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
     };
 
     const handleError = (err: unknown) => {
-        let message = 'Terjadi kesalahan';
+        let message = t('unknownError');
 
         if (err instanceof AxiosError) {
             const data = err.response?.data as { message?: string } | undefined;
@@ -137,6 +159,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
         setPassword('');
         setName('');
         setMode('login');
+        setIsSubmitAttempted(false);
     };
 
     const loginGoogle = useGoogleLogin({
@@ -176,7 +199,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
             }
         },
         onError: () => {
-            toast.error('Google login failed');
+            toast.error(t('googleLoginFailed'));
         },
     });
 
@@ -188,17 +211,17 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                 <div className='grid gap-6 md:grid-cols-2'>
                     {!isLogin && (
                         <div className='bg-accent-1 text-secondary hidden items-center justify-center rounded-xl p-6 text-sm md:flex'>
-                            Ilustrasi placeholder (sign up)
+                            Ilustration placeholder
                         </div>
                     )}
                     <div className='space-y-5'>
                         <DialogHeader>
-                            <DialogTitle>{isLogin ? 'Sign in' : 'Sign up'}</DialogTitle>
-                            <p className='text-grey-2 text-sm'>
-                                {isLogin
-                                    ? 'Selamat datang kembali, lanjutkan ke Distromatch.'
-                                    : 'Buat akun untuk menyimpan hasil rekomendasi.'}
-                            </p>
+                            <DialogTitle className='text-lg font-semibold'>
+                                {isLogin ? 'Sign in' : 'Sign up'}
+                            </DialogTitle>
+                            <DialogDescription className='text-grey-2 text-sm'>
+                                {isLogin ? t('signInDesc') : t('signUpDesc')}
+                            </DialogDescription>
                         </DialogHeader>
                         {isLogin && (
                             <>
@@ -209,13 +232,13 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                                     className='w-full'
                                 >
                                     <Google className='size-5' />
-                                    {loading ? 'Loading...' : 'Sign in with Google'}
+                                    {loading ? t('loading') : t('signInWithGoogle')}
                                 </Button>
 
                                 <div className='flex items-center gap-3'>
                                     <span className='bg-stroke h-px w-full' />
                                     <span className='text-grey-2 text-xs whitespace-nowrap'>
-                                        atau sign in dengan email
+                                        {t('orSignInWithEmail')}
                                     </span>
                                     <span className='bg-stroke h-px w-full' />
                                 </div>
@@ -224,32 +247,38 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                         <form onSubmit={handleSubmit} className='space-y-4'>
                             {mode === 'register' && (
                                 <Input
-                                    placeholder='Name'
+                                    placeholder={t('name')}
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                 />
                             )}
                             <Input
                                 type='email'
-                                placeholder='Email'
+                                placeholder={t('email')}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                aria-invalid={showEmailRuleError}
                             />
+                            {showEmailRuleError && (
+                                <p className='text-destructive text-sm'>{t('invalidEmail')}</p>
+                            )}
                             <InputGroup>
                                 <InputGroupInput
-                                    placeholder='Password'
+                                    placeholder={t('password')}
                                     type={showPassword ? 'text' : 'password'}
                                     id='password'
                                     name='password'
                                     value={password}
+                                    autoComplete='password'
                                     onChange={(e) => setPassword(e.target.value)}
+                                    aria-invalid={showPasswordRuleError}
                                 />
                                 <InputGroupAddon align='inline-end' className='pr-4'>
                                     <button
                                         type='button'
                                         onClick={() => setShowPassword(!showPassword)}
                                         aria-label={
-                                            showPassword ? 'Hide password' : 'Show password'
+                                            showPassword ? t('hidePassword') : t('showPassword')
                                         }
                                     >
                                         {showPassword ? (
@@ -260,45 +289,49 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                                     </button>
                                 </InputGroupAddon>
                             </InputGroup>
-                            <Button type='submit' disabled={loading} className='w-full'>
-                                {loading ? 'Loading...' : isLogin ? 'Sign in' : 'Sign up'}
-                            </Button>
-                            {mode === 'register' && (
-                                <p className='text-grey-2 text-xs'>
-                                    Dengan sign up, Anda sepakat menyetujui{' '}
-                                    <Link
-                                        href='/privacy-policy'
-                                        className='text-primary'
-                                        onClick={closeModal}
-                                    >
-                                        Privacy Policy
-                                    </Link>{' '}
-                                    dan{' '}
-                                    <Link
-                                        href='/terms-conditions'
-                                        className='text-primary'
-                                        onClick={closeModal}
-                                    >
-                                        Terms & Conditions
-                                    </Link>
-                                    .
-                                </p>
+                            {showPasswordRuleError && (
+                                <p className='text-destructive text-sm'>{t('invalidPassword')}</p>
                             )}
+                            <Button type='submit' disabled={loading} className='w-full'>
+                                {loading ? t('loading') : isLogin ? t('signIn') : t('signUp')}
+                            </Button>
+                            <p className='text-grey-2 text-xs'>
+                                {t('prefix')}{' '}
+                                <Link
+                                    href='/privacy-policy'
+                                    className='text-primary'
+                                    onClick={closeModal}
+                                >
+                                    {t('privacyPolicy')}
+                                </Link>{' '}
+                                {t('and')}{' '}
+                                <Link
+                                    href='/terms-conditions'
+                                    className='text-primary'
+                                    onClick={closeModal}
+                                >
+                                    {t('termsConditions')}
+                                </Link>
+                                .
+                            </p>
                         </form>
                         <p className='text-center text-sm'>
-                            {isLogin ? 'Belum punya akun?' : 'Sudah punya akun?'}{' '}
+                            {isLogin ? t('dontHaveAccount') : t('alreadyHaveAccount')}{' '}
                             <button
                                 type='button'
-                                onClick={() => setMode(isLogin ? 'register' : 'login')}
+                                onClick={() => {
+                                    setMode(isLogin ? 'register' : 'login');
+                                    setIsSubmitAttempted(false);
+                                }}
                                 className='text-primary font-medium'
                             >
-                                {isLogin ? 'Sign up' : 'Sign in'}
+                                {isLogin ? t('signUp') : t('signIn')}
                             </button>
                         </p>
                     </div>
                     {isLogin && (
                         <div className='bg-accent-1 text-secondary hidden items-center justify-center rounded-xl p-6 text-sm md:flex'>
-                            Ilustrasi placeholder (sign in)
+                            Ilustration placeholder
                         </div>
                     )}
                 </div>

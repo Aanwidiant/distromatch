@@ -3,9 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
+import { useTranslations } from 'next-intl';
 
 export default function SearchDistro({ defaultValue }: { defaultValue: string }) {
     const router = useRouter();
+    const t = useTranslations('distro');
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -22,7 +24,7 @@ export default function SearchDistro({ defaultValue }: { defaultValue: string })
                 <InputGroupInput
                     name='search'
                     defaultValue={defaultValue}
-                    placeholder='Search distro...'
+                    placeholder={t('searchDistro')}
                 />
                 <InputGroupAddon>
                     <Search />

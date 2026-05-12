@@ -1,43 +1,57 @@
 import Link from 'next/link';
-import { Button } from '../ui/button';
 import Image from 'next/image';
 
+import { Button } from '../ui/button';
+
 interface EmptyStateProps {
-    variant?: 'empty' | 'unauthorized';
+    variant?: 'empty' | 'unauthorized' | 'custom';
+
+    image?: string;
+    title?: string;
+    description?: string;
+
+    homeHref?: string;
+    homeLabel?: string;
 }
 
-export default function EmptyState({ variant = 'empty' }: EmptyStateProps) {
-    const config = {
-        empty: {
-            image: '/404.svg',
-            title: 'No Data Found',
-            description: 'There is nothing to show here yet.',
-        },
-        unauthorized: {
-            image: '/403.svg',
-            title: 'Access Denied',
-            description: 'You do not have permission to access this page.',
-        },
-    }[variant];
+const EMPTY_STATE_CONFIG = {
+    empty: {
+        image: '/404.svg',
+        title: 'No Data Found',
+        description: 'There is nothing to show here yet.',
+    },
+    unauthorized: {
+        image: '/403.svg',
+        title: 'Access Denied',
+        description: 'You do not have permission to access this page.',
+    },
+} as const;
 
-    const finalImage = config.image;
+export default function EmptyState({
+    variant = 'empty',
+    image,
+    title,
+    description,
+    homeHref = '/',
+    homeLabel = 'Go Home',
+}: EmptyStateProps) {
+    const fallbackConfig =
+        variant === 'custom' ? EMPTY_STATE_CONFIG.empty : EMPTY_STATE_CONFIG[variant];
+
+    const finalImage = image ?? fallbackConfig.image;
+    const finalTitle = title ?? fallbackConfig.title;
+    const finalDescription = description ?? fallbackConfig.description;
 
     return (
-        <main className='container mx-auto flex h-screen flex-col items-center justify-center overflow-auto p-6'>
+        <main className='container mx-auto flex h-[calc(100vh-6rem)] flex-col items-center justify-center overflow-auto p-6'>
             <div className='relative h-96 w-full lg:w-1/2'>
-                <Image
-                    src={finalImage}
-                    alt='not-found-img'
-                    fill
-                    priority
-                    className='object-contain'
-                />
+                <Image src={finalImage} alt={finalTitle} fill priority className='object-contain' />
             </div>
             <div className='flex w-full flex-col items-center gap-6 p-6 lg:w-1/2'>
-                <h1 className='text-3xl font-semibold md:text-5xl'>{config.title}</h1>
-                <p className='text-center text-base md:text-lg'>{config.description}</p>
+                <h1 className='text-center text-3xl font-semibold md:text-4xl'>{finalTitle}</h1>
+                <p className='text-center text-base md:text-lg'>{finalDescription}</p>
                 <Button size='xl' asChild>
-                    <Link href='/'>Go Home</Link>
+                    <Link href={homeHref}>{homeLabel}</Link>
                 </Button>
             </div>
         </main>

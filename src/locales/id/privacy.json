@@ -1,0 +1,78 @@
+{
+    "title": "Kebijakan Privasi",
+    "description": "Kami berkomitmen melindungi privasi Anda. Halaman ini menjelaskan bagaimana distromatch mengumpulkan, menggunakan, dan melindungi informasi Anda.",
+    "tableOfContents": "Daftar Isi",
+    "updateNotice": "Kami dapat memperbarui Kebijakan Privasi ini sewaktu-waktu. Periksa halaman ini secara berkala untuk mengetahui perubahan terbaru. Dengan terus menggunakan layanan distromatch, Anda menyetujui kebijakan yang berlaku.",
+    "sections": [
+        {
+            "id": "data-we-collect",
+            "title": "1. Data yang Kami Kumpulkan",
+            "items": [
+                "Nama dan alamat email yang Anda masukkan saat pendaftaran.",
+                "Nama dan email dari akun Google Anda jika menggunakan Login Google.",
+                "Hasil kuis dan data perhitungan terkait kuis di distromatch."
+            ]
+        },
+        {
+            "id": "how-we-collect-data",
+            "title": "2. Cara Kami Mengumpulkan Data",
+            "items": [
+                "Melalui formulir pendaftaran dengan validasi email (link verifikasi dikirim ke email).",
+                "Melalui integrasi login Google.",
+                "Dari mengikuti kuis yang tersedia di situs."
+            ]
+        },
+        {
+            "id": "data-usage",
+            "title": "3. Penggunaan Data",
+            "items": [
+                "Data nama dan email digunakan untuk keperluan pendaftaran, login, dan identifikasi pengguna yang sah.",
+                "Hasil DSS (Decision Support System) disimpan untuk keperluan analisis sistem dan audit perhitungan.",
+                "Hasil DSS dapat dibagikan secara publik melalui tautan khusus, yang hanya menampilkan perhitungan tanpa data pribadi pengguna."
+            ]
+        },
+        {
+            "id": "cookies-and-tracking",
+            "title": "4. Cookies dan Tracking",
+            "items": [
+                "Distromatch hanya menggunakan cookie untuk keperluan refresh token autentikasi.",
+                "Tidak ada cookies pihak ketiga, pelacakan, atau analitik lain yang digunakan."
+            ]
+        },
+        {
+            "id": "data-sharing-and-retention",
+            "title": "5. Pembagian dan Retensi Data",
+            "items": [
+                "Kami tidak membagikan data pengguna kepada pihak ketiga, partner, maupun untuk tujuan periklanan.",
+                "Seluruh data digunakan secara eksklusif untuk keperluan internal dalam rangka penelitian dan pengembangan sistem.",
+                "Kami menyimpan data selama akun Anda aktif atau selama diperlukan untuk tujuan layanan dan penelitian."
+            ]
+        },
+        {
+            "id": "data-security",
+            "title": "6. Keamanan Data",
+            "items": [
+                "Kami berupaya menjaga kerahasiaan data pengguna dan menerapkan langkah keamanan yang wajar, namun tidak dapat menjamin keamanan mutlak data Anda di internet."
+            ]
+        },
+        {
+            "id": "user-rights",
+            "title": "7. Hak Pengguna",
+            "items": [
+                "Pengguna dapat mengakses, memperbarui, atau menghapus data pribadinya dengan menggunakan fitur yang telah disediakan."
+            ]
+        },
+        {
+            "id": "service-area",
+            "title": "8. Wilayah Layanan",
+            "items": [
+                "Website ini tersedia untuk pengguna di seluruh dunia dan mendukung bahasa Indonesia serta Inggris."
+            ]
+        },
+        {
+            "id": "contact",
+            "title": "9. Kontak",
+            "paragraph": "Jika ada pertanyaan terkait privasi, silakan hubungi kami melalui email yang tersedia di bagian bawah situs atau melalui form pesan di halaman about."
+        }
+    ]
+}

@@ -14,12 +14,13 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Link } from '@/lib/i18n/navigation';
 import { useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import Loading from './loading';
+
 import { Eye } from 'lucide-react';
 import ConfirmDeleteResult from '@/components/result/delete-result';
 import { formatDateTime } from '@/lib/formate-date';
 import { useLocale } from 'next-intl';
 import LocaleEmptyState from '@/components/globals/locale-empty-state';
+import Loading from '@/app/loading';
 
 type DssRunItem = {
     id: string;
@@ -137,97 +138,99 @@ export default function ResultListPage() {
     }
 
     return (
-        <main className='space-y-6'>
-            <h1 className='text-2xl font-bold'>Your DSS Results</h1>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>ID</TableHead>
-                        <TableHead>Created At</TableHead>
-                        <TableHead className='text-right'>Action</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {runs.map((run) => (
-                        <TableRow key={run.id}>
-                            <TableCell className='font-medium'>{run.id}</TableCell>
-                            <TableCell>{formatDateTime(run.created_at, locale)}</TableCell>
-                            <TableCell className='space-x-2 text-right'>
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Button size='icon' asChild>
-                                                <Link href={`/${username}/results/${run.id}`}>
-                                                    <Eye />
-                                                </Link>
-                                            </Button>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>View Result</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <div className='inline-block'>
-                                                <ConfirmDeleteResult
-                                                    id={run.id}
-                                                    createdAt={run.created_at}
-                                                    onDeleted={() => fetchData()}
-                                                />
-                                            </div>
-                                        </TooltipTrigger>
-
-                                        <TooltipContent>
-                                            <p>Delete Result</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
-                            </TableCell>
+        <main className='p-6 md:px-12 lg:px-20'>
+            <div className='mx-auto max-w-330 space-y-8 overflow-hidden py-6'>
+                <h1 className='text-2xl font-bold'>Your DSS Results</h1>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>ID</TableHead>
+                            <TableHead>Created At</TableHead>
+                            <TableHead className='text-right'>Action</TableHead>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            <div className='flex flex-wrap items-center justify-center gap-2'>
-                <Button
-                    variant='outline'
-                    disabled={page === 1}
-                    onClick={() => setPage((p) => p - 1)}
-                >
-                    Prev
-                </Button>
+                    </TableHeader>
+                    <TableBody>
+                        {runs.map((run) => (
+                            <TableRow key={run.id}>
+                                <TableCell className='font-medium'>{run.id}</TableCell>
+                                <TableCell>{formatDateTime(run.created_at, locale)}</TableCell>
+                                <TableCell className='space-x-2 text-right'>
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button size='icon' asChild>
+                                                    <Link href={`/${username}/results/${run.id}`}>
+                                                        <Eye />
+                                                    </Link>
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>View Result</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <div className='inline-block'>
+                                                    <ConfirmDeleteResult
+                                                        id={run.id}
+                                                        createdAt={run.created_at}
+                                                        onDeleted={() => fetchData()}
+                                                    />
+                                                </div>
+                                            </TooltipTrigger>
 
-                {page > 3 && (
-                    <>
-                        <Button variant='outline' onClick={() => setPage(1)}>
-                            1
-                        </Button>
-                        <span>...</span>
-                    </>
-                )}
-                {getPages().map((p) => (
+                                            <TooltipContent>
+                                                <p>Delete Result</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                <div className='flex flex-wrap items-center justify-center gap-2'>
                     <Button
-                        key={p}
-                        variant={p === page ? 'default' : 'outline'}
-                        onClick={() => setPage(p)}
+                        variant='outline'
+                        disabled={page === 1}
+                        onClick={() => setPage((p) => p - 1)}
                     >
-                        {p}
+                        Prev
                     </Button>
-                ))}
-                {meta.totalPages - page > 2 && (
-                    <>
-                        <span>...</span>
-                        <Button variant='outline' onClick={() => setPage(meta.totalPages)}>
-                            {meta.totalPages}
+
+                    {page > 3 && (
+                        <>
+                            <Button variant='outline' onClick={() => setPage(1)}>
+                                1
+                            </Button>
+                            <span>...</span>
+                        </>
+                    )}
+                    {getPages().map((p) => (
+                        <Button
+                            key={p}
+                            variant={p === page ? 'default' : 'outline'}
+                            onClick={() => setPage(p)}
+                        >
+                            {p}
                         </Button>
-                    </>
-                )}
-                <Button
-                    variant='outline'
-                    disabled={page === meta.totalPages}
-                    onClick={() => setPage((p) => p + 1)}
-                >
-                    Next
-                </Button>
+                    ))}
+                    {meta.totalPages - page > 2 && (
+                        <>
+                            <span>...</span>
+                            <Button variant='outline' onClick={() => setPage(meta.totalPages)}>
+                                {meta.totalPages}
+                            </Button>
+                        </>
+                    )}
+                    <Button
+                        variant='outline'
+                        disabled={page === meta.totalPages}
+                        onClick={() => setPage((p) => p + 1)}
+                    >
+                        Next
+                    </Button>
+                </div>
             </div>
         </main>
     );

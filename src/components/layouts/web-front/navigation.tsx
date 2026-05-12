@@ -1,5 +1,5 @@
 'use client';
-// import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/lib/i18n/navigation';
 interface NavigationProps {
     layout: 'header' | 'sidebar' | 'footer';
@@ -7,15 +7,15 @@ interface NavigationProps {
 }
 
 export default function Navigation({ layout, toggleSidebar }: NavigationProps) {
-    // const t = useTranslations('common.navigation');
+    const t = useTranslations('common.navigation');
     const pathname = usePathname();
 
     const NAV_ITEMS = [
-        { href: '/distros', label: 'Distro List' },
-        { href: '/quiz', label: 'Quiz' },
-        { href: '/about-us', label: 'About' },
-        { href: '/privacy-policy', label: 'Privacy Policy' },
-        { href: '/terms-conditions', label: 'Terms and Conditions' },
+        { href: '/distros', label: t('distroList') },
+        { href: '/quiz', label: t('quiz') },
+        { href: '/about-us', label: t('about') },
+        { href: '/privacy-policy', label: t('privacyPolicy') },
+        { href: '/terms-conditions', label: t('termsConditions') },
     ];
 
     const layoutClass =

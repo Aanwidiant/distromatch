@@ -1,0 +1,37 @@
+{
+    "linuxDistributionsExplorer": "Linux Distributions Explorer",
+    "searchAndExploreLinuxDistributions": "searchAndExploreLinuxDistributions",
+    "searchDistro": "Search Distro ...",
+    "detail": "Detail",
+    "prev": "Prev",
+    "next": "Next",
+    "failedToLoadData": "Failed to load data",
+    "anErrorOccurredWhileLoadingDataPleaseTryAgainLater": "An error occurred while loading data. Please try again later.",
+    "reload": "Reload",
+    "distroNotFound": "Distro not found",
+    "noResultsFoundFor": "No results found for",
+    "noDistroDataAvailable": "No distro data available",
+    "backToList": "Back to list",
+    "detailPage": {
+        "about": "About",
+        "ratingBreakdown": "Rating Breakdown",
+        "links": "Links",
+        "documentation": "Documentation",
+        "sources": "Sources",
+        "officialWebsite": "Official Website",
+        "reviews": "{count, plural, one {# review} other {# reviews}}",
+        "ratings": {
+            "ux": "UX",
+            "performance": "Performance",
+            "stability": "Stability",
+            "features": "Features",
+            "support": "Support"
+        },
+        "details": {
+            "basedOn": "Based On",
+            "architecture": "Architecture",
+            "desktop": "Desktop",
+            "origin": "Origin"
+        }
+    }
+}

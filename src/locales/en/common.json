@@ -1,37 +1,51 @@
 {
-    "test": "test",
-    "themeColorMapping": "Theme Color Mapping",
     "light": "Light",
     "dark": "Dark",
     "navigation": {
         "title": "Navigation",
-        "features": "Features",
-        "packages": "Packages",
-        "blog": "Blog",
+        "quiz": "Quiz",
+        "distroList": "Distro List",
         "about": "About Us",
         "privacyPolicy": "Privacy Policy",
-        "task": "Task",
-        "feature": "Feature"
+        "termsConditions": "Terms & Conditions"
     },
     "contact": {
         "title": "Contact",
-        "location": "Location",
-        "openMap": "Open Map",
-        "phoneNumber": "Phone Number",
+        "messages": "Messages",
+        "clickHere": "Click Here!",
         "email": "Email"
     },
     "footer": {
-        "tagline": "Because every step forward matters. Tugasin helps teams stay aligned, on schedule, and in control—all in one place.",
+        "tagline": "Distromatch helps you discover your ideal Linux distribution, just answer a few questions and get matched instantly.",
         "allRightsReserved": "All rights reserved"
     },
     "auth": {
         "signIn": "Sign In",
-        "signUp": "Sign Up"
+        "signUp": "Sign Up",
+        "signInDesc": "Welcome back, please sign in to your Distromatch account.",
+        "signUpDesc": "Create an account to save your recommendation results.",
+        "name": "Name",
+        "email": "Email",
+        "password": "Password",
+        "loading": "Loading...",
+        "signInWithGoogle": "Sign in with Google",
+        "showPassword": "Show password",
+        "hidePassword": "Hide password",
+        "orSignInWithEmail": "or sign in with email",
+        "prefix": "By signing up and using distromatch, you agree to our",
+        "privacyPolicy": "Privacy Policy",
+        "and": "and",
+        "termsConditions": "Terms & Conditions",
+        "dontHaveAccount": "Don't have an account?",
+        "alreadyHaveAccount": "Already have an account?",
+        "requiredEmailPassword": "Email and password are required",
+        "loginFailed": "Login failed",
+        "requiredAllFields": "All fields are required",
+        "registerFailed": "Registration failed",
+        "unknownError": "An unknown error occurred",
+        "googleLoginFailed": "Google login failed",
+        "invalidEmail": "Please enter a valid email address.",
+        "invalidPassword": "Must be at least 8 characters and include uppercase, lowercase, number, and special character."
     },
-    "banner": {
-        "bannerTitle": "Build Better Team Productivity!",
-        "bannerSubtitle": "Join thousands of teams that have switched to modern task management with Tugasin.",
-        "bannerPrimaryCta": "Schedule a Demo",
-        "bannerSecondaryCta": "Free Trial"
-    }
+    "loading": "Please wait a moment…"
 }

@@ -1,0 +1,78 @@
+{
+    "title": "Privacy Policy",
+    "description": "We are committed to protecting your privacy. This page explains how distromatch collects, uses, and protects your information.",
+    "tableOfContents": "Table of Contents",
+    "updateNotice": "We may update this Privacy Policy at any time. Please check this page periodically for the latest changes. By continuing to use distromatch services, you agree to the applicable policy.",
+    "sections": [
+        {
+            "id": "data-we-collect",
+            "title": "1. Data We Collect",
+            "items": [
+                "Name and email address provided during registration.",
+                "Name and email from your Google account if using Google Login.",
+                "Quiz results and calculation data related to quizzes on distromatch."
+            ]
+        },
+        {
+            "id": "how-we-collect-data",
+            "title": "2. How We Collect Data",
+            "items": [
+                "Through registration forms with email validation (verification link sent to email).",
+                "Through Google login integration.",
+                "From participating in quizzes available on the site."
+            ]
+        },
+        {
+            "id": "data-usage",
+            "title": "3. Data Usage",
+            "items": [
+                "Name and email data are used for registration, login, and identification of legitimate users.",
+                "DSS (Decision Support System) results are stored for system analysis and calculation audit purposes.",
+                "DSS results may be shared publicly via a special link, which only displays calculations without user's personal data."
+            ]
+        },
+        {
+            "id": "cookies-and-tracking",
+            "title": "4. Cookies and Tracking",
+            "items": [
+                "Distromatch only uses cookies for authentication refresh token purposes.",
+                "No third-party cookies, tracking, or other analytics are used."
+            ]
+        },
+        {
+            "id": "data-sharing-and-retention",
+            "title": "5. Data Sharing and Retention",
+            "items": [
+                "We do not share user data with third parties, partners, or for advertising purposes.",
+                "All data is used exclusively for internal purposes within the framework of research and system development.",
+                "We store data as long as your account is active or as long as necessary for service and research purposes."
+            ]
+        },
+        {
+            "id": "data-security",
+            "title": "6. Data Security",
+            "items": [
+                "We strive to maintain the confidentiality of user data and implement reasonable security measures, but we cannot guarantee absolute security of your data on the internet."
+            ]
+        },
+        {
+            "id": "user-rights",
+            "title": "7. User Rights",
+            "items": [
+                "Users can access, update, or delete their personal data using the features provided."
+            ]
+        },
+        {
+            "id": "service-area",
+            "title": "8. Service Area",
+            "items": [
+                "This website is available to users worldwide and supports Indonesian and English."
+            ]
+        },
+        {
+            "id": "contact",
+            "title": "9. Contact",
+            "paragraph": "If you have questions regarding privacy, please contact us via the email available at the bottom of the site or through the message form on the about page."
+        }
+    ]
+}

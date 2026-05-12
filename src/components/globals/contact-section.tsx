@@ -35,7 +35,7 @@ export function ContactSection() {
     };
 
     return (
-        <section className='mx-auto max-w-3xl space-y-6'>
+        <section id='messages' className='mx-auto max-w-3xl scroll-mt-32 space-y-6'>
             <div className='space-y-2'>
                 <h2 className='text-2xl font-semibold'>Kirim Pesan</h2>
                 <p className='text-sm'>
@@ -63,8 +63,6 @@ export function ContactSection() {
                     </label>
                     <Input name='phone' placeholder='+62 812 xxxx xxxx' />
                 </div>
-
-                {/* MESSAGE */}
                 <div className='space-y-2 md:col-span-2'>
                     <label className='text-sm font-medium'>Pesan</label>
                     <Textarea
@@ -74,8 +72,6 @@ export function ContactSection() {
                         required
                     />
                 </div>
-
-                {/* BUTTON */}
                 <div className='flex justify-end md:col-span-2'>
                     <Button type='submit' disabled={loading}>
                         {loading ? 'Mengirim...' : 'Kirim Pesan'}

@@ -1,0 +1,80 @@
+{
+    "title": "Terms and Conditions",
+    "description": "Welcome to distromatch. By accessing or using our services, you automatically agree to follow all the Terms and Conditions listed below.",
+    "tableOfContents": "Table of Contents",
+    "agreementNotice": "By using distromatch, you are deemed to have read and agreed to the entirety of these Terms & Conditions.",
+    "sections": [
+        {
+            "id": "about-distromatch",
+            "title": "1. About Distromatch",
+            "paragraph": "Distromatch is a web platform that provides Linux distribution recommendations based on quiz results and displays a comprehensive list of Linux distro information."
+        },
+        {
+            "id": "ownership-and-management",
+            "title": "2. Ownership and Management",
+            "paragraph": "This website is independently owned and managed by Aan Widianto, a student conducting DSS (Decision Support System) research for educational purposes."
+        },
+        {
+            "id": "available-services",
+            "title": "3. Available Services",
+            "items": [
+                "Users can take a quiz to determine the most suitable Linux distribution based on their needs.",
+                "Quiz results provide recommendations along with links to the official homepages and documentation of the respective distros.",
+                "The distro list, recommendations, and quiz results are provided purely for educational purposes."
+            ]
+        },
+        {
+            "id": "age-restrictions",
+            "title": "4. Age Restrictions",
+            "paragraph": "There is no minimum age limit for use, but this service is intended for users who wish to understand or explore Linux operating systems."
+        },
+        {
+            "id": "intellectual-property",
+            "title": "5. Intellectual Property Rights",
+            "items": [
+                "Linux distro data is obtained from public sources such as official documentation and global community references.",
+                "The calculation system in this quiz is independently developed for academic research purposes.",
+                "Reuse of code or systems is permitted for learning purposes as long as the source is credited, except for commercial use without written permission."
+            ]
+        },
+        {
+            "id": "prohibited-usage",
+            "title": "6. Prohibited Usage",
+            "items": [
+                "Users are prohibited from spamming the registration system or attempting to bypass website security.",
+                "Users are prohibited from using the service for any purpose that violates applicable laws or regulations."
+            ]
+        },
+        {
+            "id": "shared-content",
+            "title": "7. Shared Content",
+            "items": [
+                "Users can share their quiz results through public links provided by the system.",
+                "Public links only display the final calculation results without including personal data such as email addresses.",
+                "Users are fully responsible for the distribution of the public links they share."
+            ]
+        },
+        {
+            "id": "limitation-of-liability",
+            "title": "8. Limitation of Liability",
+            "items": [
+                "Distromatch only provides system-based recommendations and does not guarantee that the results are absolutely suitable for every user's technical condition.",
+                "We do not provide installation files or any form of Linux distribution files.",
+                "The decision to use the recommendations is entirely at the user's own risk."
+            ]
+        },
+        {
+            "id": "dispute-resolution-and-contact",
+            "title": "9. Dispute Resolution and Contact",
+            "items": [
+                "If you have questions or complaints, you can contact us via the email listed in the footer or through the form on the about page.",
+                "We prioritize resolving issues through discussion to reach the best solution for both parties."
+            ]
+        },
+        {
+            "id": "terms-changes",
+            "title": "10. Changes to Terms and Conditions",
+            "paragraph": "These Terms and Conditions may change at any time. We recommend that you check this page periodically for the latest updates."
+        }
+    ]
+}

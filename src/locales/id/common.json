@@ -1,37 +1,51 @@
 {
-    "test": "tes",
-    "themeColorMapping": "Pemetaan Warna Tema",
     "light": "Terang",
     "dark": "Gelap",
     "navigation": {
         "title": "Navigasi",
-        "features": "Fitur",
-        "packages": "Paket",
-        "blog": "Blog",
+        "quiz": "Kuis",
+        "distroList": "Daftar Distro",
         "about": "Tentang Kami",
         "privacyPolicy": "Kebijakan Privasi",
-        "task": "Tugas",
-        "feature": "Fitur"
+        "termsConditions": "Syarat & Ketentuan"
     },
     "contact": {
         "title": "Kontak",
-        "location": "Lokasi",
-        "openMap": "Buka di Peta",
-        "phoneNumber": "Nomor HP",
+        "messages": "Pesan",
+        "clickHere": "Klik Di Sini!",
         "email": "Email"
     },
     "footer": {
-        "tagline": "Karena setiap progres berarti. Tugasin membantu tim tetap selaras, tepat waktu, dan terkontrol—semua dalam satu tempat.",
+        "tagline": "Distromatch membantumu menemukan distribusi Linux yang cocok, jawab beberapa pertanyaan dan temukan distro pilihanmu dengan mudah.",
         "allRightsReserved": "Hak cipta dilindungi undang-undang."
     },
     "auth": {
         "signIn": "Masuk",
-        "signUp": "Daftar"
+        "signUp": "Daftar",
+        "signInDesc": "Selamat datang kembali di Distromatch, silakan masuk ke akun Anda.",
+        "signUpDesc": "Buat akun untuk menyimpan hasil rekomendasi kuis Anda.",
+        "name": "Nama",
+        "email": "Email",
+        "password": "Kata Sandi",
+        "loading": "Memuat...",
+        "signInWithGoogle": "Masuk dengan Google",
+        "showPassword": "Tampilkan kata sandi",
+        "hidePassword": "Sembunyikan kata sandi",
+        "orSignInWithEmail": "atau masuk dengan email",
+        "prefix": "Dengan mendaftar dan menggunakan distromatch, Anda menyetujui",
+        "privacyPolicy": "Kebijakan Privasi",
+        "and": "dan",
+        "termsConditions": "Syarat & Ketentuan",
+        "dontHaveAccount": "Belum punya akun?",
+        "alreadyHaveAccount": "Sudah punya akun?",
+        "requiredEmailPassword": "Email dan kata sandi wajib diisi",
+        "loginFailed": "Gagal masuk",
+        "requiredAllFields": "Semua kolom wajib diisi",
+        "registerFailed": "Gagal mendaftar",
+        "unknownError": "Terjadi kesalahan yang tidak diketahui",
+        "googleLoginFailed": "Gagal masuk dengan Google",
+        "invalidEmail": "Masukkan alamat email yang valid.",
+        "invalidPassword": "Minimal 8 karakter dan harus menyertakan huruf besar, huruf kecil, angka, serta karakter khusus."
     },
-    "banner": {
-        "bannerTitle": "Wujudkan Produktivitas Tim yang Lebih Baik!",
-        "bannerSubtitle": "Bergabunglah dengan ribuan tim yang sudah beralih ke manajemen tugas modern bersama Tugasin.",
-        "bannerPrimaryCta": "Jadwalkan Demo",
-        "bannerSecondaryCta": "Uji Coba Gratis"
-    }
+    "loading": "Mohon tunggu sebentar…"
 }

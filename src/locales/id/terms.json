@@ -1,0 +1,80 @@
+{
+    "title": "Syarat dan Ketentuan",
+    "description": "Selamat datang di distromatch. Dengan mengakses atau menggunakan layanan kami, Anda secara otomatis menyetujui seluruh Syarat dan Ketentuan yang berlaku di bawah ini.",
+    "tableOfContents": "Daftar Isi",
+    "agreementNotice": "Dengan menggunakan distromatch, Anda dianggap telah membaca dan menyetujui seluruh Syarat dan Ketentuan ini.",
+    "sections": [
+        {
+            "id": "about-distromatch",
+            "title": "1. Tentang Distromatch",
+            "paragraph": "Distromatch adalah platform web yang memberikan rekomendasi distribusi Linux berdasarkan hasil kuis serta menyediakan daftar informasi lengkap mengenai berbagai distro Linux."
+        },
+        {
+            "id": "ownership-and-management",
+            "title": "2. Pemilik dan Pengelola",
+            "paragraph": "Website ini dimiliki dan dikelola secara mandiri oleh Aan Widianto dalam rangka penelitian sistem pendukung keputusan untuk keperluan pendidikan."
+        },
+        {
+            "id": "available-services",
+            "title": "3. Layanan yang Tersedia",
+            "items": [
+                "Pengguna dapat mengikuti kuis untuk menentukan distribusi Linux yang paling sesuai dengan kebutuhan pengguna.",
+                "Hasil kuis menyediakan rekomendasi beserta tautan menuju halaman utama dan dokumentasi resmi dari distro terkait.",
+                "Seluruh daftar distro, rekomendasi, dan hasil kuis disediakan murni untuk tujuan edukasi."
+            ]
+        },
+        {
+            "id": "age-restrictions",
+            "title": "4. Batasan Usia",
+            "paragraph": "Tidak ada batasan usia minimum untuk menggunakan layanan ini, namun distromatch ditujukan bagi pengguna yang ingin memahami atau mengeksplorasi sistem operasi Linux."
+        },
+        {
+            "id": "intellectual-property",
+            "title": "5. Hak Kekayaan Intelektual",
+            "items": [
+                "Data distribusi Linux diperoleh dari berbagai sumber publik seperti dokumentasi resmi dan referensi komunitas global.",
+                "Sistem perhitungan dalam kuis ini merupakan hasil pengembangan mandiri untuk tujuan penelitian akademik.",
+                "Penggunaan ulang kode atau sistem diperbolehkan untuk tujuan pembelajaran dengan tetap mencantumkan sumber, namun tidak diizinkan untuk penggunaan komersial tanpa izin tertulis."
+            ]
+        },
+        {
+            "id": "prohibited-usage",
+            "title": "6. Larangan Penggunaan",
+            "items": [
+                "Dilarang melakukan aktivitas spam pada sistem pendaftaran atau mencoba mengganggu stabilitas keamanan website.",
+                "Dilarang menggunakan layanan untuk aktivitas yang melanggar hukum atau norma yang berlaku di wilayah hukum terkait."
+            ]
+        },
+        {
+            "id": "shared-content",
+            "title": "7. Konten yang Dibagikan",
+            "items": [
+                "Pengguna dapat membagikan hasil kuis melalui tautan publik yang dihasilkan oleh sistem.",
+                "Tautan tersebut hanya menampilkan hasil akhir perhitungan tanpa menyertakan data pribadi seperti alamat email.",
+                "Pengguna bertanggung jawab penuh atas penyebaran tautan publik yang mereka bagikan kepada pihak lain."
+            ]
+        },
+        {
+            "id": "limitation-of-liability",
+            "title": "8. Batasan Tanggung Jawab",
+            "items": [
+                "Distromatch hanya memberikan rekomendasi berbasis sistem dan tidak menjamin hasil tersebut mutlak sesuai untuk setiap kondisi teknis pengguna.",
+                "Kami tidak menyediakan file instalasi atau file distribusi Linux dalam bentuk apapun.",
+                "Keputusan untuk menggunakan hasil rekomendasi sepenuhnya menjadi tanggung jawab dan risiko pengguna."
+            ]
+        },
+        {
+            "id": "dispute-resolution-and-contact",
+            "title": "9. Penyelesaian Sengketa dan Kontak",
+            "items": [
+                "Jika terdapat pertanyaan atau keluhan, Anda dapat menghubungi kami melalui email di bagian bawah situs atau melalui formulir pada halaman tentang.",
+                "Kami mengutamakan penyelesaian masalah melalui musyawarah untuk mencapai solusi terbaik bagi kedua belah pihak."
+            ]
+        },
+        {
+            "id": "terms-changes",
+            "title": "10. Perubahan Syarat dan Ketentuan",
+            "paragraph": "Syarat dan Ketentuan ini dapat berubah sewaktu-waktu. Kami menyarankan Anda untuk memeriksa halaman ini secara berkala untuk mengetahui ketentuan terbaru."
+        }
+    ]
+}

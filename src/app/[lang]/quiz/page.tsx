@@ -6,8 +6,8 @@ import { CATEGORY_ICONS } from '@/components/quiz/category-icons';
 export default function QuizPage() {
     return (
         <>
-            <main className='flex min-h-screen flex-col gap-12 md:flex-row'>
-                <div className='w-full space-y-9 md:w-1/2'>
+            <main className='flex flex-col gap-12 p-6 md:flex-row md:px-12 lg:px-20'>
+                <div className='mx-auto w-full max-w-330 space-y-8 overflow-hidden py-6 md:w-1/2'>
                     <div className='space-y-8'>
                         <span className='bg-accent-1 text-secondary inline-flex w-fit rounded-full px-3 py-1 text-xs font-semibold'>
                             Survey → Bobot → TOPSIS → Bayesian → Penalti → Ranking

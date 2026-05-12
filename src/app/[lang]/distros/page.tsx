@@ -4,6 +4,12 @@ import Logo from '@/components/globals/logo';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/lib/i18n/navigation';
 import SearchDistro from '@/components/globals/search-distro';
+import LoadingLocale from '@/components/globals/loading-locale';
+import { Suspense } from 'react';
+import { getTranslations } from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
+import { loadMessages } from '@/lib/i18n/get-messages';
+import EmptyState from '@/components/globals/empty-state';
 
 type Distros = {
     distro_id: number;
@@ -45,41 +51,26 @@ function getPagination(current: number, total: number) {
 const LIMIT = 12;
 
 export default async function DistroListPage({
+    params,
     searchParams,
 }: {
+    params: Promise<{ lang: string }>;
     searchParams: Promise<{ page?: string; search?: string }>;
 }) {
+    const { lang } = await params;
     const { page: rawPage, search: rawSearch } = await searchParams;
+    const t = await getTranslations({ locale: lang, namespace: 'distro' });
+    const tc = await getTranslations({ locale: lang, namespace: 'common' });
+
+    const messages = await loadMessages(lang, ['distro']);
 
     const page = Math.max(1, Number(rawPage) || 1);
     const search = rawSearch?.trim() ?? '';
 
-    const params = new URLSearchParams({ page: String(page), limit: String(LIMIT) });
-    if (search) params.set('search', search);
+    const apiParams = new URLSearchParams({ page: String(page), limit: String(LIMIT) });
+    if (search) apiParams.set('search', search);
 
-    const res = await Fetch.GET<Response>(`/distros/list?${params.toString()}`);
-
-    if (!res.success) {
-        return (
-            <main className='p-6'>
-                <p className='text-red'>Failed to load data</p>
-            </main>
-        );
-    }
-
-    if (res.data.length === 0) {
-        return (
-            <main className='flex min-h-screen flex-col items-center justify-center gap-4 p-6'>
-                <h2 className='text-foreground text-xl font-semibold'>Distro not found</h2>
-                <p className='text-grey-2 text-sm'>
-                    {search ? `No results found for "${search}"` : 'No distro data available'}
-                </p>
-                <Button asChild variant='outline'>
-                    <Link href='?'>Back to list</Link>
-                </Button>
-            </main>
-        );
-    }
+    const res = await Fetch.GET<Response>(`/distros/list?${apiParams.toString()}`);
 
     const data: Distros[] = res.data;
     const meta: Pagination = res.meta;
@@ -93,107 +84,157 @@ export default async function DistroListPage({
     };
 
     return (
-        <main className='flex min-h-screen flex-col gap-10'>
-            <div className='flex flex-wrap items-start justify-between gap-3'>
-                <div className='space-y-2'>
-                    <h1 className='text-foreground text-3xl font-bold'>
-                        Linux Distributions Explorer
-                    </h1>
-                    <p className='text-grey-2 text-sm'>Search and explore Linux distributions.</p>
-                </div>
-                <SearchDistro defaultValue={search} />
-            </div>
-
-            <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-                {data.map((item) => {
-                    const rating = Math.max(0, Math.min(5, Number(item.overall_rating) || 0));
-
-                    return (
-                        <div
-                            key={`${item.distro_id}-${item.slug}`}
-                            className='bg-background border-stroke rounded-2xl border p-5 shadow-sm transition hover:shadow-md'
-                        >
-                            <div className='flex items-center justify-between'>
-                                <Logo name={item.name} image={item.logo ?? undefined} size='md' />
-                                <Button variant='outline' asChild size='sm'>
-                                    <Link href={`/distros/${item.slug}`}>Detail</Link>
-                                </Button>
+        <NextIntlClientProvider locale={lang} messages={messages}>
+            <main className='p-6 md:px-12 lg:px-20'>
+                {!res.success ? (
+                    <EmptyState
+                        variant='custom'
+                        image='/500.svg'
+                        title={t('failedToLoadData')}
+                        description={t('anErrorOccurredWhileLoadingDataPleaseTryAgainLater')}
+                        homeHref='?'
+                        homeLabel={t('reload')}
+                    />
+                ) : res.data.length === 0 ? (
+                    <EmptyState
+                        variant='custom'
+                        image='/404.svg'
+                        title={t('distroNotFound')}
+                        description={
+                            search
+                                ? `${t('noResultsFoundFor')} "${search}"`
+                                : t('noDistroDataAvailable')
+                        }
+                        homeHref='?'
+                        homeLabel={t('backToList')}
+                    />
+                ) : (
+                    <div className='mx-auto max-w-330 space-y-16 overflow-hidden py-6'>
+                        <div className='flex flex-wrap items-start justify-between gap-3'>
+                            <div className='space-y-2'>
+                                <h1 className='text-foreground text-3xl font-bold'>
+                                    {t('linuxDistributionsExplorer')}
+                                </h1>
+                                <p className='text-grey-2 text-sm'>
+                                    {t('searchAndExploreLinuxDistributions')}
+                                </p>
                             </div>
-
-                            <h2 className='text-foreground mt-3 text-lg font-semibold'>
-                                {item.name}
-                            </h2>
-
-                            <div className='mt-3 flex items-center justify-between'>
-                                <div className='flex items-center gap-2'>
-                                    <div className='flex gap-1'>
-                                        {Array.from({ length: 5 }).map((_, idx) => {
-                                            const fill = Math.max(0, Math.min(1, rating - idx));
-                                            return (
-                                                <span key={idx} className='relative size-4'>
-                                                    <Star className='text-grey-1 size-4' />
-                                                    <span
-                                                        className='absolute inset-0 overflow-hidden'
-                                                        style={{ width: `${fill * 100}%` }}
-                                                    >
-                                                        <Star className='fill-yellow text-yellow size-4' />
-                                                    </span>
-                                                </span>
-                                            );
-                                        })}
-                                    </div>
-                                    <span className='text-grey-2 text-xs'>{rating.toFixed(1)}</span>
-                                </div>
-
-                                <div className='text-grey-2 flex items-center gap-1 text-xs'>
-                                    <UserStar className='size-4' />
-                                    {item.total_reviews}
-                                </div>
-                            </div>
+                            <SearchDistro defaultValue={search} />
                         </div>
-                    );
-                })}
-            </div>
 
-            {meta.totalPages > 1 && (
-                <div className='flex flex-wrap items-center justify-center gap-2'>
-                    {meta.currentPage === 1 ? (
-                        <Button variant='outline' disabled>
-                            Prev
-                        </Button>
-                    ) : (
-                        <Button variant='outline' asChild>
-                            <Link href={buildUrl(meta.currentPage - 1)}>Prev</Link>
-                        </Button>
-                    )}
+                        <Suspense fallback={<LoadingLocale text={tc('loading')} />}>
+                            <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+                                {data.map((item) => {
+                                    const rating = Math.max(
+                                        0,
+                                        Math.min(5, Number(item.overall_rating) || 0)
+                                    );
 
-                    {pages.map((p, i) =>
-                        p === '...' ? (
-                            <span key={`ellipsis-${i}`} className='text-grey-2 px-2'>
-                                ...
-                            </span>
-                        ) : p === meta.currentPage ? (
-                            <Button key={`page-${p}`} variant='default' disabled>
-                                {p}
-                            </Button>
-                        ) : (
-                            <Button key={`page-${p}`} variant='outline' asChild>
-                                <Link href={buildUrl(Number(p))}>{p}</Link>
-                            </Button>
-                        )
-                    )}
+                                    return (
+                                        <div
+                                            key={`${item.distro_id}-${item.slug}`}
+                                            className='bg-background border-stroke rounded-2xl border p-5 shadow-sm transition hover:shadow-md'
+                                        >
+                                            <div className='flex items-center justify-between'>
+                                                <Logo
+                                                    name={item.name}
+                                                    image={item.logo ?? undefined}
+                                                    size='md'
+                                                />
+                                                <Button variant='outline' asChild size='sm'>
+                                                    <Link href={`/distros/${item.slug}`}>
+                                                        {t('detail')}
+                                                    </Link>
+                                                </Button>
+                                            </div>
 
-                    {meta.currentPage === meta.totalPages ? (
-                        <Button variant='outline' disabled>
-                            Next
-                        </Button>
-                    ) : (
-                        <Button variant='outline' asChild>
-                            <Link href={buildUrl(meta.currentPage + 1)}>Next</Link>
-                        </Button>
-                    )}
-                </div>
-            )}
-        </main>
+                                            <h2 className='text-foreground mt-3 text-lg font-semibold'>
+                                                {item.name}
+                                            </h2>
+                                            <div className='mt-3 flex items-center justify-between'>
+                                                <div className='flex items-center gap-2'>
+                                                    <div className='flex gap-1'>
+                                                        {Array.from({ length: 5 }).map((_, idx) => {
+                                                            const fill = Math.max(
+                                                                0,
+                                                                Math.min(1, rating - idx)
+                                                            );
+                                                            return (
+                                                                <span
+                                                                    key={idx}
+                                                                    className='relative size-4'
+                                                                >
+                                                                    <Star className='text-grey-1 size-4' />
+                                                                    <span
+                                                                        className='absolute inset-0 overflow-hidden'
+                                                                        style={{
+                                                                            width: `${fill * 100}%`,
+                                                                        }}
+                                                                    >
+                                                                        <Star className='fill-yellow text-yellow size-4' />
+                                                                    </span>
+                                                                </span>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                    <span className='text-grey-2 text-xs'>
+                                                        {rating.toFixed(1)}
+                                                    </span>
+                                                </div>
+
+                                                <div className='text-grey-2 flex items-center gap-1 text-xs'>
+                                                    <UserStar className='size-4' />
+                                                    {item.total_reviews}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            {meta.totalPages > 1 && (
+                                <div className='flex flex-wrap items-center justify-center gap-2'>
+                                    {meta.currentPage === 1 ? (
+                                        <Button variant='outline' disabled>
+                                            {t('prev')}
+                                        </Button>
+                                    ) : (
+                                        <Button variant='outline' asChild>
+                                            <Link href={buildUrl(meta.currentPage - 1)}>Prev</Link>
+                                        </Button>
+                                    )}
+                                    {pages.map((p, i) =>
+                                        p === '...' ? (
+                                            <span
+                                                key={`ellipsis-${i}`}
+                                                className='text-grey-2 px-2'
+                                            >
+                                                ...
+                                            </span>
+                                        ) : p === meta.currentPage ? (
+                                            <Button key={`page-${p}`} variant='default' disabled>
+                                                {p}
+                                            </Button>
+                                        ) : (
+                                            <Button key={`page-${p}`} variant='outline' asChild>
+                                                <Link href={buildUrl(Number(p))}>{p}</Link>
+                                            </Button>
+                                        )
+                                    )}
+                                    {meta.currentPage === meta.totalPages ? (
+                                        <Button variant='outline' disabled>
+                                            {t('next')}
+                                        </Button>
+                                    ) : (
+                                        <Button variant='outline' asChild>
+                                            <Link href={buildUrl(meta.currentPage + 1)}>Next</Link>
+                                        </Button>
+                                    )}
+                                </div>
+                            )}
+                        </Suspense>
+                    </div>
+                )}
+            </main>
+        </NextIntlClientProvider>
     );
 }
