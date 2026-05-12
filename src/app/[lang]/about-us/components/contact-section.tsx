@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
-export function ContactSection() {
+export default function ContactSection() {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,19 +23,20 @@ export function ContactSection() {
         };
 
         try {
-            alert(payload);
-
-            toast.success('Pesan berhasil dikirim 🚀');
-            e.currentTarget.reset();
+            void payload;
+            toast.error('Maaf, sedang dalam proses development');
         } catch {
-            toast.error('Gagal mengirim pesan');
+            toast.error('Maaf, sedang dalam proses development');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <section id='messages' className='mx-auto max-w-3xl scroll-mt-32 space-y-6'>
+        <section
+            id='messages'
+            className='bg-bg-2 mx-auto max-w-4xl scroll-mt-32 space-y-6 rounded-2xl p-6'
+        >
             <div className='space-y-2'>
                 <h2 className='text-2xl font-semibold'>Kirim Pesan</h2>
                 <p className='text-sm'>
@@ -43,35 +44,36 @@ export function ContactSection() {
                 </p>
             </div>
 
-            <form onSubmit={handleSubmit} className='grid gap-4 md:grid-cols-2'>
-                {/* NAME */}
-                <div className='space-y-2'>
-                    <label className='text-sm font-medium'>Nama</label>
-                    <Input name='name' placeholder='Nama kamu' required />
+            <form onSubmit={handleSubmit} className='grid gap-6 md:grid-cols-[1fr_2fr]'>
+                <div className='space-y-4'>
+                    <div className='space-y-2'>
+                        <label className='text-sm font-medium'>Nama</label>
+                        <Input name='name' placeholder='Nama kamu' required />
+                    </div>
+
+                    <div className='space-y-2'>
+                        <label className='text-sm font-medium'>Email</label>
+                        <Input type='email' name='email' placeholder='email@example.com' required />
+                    </div>
+
+                    <div className='space-y-2'>
+                        <label className='text-sm font-medium'>
+                            Nomor HP <span>(opsional)</span>
+                        </label>
+                        <Input name='phone' placeholder='+62 812 xxxx xxxx' />
+                    </div>
                 </div>
 
-                {/* EMAIL */}
                 <div className='space-y-2'>
-                    <label className='text-sm font-medium'>Email</label>
-                    <Input type='email' name='email' placeholder='email@example.com' required />
-                </div>
-
-                {/* PHONE (OPTIONAL) */}
-                <div className='space-y-2 md:col-span-2'>
-                    <label className='text-sm font-medium'>
-                        Nomor HP <span>(opsional)</span>
-                    </label>
-                    <Input name='phone' placeholder='+62 812 xxxx xxxx' />
-                </div>
-                <div className='space-y-2 md:col-span-2'>
                     <label className='text-sm font-medium'>Pesan</label>
                     <Textarea
                         name='message'
                         placeholder='Tulis pesan kamu di sini...'
-                        rows={5}
+                        rows={8}
                         required
                     />
                 </div>
+
                 <div className='flex justify-end md:col-span-2'>
                     <Button type='submit' disabled={loading}>
                         {loading ? 'Mengirim...' : 'Kirim Pesan'}

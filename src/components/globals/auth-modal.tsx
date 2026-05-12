@@ -21,6 +21,7 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from '../ui/input-group'
 import { Eye, EyeOff } from 'lucide-react';
 import { Link } from '@/lib/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import ForgotPasswordDialog from './forgot-password';
 
 interface AuthDialogProps {
     open: boolean;
@@ -246,49 +247,69 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                         )}
                         <form onSubmit={handleSubmit} className='space-y-4'>
                             {mode === 'register' && (
-                                <Input
-                                    placeholder={t('name')}
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                />
+                                <div className='space-y-2'>
+                                    <label htmlFor='auth-name' className='text-sm font-medium'>
+                                        {t('name')}
+                                    </label>
+                                    <Input
+                                        id='auth-name'
+                                        placeholder={t('name')}
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                </div>
                             )}
-                            <Input
-                                type='email'
-                                placeholder={t('email')}
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                aria-invalid={showEmailRuleError}
-                            />
+                            <div className='space-y-2'>
+                                <label htmlFor='auth-email' className='text-sm font-medium'>
+                                    {t('email')}
+                                </label>
+                                <Input
+                                    id='auth-email'
+                                    type='email'
+                                    placeholder={t('email')}
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    aria-invalid={showEmailRuleError}
+                                />
+                            </div>
                             {showEmailRuleError && (
                                 <p className='text-destructive text-sm'>{t('invalidEmail')}</p>
                             )}
-                            <InputGroup>
-                                <InputGroupInput
-                                    placeholder={t('password')}
-                                    type={showPassword ? 'text' : 'password'}
-                                    id='password'
-                                    name='password'
-                                    value={password}
-                                    autoComplete='password'
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    aria-invalid={showPasswordRuleError}
-                                />
-                                <InputGroupAddon align='inline-end' className='pr-4'>
-                                    <button
-                                        type='button'
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        aria-label={
-                                            showPassword ? t('hidePassword') : t('showPassword')
-                                        }
-                                    >
-                                        {showPassword ? (
-                                            <EyeOff className='hover:stroke-primary size-5' />
-                                        ) : (
-                                            <Eye className='hover:stroke-primary size-5' />
-                                        )}
-                                    </button>
-                                </InputGroupAddon>
-                            </InputGroup>
+                            <div className='space-y-2'>
+                                <div className='flex items-center justify-between'>
+                                    <label htmlFor='auth-password' className='text-sm font-medium'>
+                                        {t('password')}
+                                    </label>
+                                    {isLogin && <ForgotPasswordDialog />}
+                                </div>
+                                <InputGroup>
+                                    <InputGroupInput
+                                        id='auth-password'
+                                        placeholder={t('password')}
+                                        type={showPassword ? 'text' : 'password'}
+                                        name='password'
+                                        value={password}
+                                        autoComplete='password'
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        aria-invalid={showPasswordRuleError}
+                                    />
+                                    <InputGroupAddon align='inline-end' className='pr-4'>
+                                        <button
+                                            type='button'
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            aria-label={
+                                                showPassword ? t('hidePassword') : t('showPassword')
+                                            }
+                                        >
+                                            {showPassword ? (
+                                                <EyeOff className='hover:stroke-primary size-5' />
+                                            ) : (
+                                                <Eye className='hover:stroke-primary size-5' />
+                                            )}
+                                        </button>
+                                    </InputGroupAddon>
+                                </InputGroup>
+                            </div>
                             {showPasswordRuleError && (
                                 <p className='text-destructive text-sm'>{t('invalidPassword')}</p>
                             )}

@@ -723,7 +723,7 @@ export async function forgotPassword(c: Context) {
 
         const resetToken = await generateToken(payload);
 
-        const resetLink = `${process.env.FRONTEND_URL}/verify/reset-password?token=${resetToken}`;
+        const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
 
         await sendEmail({
             to: user.email,

@@ -64,7 +64,7 @@ export default async function DistroDetail({
     return (
         <NextIntlClientProvider locale={lang} messages={messages}>
             <main className='grid flex-col gap-10 p-6 md:px-12 lg:grid-cols-3 lg:px-20'>
-                <div className='mx-auto max-w-330 space-y-12 overflow-hidden py-6 lg:col-span-2'>
+                <div className='mx-auto w-full max-w-330 space-y-12 overflow-hidden py-6 lg:col-span-2'>
                     <div className='flex items-center gap-4'>
                         <Logo name={distro.name} image={distro.logo ?? undefined} size='lg' />
                         <div>

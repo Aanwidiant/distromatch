@@ -35,7 +35,8 @@ export default function Header({ isSidebarOpen, toggleSidebar }: HeaderProps) {
                     <div className='bg-stroke mx-2 hidden h-6 w-px lg:block' />
                     {isAuthenticated ? <UserDropdown /> : <AuthAction />}
                 </div>
-                <div className='flex h-full items-center p-4 lg:hidden'>
+                <div className='flex h-full items-center gap-6 p-4 lg:hidden'>
+                    {isAuthenticated && <UserDropdown />}
                     <HamburgerMenu isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
                 </div>
             </div>

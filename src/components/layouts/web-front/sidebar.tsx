@@ -2,6 +2,7 @@ import LanguageSwitcher from '@/components/globals/locale-dropdown';
 import Navigation from './navigation';
 import ThemeToggle from '@/components/theme/theme-toggle';
 import AuthAction from './auth-action';
+import { useAuthStore } from '@/stores/auth-store';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -9,6 +10,8 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
+    const { isAuthenticated } = useAuthStore();
+
     return (
         <div>
             <div
@@ -17,7 +20,7 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
                 <div className='flex h-full flex-col gap-8 px-8 py-6'>
                     <Navigation layout='sidebar' toggleSidebar={toggleSidebar} />
                     <LanguageSwitcher />
-                    <AuthAction layout='sidebar' />
+                    {!isAuthenticated && <AuthAction layout='sidebar' />}
                     <div className='mt-auto flex justify-center'>
                         <ThemeToggle />
                     </div>

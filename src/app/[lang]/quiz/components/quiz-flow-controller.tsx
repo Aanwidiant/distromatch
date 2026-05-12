@@ -6,7 +6,7 @@ import { useQuizStore, QUESTION_KEYS } from '@/stores/quiz-store';
 import { useAuthStore } from '@/stores/auth-store';
 import Fetch from '@/lib/fetch';
 import { toast } from 'sonner';
-import QuizFlow from '@/components/quiz/quiz-flow';
+import QuizFlow from '@/app/[lang]/quiz/components/quiz-flow';
 
 export default function QuizFlowController() {
     const router = useRouter();

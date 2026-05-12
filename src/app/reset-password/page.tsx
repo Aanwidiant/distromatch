@@ -60,7 +60,7 @@ export default function ResetPasswordPage() {
             setLoading(true);
             const res = await Fetch.POST('/auth/password/reset', {
                 token,
-                newPassword,
+                password: newPassword,
             });
 
             if (res?.success) {
@@ -79,83 +79,89 @@ export default function ResetPasswordPage() {
     };
 
     return (
-        <div className='bg-background min-h-screen'>
-            <div className='mx-auto grid min-h-screen w-full max-w-5xl grid-cols-1 gap-8 px-6 py-12 lg:grid-cols-2'>
-                <div className='flex flex-col justify-center'>
-                    <div className='mb-6 space-y-2'>
-                        <h1 className='text-2xl font-semibold'>Reset your password</h1>
-                        <p className='text-grey-3 text-sm'>
-                            Enter a strong new password for your account.
-                        </p>
-                    </div>
+        <main className='bg-background flex min-h-screen items-center justify-center px-6 py-12'>
+            <div className='border-stroke bg-bg-2 mx-auto w-full max-w-5xl rounded-2xl p-6 shadow-sm md:p-8'>
+                <div className='grid gap-8 md:grid-cols-[minmax(0,420px)_1fr] md:items-center'>
+                    <div>
+                        <div className='mb-6 space-y-2'>
+                            <h1 className='text-2xl font-semibold'>Reset your password</h1>
+                            <p className='text-grey-3 text-sm'>
+                                Enter a strong new password for your account.
+                            </p>
+                        </div>
 
-                    <form className='space-y-4' onSubmit={handleSubmit}>
-                        <div className='space-y-2'>
-                            <Label htmlFor='new-password'>New password</Label>
-                            <Input
-                                id='new-password'
-                                type='password'
-                                value={newPassword}
-                                onChange={(event) => setNewPassword(event.target.value)}
-                                placeholder='Enter your new password'
-                                autoComplete='new-password'
-                                required
-                                aria-invalid={showPasswordRuleError}
-                            />
-                            {showPasswordRuleError && (
-                                <p className='text-destructive text-sm'>
-                                    Must be at least 8 characters and include uppercase, lowercase,
-                                    number, and special character.
+                        <form className='space-y-6' onSubmit={handleSubmit}>
+                            <div className='space-y-2'>
+                                <Label htmlFor='new-password'>New password</Label>
+                                <Input
+                                    id='new-password'
+                                    type='password'
+                                    value={newPassword}
+                                    onChange={(event) => setNewPassword(event.target.value)}
+                                    placeholder='Enter your new password'
+                                    autoComplete='new-password'
+                                    required
+                                    aria-invalid={showPasswordRuleError}
+                                />
+                                {showPasswordRuleError && (
+                                    <p className='text-destructive text-sm'>
+                                        Must be at least 8 characters and include uppercase,
+                                        lowercase, number, and special character.
+                                    </p>
+                                )}
+                            </div>
+
+                            <div className='space-y-2'>
+                                <Label htmlFor='confirm-password'>Confirm new password</Label>
+                                <Input
+                                    id='confirm-password'
+                                    type='password'
+                                    value={confirmPassword}
+                                    onChange={(event) => setConfirmPassword(event.target.value)}
+                                    placeholder='Re-enter your new password'
+                                    autoComplete='new-password'
+                                    required
+                                    aria-invalid={showConfirmMismatchError}
+                                />
+                                {showConfirmMismatchError && (
+                                    <p className='text-destructive text-sm'>
+                                        Passwords do not match.
+                                    </p>
+                                )}
+                            </div>
+
+                            {errorMessage && (
+                                <p className='text-destructive text-sm'>{errorMessage}</p>
+                            )}
+
+                            {redirectCountdown !== null && (
+                                <p className='text-grey-3 text-sm'>
+                                    Redirecting in{' '}
+                                    <span className='font-semibold'>{redirectCountdown}</span>{' '}
+                                    seconds...
                                 </p>
                             )}
-                        </div>
 
-                        <div className='space-y-2'>
-                            <Label htmlFor='confirm-password'>Confirm new password</Label>
-                            <Input
-                                id='confirm-password'
-                                type='password'
-                                value={confirmPassword}
-                                onChange={(event) => setConfirmPassword(event.target.value)}
-                                placeholder='Re-enter your new password'
-                                autoComplete='new-password'
-                                required
-                                aria-invalid={showConfirmMismatchError}
-                            />
-                            {showConfirmMismatchError && (
-                                <p className='text-destructive text-sm'>Passwords do not match.</p>
-                            )}
-                        </div>
+                            <div className='flex flex-col gap-3 sm:flex-row'>
+                                <Button type='submit' disabled={loading} className='sm:w-auto'>
+                                    {loading ? 'Resetting...' : 'Reset password'}
+                                </Button>
+                                <Button
+                                    type='button'
+                                    variant='outline'
+                                    onClick={() => router.replace('/')}
+                                >
+                                    Back to Home
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
 
-                        {errorMessage && <p className='text-destructive text-sm'>{errorMessage}</p>}
-
-                        {redirectCountdown !== null && (
-                            <p className='text-grey-3 text-sm'>
-                                Redirecting in{' '}
-                                <span className='font-semibold'>{redirectCountdown}</span>{' '}
-                                seconds...
-                            </p>
-                        )}
-
-                        <div className='flex items-center gap-3'>
-                            <Button type='submit' disabled={loading}>
-                                {loading ? 'Resetting...' : 'Reset password'}
-                            </Button>
-                            <Button
-                                type='button'
-                                variant='ghost'
-                                onClick={() => router.replace('/')}
-                            >
-                                Back to Home
-                            </Button>
-                        </div>
-                    </form>
-                </div>
-
-                <div className='border-border bg-muted/40 hidden items-center justify-center rounded-2xl border border-dashed lg:flex'>
-                    <p className='text-grey-3 text-sm'>Image placeholder</p>
+                    <div className='border-border bg-muted/40 hidden h-105 w-full items-center justify-center rounded-2xl border border-dashed md:flex'>
+                        <p className='text-grey-3 text-sm'>Image placeholder</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }

@@ -1,9 +1,9 @@
 import { Category, CATEGORIES } from '@/lib/quiz-data';
 import { Button } from '@/components/ui/button';
-import QuizProgress from '@/components/quiz/progress';
-import CategoryCard from '@/components/quiz/category-card';
+import QuizProgress from './progress';
+import CategoryCard from './category-card';
 import { ArrowLeft, ArrowRight, Loader2, Sparkles } from 'lucide-react';
-import { CATEGORY_ICONS } from '@/components/quiz/category-icons';
+import { CATEGORY_ICONS } from './category-icons';
 
 type QuizFlowProps = {
     category: Category;
@@ -34,10 +34,10 @@ export default function QuizFlow({
 }: QuizFlowProps) {
     return (
         <main className='flex flex-col p-6 md:px-12 lg:px-20'>
-            <div className='mx-auto w-full max-w-330 space-y-8 overflow-hidden py-6'>
-                <QuizProgress answeredCount={answeredCount} />
+            <div className='mx-auto w-full max-w-330 space-y-6 overflow-hidden py-6'>
                 <div className='grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr]'>
-                    <aside className='order-2 md:order-0'>
+                    <aside className='order-2 space-y-4 md:order-0'>
+                        <QuizProgress answeredCount={answeredCount} />
                         <div className='border-stroke bg-bg-2 rounded-xl border p-4'>
                             <div className='text-grey-3 mb-3 font-mono text-xs tracking-widest uppercase'>
                                 Daftar Kategori
@@ -49,7 +49,6 @@ export default function QuizFlow({
                                     const isActive = index === currentStep;
                                     const isDone = answeredByCategory[index];
                                     const isDisabled = index > maxReachableStep;
-
                                     return (
                                         <button
                                             key={cat.id}

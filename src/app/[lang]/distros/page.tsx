@@ -199,7 +199,9 @@ export default async function DistroListPage({
                                         </Button>
                                     ) : (
                                         <Button variant='outline' asChild>
-                                            <Link href={buildUrl(meta.currentPage - 1)}>Prev</Link>
+                                            <Link href={buildUrl(meta.currentPage - 1)}>
+                                                {t('prev')}
+                                            </Link>
                                         </Button>
                                     )}
                                     {pages.map((p, i) =>
@@ -226,7 +228,9 @@ export default async function DistroListPage({
                                         </Button>
                                     ) : (
                                         <Button variant='outline' asChild>
-                                            <Link href={buildUrl(meta.currentPage + 1)}>Next</Link>
+                                            <Link href={buildUrl(meta.currentPage + 1)}>
+                                                {t('next')}
+                                            </Link>
                                         </Button>
                                     )}
                                 </div>
