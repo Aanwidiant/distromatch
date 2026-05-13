@@ -40,12 +40,12 @@ export default async function DssMeta({ id, username }: Props) {
 
     return (
         <div className='bg-background border-stroke flex flex-col gap-5 rounded-2xl border p-6 md:flex-row md:items-center md:justify-between'>
-            <div className='flex items-center gap-4'>
+            <div className='flex flex-col items-center gap-4 md:flex-row'>
                 <ProfilePicture username={meta.name} image={meta.photo ?? undefined} size='xl' />
-                <div className='space-y-1'>
+                <div className='space-y-1 text-center md:text-start'>
                     <h2 className='text-lg font-semibold'>{meta.name}</h2>
-                    <p className='ext-sm'>@{meta.username}</p>
-                    <p className='ext-sm'>{meta.email}</p>
+                    <p className='text-sm'>@{meta.username}</p>
+                    <p className='text-sm'>{meta.email}</p>
                 </div>
             </div>
             <div className='space-y-1 text-sm'>

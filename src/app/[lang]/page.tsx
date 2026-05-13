@@ -6,7 +6,7 @@ import PreviewSection from './landing/components/preview-section';
 import TargetUsersSection from './landing/components/target-users-section';
 import ValuePropsSection from './landing/components/value-props-section';
 
-export default function LandingPage() {
+export default async function LandingPage() {
     return (
         <main className='p-6 md:px-12 lg:px-20'>
             <div className='mx-auto max-w-330 space-y-16 overflow-hidden py-6'>

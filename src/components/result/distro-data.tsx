@@ -10,6 +10,7 @@ import {
 import { BlockMath } from 'react-katex';
 import { FORMULAS } from '@/lib/formulas';
 import 'katex/dist/katex.min.css';
+import { getTranslations } from 'next-intl/server';
 
 type DistroRow = {
     distro: string;
@@ -63,22 +64,23 @@ async function getData(runId: string): Promise<{
 
 export default async function DistroData({ runId }: Props) {
     const { distro, denominator } = await getData(runId);
+    const t = await getTranslations('result.distro');
 
     if (!distro.length || !denominator) {
-        return <div>Failed to load data</div>;
+        return <div>{t('status.failed')}</div>;
     }
 
     return (
         <div className='grid gap-6 lg:grid-cols-3'>
             {/* TABLE SECTION */}
-            <div className='space-y-6 lg:col-span-2'>
+            <div className='space-y-6 overflow-x-auto lg:col-span-2'>
                 {/* DISTRO TABLE */}
-                <div className='bg-background border-stroke overflow-x-auto rounded-2xl border'>
+                <div className='bg-background border-stroke rounded-2xl border'>
                     <div className='border-stroke border-b p-5'>
-                        <h2 className='text-xl font-semibold'>Linux Distribution Dataset</h2>
+                        <h2 className='text-xl font-semibold'>{t('dataset.title')}</h2>
 
                         <p className='text-muted-foreground mt-1 text-sm'>
-                            Raw criteria values used in the TOPSIS calculation.
+                            {t('dataset.description')}
                         </p>
                     </div>
 
@@ -86,24 +88,28 @@ export default async function DistroData({ runId }: Props) {
                         <TableHeader>
                             <TableRow className='bg-bg-2 hover:bg-bg-2'>
                                 <TableHead className='min-w-36 font-semibold'>
-                                    Distribution
-                                </TableHead>
-
-                                <TableHead className='text-center font-semibold'>UX</TableHead>
-
-                                <TableHead className='text-center font-semibold'>
-                                    Performance
+                                    {t('table.columnDistro')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Stability
+                                    {t('table.columnUx')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Features
+                                    {t('table.columnPerformance')}
                                 </TableHead>
 
-                                <TableHead className='text-center font-semibold'>Support</TableHead>
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnStability')}
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnFeatures')}
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnSupport')}
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
 
@@ -130,39 +136,47 @@ export default async function DistroData({ runId }: Props) {
                 {/* DENOMINATOR TABLE */}
                 <div className='bg-background border-stroke overflow-x-auto rounded-2xl border'>
                     <div className='border-stroke border-b p-5'>
-                        <h2 className='text-xl font-semibold'>TOPSIS Denominator</h2>
+                        <h2 className='text-xl font-semibold'>{t('denominator.title')}</h2>
 
                         <p className='text-muted-foreground mt-1 text-sm'>
-                            Vector normalization denominator for each criterion.
+                            {t('denominator.description')}
                         </p>
                     </div>
 
                     <Table>
                         <TableHeader>
                             <TableRow className='bg-bg-2 hover:bg-bg-2'>
-                                <TableHead className='font-semibold'>Criteria</TableHead>
-
-                                <TableHead className='text-center font-semibold'>UX</TableHead>
-
-                                <TableHead className='text-center font-semibold'>
-                                    Performance
+                                <TableHead className='font-semibold'>
+                                    {t('table.columnCriteria')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Stability
+                                    {t('table.columnUx')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Features
+                                    {t('table.columnPerformance')}
                                 </TableHead>
 
-                                <TableHead className='text-center font-semibold'>Support</TableHead>
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnStability')}
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnFeatures')}
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnSupport')}
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
 
                         <TableBody>
                             <TableRow>
-                                <TableCell className='font-medium'>Denominator</TableCell>
+                                <TableCell className='font-medium'>
+                                    {t('table.rowDenominator')}
+                                </TableCell>
 
                                 <TableCell className='text-center'>{denominator.ux}</TableCell>
 
@@ -188,17 +202,18 @@ export default async function DistroData({ runId }: Props) {
             {/* FORMULA SECTION */}
             <div className='space-y-5'>
                 <div className='bg-background border-stroke rounded-2xl border p-5'>
-                    <h2 className='text-xl font-semibold'>Vector Normalization</h2>
+                    <h2 className='text-xl font-semibold'>{t('normalization.title')}</h2>
 
                     <p className='text-muted-foreground mt-1 text-sm'>
-                        Formula used to calculate the denominator in the TOPSIS normalization
-                        process.
+                        {t('normalization.description')}
                     </p>
                 </div>
 
                 <div className='bg-background border-stroke rounded-2xl border p-5'>
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Denominator Formula</h3>
+                        <h3 className='text-base font-semibold'>
+                            {t('normalization.formulaTitle')}
+                        </h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.topsisDenominator} />

@@ -1,3 +1,120 @@
 {
-    "test": "test"
+    "heroSection": {
+        "badge": "Decision Support System",
+        "title": {
+            "prefix": "Linux distro recommendations based on",
+            "highlight": "real calculations"
+        },
+        "description": "Distromatch maps your needs, evaluates each criterion, then ranks the most suitable Linux distros transparently and explainably.",
+        "features": {
+            "finalUtilityScore": "Final utility score 0–1",
+            "criteriaBreakdown": "Criteria contribution breakdown",
+            "auditableRanking": "Easily auditable ranking",
+            "measurableDecisionMethod": "Measurable DSS method"
+        },
+        "buttons": {
+            "startQuiz": "Start Quiz",
+            "learnMore": "Learn More"
+        },
+        "visualization": "Placeholder calculation flow visualization"
+    },
+    "valuePropsSection": {
+        "items": {
+            "transparent": {
+                "title": "Transparent",
+                "description": "Every score can be traced, from survey results to utility values."
+            },
+            "objective": {
+                "title": "Objective",
+                "description": "Uses TOPSIS & Bayesian shrinkage for more stable results."
+            },
+            "personal": {
+                "title": "Personalized",
+                "description": "Symmetric penalties ensure the distro matches your experience level."
+            }
+        }
+    },
+    "howItWorksSection": {
+        "title": "How does the calculation work?",
+        "description": "The process from survey data to distro ranking.",
+        "stepLabel": "Step",
+        "steps": {
+            "surveyWeight": {
+                "title": "Survey & Weighting",
+                "description": "User needs are evaluated by dimension and then weighted."
+            },
+            "topsis": {
+                "title": "TOPSIS",
+                "description": "Normalization, ideal solutions, and closeness coefficient."
+            },
+            "bayesianPenalty": {
+                "title": "Bayesian + Penalty",
+                "description": "Confidence shrinkage & level penalties for the final utility score."
+            }
+        }
+    },
+    "previewSection": {
+        "label": "Ranking & audit preview",
+        "title": "Transparent and auditable rankings",
+        "description": "Recommendation results display distro rankings along with final utility scores. Each score can be traced through the criteria contribution summary, making the decision process transparent and auditable.",
+        "highlights": {
+            "finalUtilityScore": "Clear final utility scores",
+            "criteriaBreakdown": "Criteria contribution breakdown",
+            "verifiableRanking": "Easily verifiable rankings"
+        }
+    },
+    "targetUsersSection": {
+        "title": "Who is this for?",
+        "users": {
+            "linuxBeginner": {
+                "title": "Linux Beginners",
+                "description": "Need clear and easy-to-understand recommendations."
+            },
+            "itStudent": {
+                "title": "IT Students",
+                "description": "Looking for a suitable distro for learning and practical work."
+            },
+            "developer": {
+                "title": "Developers",
+                "description": "Need a fast workflow with stable tools."
+            }
+        }
+    },
+    "faqSection": {
+        "title": "Frequently Asked Questions",
+        "items": {
+            "whatIsDistromatch": {
+                "question": "What is Distromatch?",
+                "answer": "Distromatch is a Linux distro recommendation platform based on a transparent and measurable decision support system."
+            },
+            "whyTopsisBayesian": {
+                "question": "Why use TOPSIS and Bayesian shrinkage?",
+                "answer": "TOPSIS evaluates closeness to the ideal solution, while Bayesian shrinkage stabilizes scores when data is limited."
+            },
+            "howPenaltyWorks": {
+                "question": "How are level penalties applied?",
+                "answer": "Symmetric penalties reduce scores when a distro level is too far from the user's preference, keeping recommendations relevant."
+            },
+            "recommendationExplainable": {
+                "question": "Can the recommendation results be explained?",
+                "answer": "Yes. Every score can be traced through the criteria contribution summary up to the final utility value."
+            },
+            "freeToUse": {
+                "question": "Is Distromatch free to use?",
+                "answer": "Currently, Distromatch is available for free to all users."
+            },
+            "needRegistration": {
+                "question": "Do I need to register to use Distromatch?",
+                "answer": "Yes. Registration and login are required so recommendation results can be saved and audited."
+            }
+        }
+    },
+    "ctaSection": {
+        "title": "Ready to find your best Linux distro?",
+        "description": "Start now and get calculation-based recommendations in just minutes.",
+        "button": {
+            "startQuiz": "Start the Quiz Now"
+        },
+        "placeholder": "CTA image placeholder"
+    }
 }

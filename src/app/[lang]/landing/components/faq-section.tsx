@@ -5,46 +5,46 @@ import {
     AccordionTrigger,
 } from '@/components/ui/accordion';
 import { CircleChevronDown } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
-const FAQ_ITEMS = [
-    {
-        id: 'faq-1',
-        question: 'Apa itu Distromatch?',
-        answer: 'Distromatch adalah platform rekomendasi distro Linux berbasis sistem pendukung keputusan yang transparan dan terukur.',
-    },
-    {
-        id: 'faq-2',
-        question: 'Mengapa menggunakan TOPSIS dan Bayesian shrinkage?',
-        answer: 'TOPSIS menilai kedekatan terhadap solusi ideal, sedangkan Bayesian shrinkage menstabilkan skor ketika data terbatas.',
-    },
-    {
-        id: 'faq-3',
-        question: 'Bagaimana penalti level diterapkan?',
-        answer: 'Penalti simetris menurunkan skor jika level distro terlalu jauh dari preferensi pengguna sehingga rekomendasi tetap relevan.',
-    },
-    {
-        id: 'faq-4',
-        question: 'Apakah hasil rekomendasi dapat dijelaskan?',
-        answer: 'Ya. Setiap skor dapat ditelusuri melalui ringkasan kontribusi kriteria hingga utility akhir.',
-    },
-    {
-        id: 'faq-5',
-        question: 'Apakah Distromatch dapat digunakan secara gratis?',
-        answer: 'Saat ini Distromatch dapat digunakan secara gratis oleh seluruh pengguna.',
-    },
-    {
-        id: 'faq-6',
-        question: 'Apakah saya perlu mendaftar untuk menggunakan Distromatch?',
-        answer: 'Ya. Pendaftaran dan login diperlukan agar hasil rekomendasi dapat disimpan serta diaudit.',
-    },
-];
+export default async function FaqSection() {
+    const t = await getTranslations('landing.faqSection');
+    const FAQ_ITEMS = [
+        {
+            id: 'faq-1',
+            question: t('items.whatIsDistromatch.question'),
+            answer: t('items.whatIsDistromatch.answer'),
+        },
+        {
+            id: 'faq-2',
+            question: t('items.whyTopsisBayesian.question'),
+            answer: t('items.whyTopsisBayesian.answer'),
+        },
+        {
+            id: 'faq-3',
+            question: t('items.howPenaltyWorks.question'),
+            answer: t('items.howPenaltyWorks.answer'),
+        },
+        {
+            id: 'faq-4',
+            question: t('items.recommendationExplainable.question'),
+            answer: t('items.recommendationExplainable.answer'),
+        },
+        {
+            id: 'faq-5',
+            question: t('items.freeToUse.question'),
+            answer: t('items.freeToUse.answer'),
+        },
+        {
+            id: 'faq-6',
+            question: t('items.needRegistration.question'),
+            answer: t('items.needRegistration.answer'),
+        },
+    ];
 
-export default function FaqSection() {
     return (
         <section className='mx-auto max-w-5xl space-y-8'>
-            <h2 className='text-center text-2xl font-semibold md:text-3xl'>
-                Pertanyaan yang Sering Diajukan
-            </h2>
+            <h2 className='text-center text-2xl font-semibold md:text-3xl'>{t('title')}</h2>
             <div className='flex w-full'>
                 <Accordion
                     type='single'

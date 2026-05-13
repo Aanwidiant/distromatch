@@ -4,12 +4,9 @@ import Logo from '@/components/globals/logo';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/lib/i18n/navigation';
 import SearchDistro from '@/components/globals/search-distro';
-import LoadingLocale from '@/components/globals/loading-locale';
-import { Suspense } from 'react';
-import { getTranslations } from 'next-intl/server';
-import { NextIntlClientProvider } from 'next-intl';
-import { loadMessages } from '@/lib/i18n/get-messages';
+import { getMessages, getTranslations } from 'next-intl/server';
 import EmptyState from '@/components/globals/empty-state';
+import { NextIntlClientProvider } from 'next-intl';
 
 type Distros = {
     distro_id: number;
@@ -60,9 +57,8 @@ export default async function DistroListPage({
     const { lang } = await params;
     const { page: rawPage, search: rawSearch } = await searchParams;
     const t = await getTranslations({ locale: lang, namespace: 'distro' });
-    const tc = await getTranslations({ locale: lang, namespace: 'common' });
 
-    const messages = await loadMessages(lang, ['distro']);
+    const messages = await getMessages();
 
     const page = Math.max(1, Number(rawPage) || 1);
     const search = rawSearch?.trim() ?? '';
@@ -84,7 +80,7 @@ export default async function DistroListPage({
     };
 
     return (
-        <NextIntlClientProvider locale={lang} messages={messages}>
+        <NextIntlClientProvider messages={messages}>
             <main className='p-6 md:px-12 lg:px-20'>
                 {!res.success ? (
                     <EmptyState
@@ -121,121 +117,115 @@ export default async function DistroListPage({
                             </div>
                             <SearchDistro defaultValue={search} />
                         </div>
+                        <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+                            {data.map((item) => {
+                                const rating = Math.max(
+                                    0,
+                                    Math.min(5, Number(item.overall_rating) || 0)
+                                );
 
-                        <Suspense fallback={<LoadingLocale text={tc('loading')} />}>
-                            <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-                                {data.map((item) => {
-                                    const rating = Math.max(
-                                        0,
-                                        Math.min(5, Number(item.overall_rating) || 0)
-                                    );
+                                return (
+                                    <div
+                                        key={`${item.distro_id}-${item.slug}`}
+                                        className='bg-background border-stroke rounded-2xl border p-5 shadow-sm transition hover:shadow-md'
+                                    >
+                                        <div className='flex items-center justify-between'>
+                                            <Logo
+                                                name={item.name}
+                                                image={item.logo ?? undefined}
+                                                size='md'
+                                            />
+                                            <Button variant='outline' asChild size='sm'>
+                                                <Link href={`/distros/${item.slug}`}>
+                                                    {t('detail')}
+                                                </Link>
+                                            </Button>
+                                        </div>
 
-                                    return (
-                                        <div
-                                            key={`${item.distro_id}-${item.slug}`}
-                                            className='bg-background border-stroke rounded-2xl border p-5 shadow-sm transition hover:shadow-md'
-                                        >
-                                            <div className='flex items-center justify-between'>
-                                                <Logo
-                                                    name={item.name}
-                                                    image={item.logo ?? undefined}
-                                                    size='md'
-                                                />
-                                                <Button variant='outline' asChild size='sm'>
-                                                    <Link href={`/distros/${item.slug}`}>
-                                                        {t('detail')}
-                                                    </Link>
-                                                </Button>
+                                        <h2 className='text-foreground mt-3 text-lg font-semibold'>
+                                            {item.name}
+                                        </h2>
+                                        <div className='mt-3 flex items-center justify-between'>
+                                            <div className='flex items-center gap-2'>
+                                                <div className='flex gap-1'>
+                                                    {Array.from({ length: 5 }).map((_, idx) => {
+                                                        const fill = Math.max(
+                                                            0,
+                                                            Math.min(1, rating - idx)
+                                                        );
+                                                        return (
+                                                            <span
+                                                                key={idx}
+                                                                className='relative size-4'
+                                                            >
+                                                                <Star className='text-grey-1 size-4' />
+                                                                <span
+                                                                    className='absolute inset-0 overflow-hidden'
+                                                                    style={{
+                                                                        width: `${fill * 100}%`,
+                                                                    }}
+                                                                >
+                                                                    <Star className='fill-yellow text-yellow size-4' />
+                                                                </span>
+                                                            </span>
+                                                        );
+                                                    })}
+                                                </div>
+                                                <span className='text-grey-2 text-xs'>
+                                                    {rating.toFixed(1)}
+                                                </span>
                                             </div>
 
-                                            <h2 className='text-foreground mt-3 text-lg font-semibold'>
-                                                {item.name}
-                                            </h2>
-                                            <div className='mt-3 flex items-center justify-between'>
-                                                <div className='flex items-center gap-2'>
-                                                    <div className='flex gap-1'>
-                                                        {Array.from({ length: 5 }).map((_, idx) => {
-                                                            const fill = Math.max(
-                                                                0,
-                                                                Math.min(1, rating - idx)
-                                                            );
-                                                            return (
-                                                                <span
-                                                                    key={idx}
-                                                                    className='relative size-4'
-                                                                >
-                                                                    <Star className='text-grey-1 size-4' />
-                                                                    <span
-                                                                        className='absolute inset-0 overflow-hidden'
-                                                                        style={{
-                                                                            width: `${fill * 100}%`,
-                                                                        }}
-                                                                    >
-                                                                        <Star className='fill-yellow text-yellow size-4' />
-                                                                    </span>
-                                                                </span>
-                                                            );
-                                                        })}
-                                                    </div>
-                                                    <span className='text-grey-2 text-xs'>
-                                                        {rating.toFixed(1)}
-                                                    </span>
-                                                </div>
-
-                                                <div className='text-grey-2 flex items-center gap-1 text-xs'>
-                                                    <UserStar className='size-4' />
-                                                    {item.total_reviews}
-                                                </div>
+                                            <div className='text-grey-2 flex items-center gap-1 text-xs'>
+                                                <UserStar className='size-4' />
+                                                {item.total_reviews}
                                             </div>
                                         </div>
-                                    );
-                                })}
-                            </div>
-                            {meta.totalPages > 1 && (
-                                <div className='flex flex-wrap items-center justify-center gap-2'>
-                                    {meta.currentPage === 1 ? (
-                                        <Button variant='outline' disabled>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        {meta.totalPages > 1 && (
+                            <div className='flex flex-wrap items-center justify-center gap-2'>
+                                {meta.currentPage === 1 ? (
+                                    <Button variant='outline' disabled>
+                                        {t('prev')}
+                                    </Button>
+                                ) : (
+                                    <Button variant='outline' asChild>
+                                        <Link href={buildUrl(meta.currentPage - 1)}>
                                             {t('prev')}
+                                        </Link>
+                                    </Button>
+                                )}
+                                {pages.map((p, i) =>
+                                    p === '...' ? (
+                                        <span key={`ellipsis-${i}`} className='text-grey-2 px-2'>
+                                            ...
+                                        </span>
+                                    ) : p === meta.currentPage ? (
+                                        <Button key={`page-${p}`} variant='default' disabled>
+                                            {p}
                                         </Button>
                                     ) : (
-                                        <Button variant='outline' asChild>
-                                            <Link href={buildUrl(meta.currentPage - 1)}>
-                                                {t('prev')}
-                                            </Link>
+                                        <Button key={`page-${p}`} variant='outline' asChild>
+                                            <Link href={buildUrl(Number(p))}>{p}</Link>
                                         </Button>
-                                    )}
-                                    {pages.map((p, i) =>
-                                        p === '...' ? (
-                                            <span
-                                                key={`ellipsis-${i}`}
-                                                className='text-grey-2 px-2'
-                                            >
-                                                ...
-                                            </span>
-                                        ) : p === meta.currentPage ? (
-                                            <Button key={`page-${p}`} variant='default' disabled>
-                                                {p}
-                                            </Button>
-                                        ) : (
-                                            <Button key={`page-${p}`} variant='outline' asChild>
-                                                <Link href={buildUrl(Number(p))}>{p}</Link>
-                                            </Button>
-                                        )
-                                    )}
-                                    {meta.currentPage === meta.totalPages ? (
-                                        <Button variant='outline' disabled>
+                                    )
+                                )}
+                                {meta.currentPage === meta.totalPages ? (
+                                    <Button variant='outline' disabled>
+                                        {t('next')}
+                                    </Button>
+                                ) : (
+                                    <Button variant='outline' asChild>
+                                        <Link href={buildUrl(meta.currentPage + 1)}>
                                             {t('next')}
-                                        </Button>
-                                    ) : (
-                                        <Button variant='outline' asChild>
-                                            <Link href={buildUrl(meta.currentPage + 1)}>
-                                                {t('next')}
-                                            </Link>
-                                        </Button>
-                                    )}
-                                </div>
-                            )}
-                        </Suspense>
+                                        </Link>
+                                    </Button>
+                                )}
+                            </div>
+                        )}
                     </div>
                 )}
             </main>

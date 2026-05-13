@@ -47,5 +47,158 @@
         "invalidEmail": "Masukkan alamat email yang valid.",
         "invalidPassword": "Minimal 8 karakter dan harus menyertakan huruf besar, huruf kecil, angka, serta karakter khusus."
     },
-    "loading": "Mohon tunggu sebentar…"
+    "userDropdown": {
+        "menu": {
+            "adminDashboard": "Dashboard Admin",
+            "recommendationResults": "Hasil Rekomendasi",
+            "profile": "Profil",
+            "logout": "Logout"
+        },
+        "notifications": {
+            "logoutSuccess": "Logout berhasil",
+            "logoutFailed": "Gagal logout"
+        },
+        "accessibility": {
+            "triggerLabel": "Menu pengguna"
+        }
+    },
+    "forgotPassword": {
+        "title": "Lupa Password",
+        "description": "Masukkan alamat email Anda dan kami akan mengirimkan tautan untuk mengatur ulang password.",
+        "placeholder": "Masukkan email Anda",
+        "validation": {
+            "emailRequired": "Email wajib diisi.",
+            "emailInvalid": "Silakan masukkan alamat email yang valid."
+        },
+        "buttons": {
+            "cancel": "Batal",
+            "sendLink": "Kirim Tautan Reset",
+            "sending": "Mengirim..."
+        },
+        "notifications": {
+            "success": "Tautan reset berhasil dikirim.",
+            "failed": "Gagal meminta reset password."
+        }
+    },
+    "changeEmail": {
+        "title": "Ubah Email",
+        "description": "Masukkan alamat email baru Anda. Kami akan mengirimkan tautan verifikasi untuk mengonfirmasi perubahan tersebut.",
+        "placeholder": "Masukkan email baru Anda",
+        "validation": {
+            "emailRequired": "Email baru wajib diisi.",
+            "emailInvalid": "Silakan masukkan alamat email yang valid."
+        },
+        "buttons": {
+            "cancel": "Batal",
+            "sendVerification": "Kirim Email Verifikasi",
+            "sending": "Mengirim permintaan..."
+        },
+        "notifications": {
+            "failed": "Gagal meminta perubahan email."
+        }
+    },
+    "changePassword": {
+        "title": "Ubah Password",
+        "fields": {
+            "current": "Password Saat Ini",
+            "new": "Password Baru",
+            "confirm": "Konfirmasi Password Baru"
+        },
+        "validation": {
+            "requiredAll": "Semua kolom wajib diisi.",
+            "currentRequired": "Password saat ini wajib diisi.",
+            "mismatch": "Konfirmasi password tidak sesuai.",
+            "weakPassword": "Password minimal 8 karakter dan harus mengandung huruf besar, huruf kecil, angka, serta karakter spesial."
+        },
+        "buttons": {
+            "cancel": "Batal",
+            "update": "Perbarui Password",
+            "updating": "Memperbarui..."
+        },
+        "notifications": {
+            "failed": "Gagal mengubah password"
+        }
+    },
+    "changeProfilePicture": {
+        "title": {
+            "upload": "Unggah foto",
+            "crop": "Potong gambar lalu klik simpan"
+        },
+        "dropzone": {
+            "instruction": "Klik untuk unggah foto atau tarik dan lepas di sini"
+        },
+        "validation": {
+            "invalidType": "Tipe file tidak valid",
+            "fileTooLarge": "Ukuran file terlalu besar (maks 4MB)"
+        },
+        "buttons": {
+            "change": "Ganti",
+            "save": "Simpan",
+            "saving": "Menyimpan..."
+        },
+        "notifications": {
+            "failed": "Gagal mengunggah gambar"
+        }
+    },
+    "deleteAccount": {
+        "title": "Hapus Akun",
+        "description": "Tindakan ini permanen dan tidak dapat dibatalkan. Silakan ketik email Anda untuk konfirmasi.",
+        "placeholder": "Masukkan email Anda untuk konfirmasi",
+        "validation": {
+            "emailRequired": "Konfirmasi email wajib diisi.",
+            "emailInvalid": "Silakan masukkan alamat email yang valid."
+        },
+        "buttons": {
+            "cancel": "Batal",
+            "delete": "Hapus Permanen",
+            "deleting": "Menghapus..."
+        },
+        "notifications": {
+            "failed": "Gagal menghapus akun."
+        }
+    },
+    "deletePhoto": {
+        "title": "Hapus Foto Profil?",
+        "description": "Apakah Anda yakin ingin menghapus foto profil Anda? Tindakan ini tidak dapat dibatalkan.",
+        "buttons": {
+            "cancel": "Batal",
+            "delete": "Hapus",
+            "deleting": "Menghapus..."
+        },
+        "notifications": {
+            "success": "Foto profil berhasil dihapus",
+            "failed": "Gagal menghapus foto",
+            "error": "Terjadi kesalahan"
+        }
+    },
+    "profile": {
+        "title": "Profil Pengguna",
+        "photoSection": {
+            "label": "Foto Profil",
+            "hint": "PNG, JPG di bawah 4MB",
+            "change": "Ganti Foto Profil",
+            "delete": "Hapus Foto Profil"
+        },
+        "form": {
+            "name": "Nama",
+            "username": "Username",
+            "email": "Email",
+            "buttons": {
+                "save": "Simpan",
+                "saving": "Menyimpan...",
+                "changeEmail": "Ganti Email",
+                "changePassword": "Ganti Kata Sandi"
+            },
+            "validation": {
+                "nameRequired": "Nama wajib diisi"
+            }
+        },
+        "dangerZone": {
+            "title": "Zona Berbahaya",
+            "button": "Hapus Akun"
+        },
+        "notifications": {
+            "failed": "Gagal memperbarui profil"
+        }
+    }
 }

@@ -4,6 +4,8 @@ import { Star, UserStar, CalendarClock } from 'lucide-react';
 import Logo from '../globals/logo';
 import { Button } from '../ui/button';
 import { Link } from '@/lib/i18n/navigation';
+import { getTranslations } from 'next-intl/server';
+import { formatDateTime } from '@/lib/formate-date';
 
 type Recommendation = {
     rank_position: number;
@@ -30,10 +32,12 @@ type Response = {
 
 type Props = {
     runId: string;
+    lang: string;
 };
 
-export default async function TopResult({ runId }: Props) {
+export default async function TopResult({ runId, lang }: Props) {
     let data: Response['data'] | null = null;
+    const t = await getTranslations('result.topResult');
 
     try {
         const res = await Fetch.GET<Response>(`/dss/${runId}/recommendations`);
@@ -50,11 +54,11 @@ export default async function TopResult({ runId }: Props) {
     return (
         <>
             <div className='space-y-2'>
-                <h1 className='text-2xl font-bold'>Top {data.top_n} Linux Recommendations</h1>
+                <h1 className='text-2xl font-bold'>{t('title', { n: data.top_n })}</h1>
                 <p className='text-grey-2 flex gap-2 text-sm'>
-                    Generated for <span className='font-medium'>{data.user_name}</span>
+                    {t('generatedFor')} <span className='font-medium'>{data.user_name}</span>
                     <CalendarClock className='stroke-grey-2 size-5' />
-                    {new Date(data.run_created_at).toLocaleString()}
+                    {formatDateTime(data.run_created_at, lang)}
                 </p>
             </div>
             <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
@@ -77,7 +81,7 @@ export default async function TopResult({ runId }: Props) {
                                     />
                                 </div>
                                 <span className='bg-accent-1 text-primary border-primary/30 rounded-full border px-3 py-1 text-xs font-semibold'>
-                                    Score: {item.final_score}
+                                    {t('labels.score')}: {item.final_score}
                                 </span>
                             </div>
                             <h2 className='text-lg font-semibold'>{item.name}</h2>
@@ -104,14 +108,16 @@ export default async function TopResult({ runId }: Props) {
                                 <div className='flex items-center gap-2'>
                                     <UserStar className='stroke-grey-2 size-5' />
                                     <span className='text-grey-2 text-xs'>
-                                        {item.total_reviews} reviews
+                                        {item.total_reviews} {t('labels.reviews')}
                                     </span>
                                 </div>
                             </div>
                             <div className='space-y-2 text-xs'>
                                 {item.homepage_url && (
                                     <div className='flex flex-wrap items-center gap-2'>
-                                        <span className='text-grey-3 font-semibold'>Website</span>
+                                        <span className='text-grey-3 font-semibold'>
+                                            {t('labels.website')}
+                                        </span>
                                         <a
                                             href={item.homepage_url}
                                             target='_blank'
@@ -125,7 +131,9 @@ export default async function TopResult({ runId }: Props) {
                             </div>
                             <div className='flex justify-end'>
                                 <Button variant='outline' asChild size='sm'>
-                                    <Link href={`/distros/${item.slug}`}>Lihat detail</Link>
+                                    <Link href={`/distros/${item.slug}`}>
+                                        {t('labels.viewDetail')}
+                                    </Link>
                                 </Button>
                             </div>
                         </div>

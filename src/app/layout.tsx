@@ -2,11 +2,10 @@ import { ThemeProvider } from '@/providers/theme-provider';
 import './styles/globals.css';
 import { Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
-import { ChecklistCircle, CircleInfo } from '@/components/icons';
 import ThemeTransition from '@/components/theme/theme-transition';
 import AuthProvider from '@/providers/auth-provider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import DialogProvider from '@/providers/dialog-provider';
+import { CircleCheck, CircleX, Info } from 'lucide-react';
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -26,18 +25,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
                         <AuthProvider>
                             {children}
-                            <DialogProvider />
                             <Toaster
                                 position='bottom-right'
                                 icons={{
-                                    success: <ChecklistCircle className='size-6' />,
-                                    error: <CircleInfo className='size-6' />,
-                                    info: <CircleInfo className='size-6 rotate-180' />,
+                                    success: <CircleCheck className='size-6' />,
+                                    error: <CircleX className='size-6' />,
+                                    info: <Info className='size-6' />,
                                 }}
                                 duration={5000}
                                 toastOptions={{
                                     classNames: {
-                                        toast: `${poppins.className} transition-all duration-500 bg-background text-foreground ease-in-out border border-stroke shadow-grey-1 shadow-sm min-h-16`,
+                                        toast: `${poppins.className} transition-all duration-500 bg-bg-2! text-foreground! ease-in-out border border-stroke! shadow-grey-1 shadow-sm min-h-16`,
                                     },
                                 }}
                             />

@@ -1,11 +1,13 @@
-import { Category, CATEGORIES } from '@/lib/quiz-data';
+import { Category } from '@/lib/quiz-data';
 import { Button } from '@/components/ui/button';
 import QuizProgress from './progress';
 import CategoryCard from './category-card';
 import { ArrowLeft, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { CATEGORY_ICONS } from './category-icons';
+import { useTranslations } from 'next-intl';
 
 type QuizFlowProps = {
+    categories: Category[];
     category: Category;
     currentStep: number;
     answeredByCategory: boolean[];
@@ -20,6 +22,7 @@ type QuizFlowProps = {
 };
 
 export default function QuizFlow({
+    categories,
     category,
     currentStep,
     answeredByCategory,
@@ -32,6 +35,7 @@ export default function QuizFlow({
     onPrev,
     onNext,
 }: QuizFlowProps) {
+    const t = useTranslations('quiz.quizFlow');
     return (
         <main className='flex flex-col p-6 md:px-12 lg:px-20'>
             <div className='mx-auto w-full max-w-330 space-y-6 overflow-hidden py-6'>
@@ -40,10 +44,10 @@ export default function QuizFlow({
                         <QuizProgress answeredCount={answeredCount} />
                         <div className='border-stroke bg-bg-2 rounded-xl border p-4'>
                             <div className='text-grey-3 mb-3 font-mono text-xs tracking-widest uppercase'>
-                                Daftar Kategori
+                                {t('categoryList')}
                             </div>
                             <div className='flex flex-col gap-2'>
-                                {CATEGORIES.map((cat, index) => {
+                                {categories.map((cat, index) => {
                                     const Icon =
                                         CATEGORY_ICONS[cat.id as keyof typeof CATEGORY_ICONS];
                                     const isActive = index === currentStep;
@@ -85,7 +89,10 @@ export default function QuizFlow({
                                 })()}
                                 <div>
                                     <div className='text-grey-3 mb-0.5 font-mono text-xs tracking-widest uppercase'>
-                                        Kategori {category.id} dari {CATEGORIES.length}
+                                        {t('categoryList', {
+                                            current: category.id,
+                                            total: categories.length,
+                                        })}
                                     </div>
                                     <h2 className='text-2xl font-bold'>{category.title}</h2>
                                 </div>
@@ -103,7 +110,7 @@ export default function QuizFlow({
                                 className='gap-2 font-mono text-sm'
                             >
                                 <ArrowLeft className='size-4' />
-                                Sebelumnya
+                                {t('buttons.previous')}
                             </Button>
 
                             <Button
@@ -115,16 +122,16 @@ export default function QuizFlow({
                                 {isSubmitting ? (
                                     <>
                                         <Loader2 className='size-4 animate-spin' />
-                                        Menganalisis...
+                                        {t('loading.analyzing')}
                                     </>
                                 ) : isLastStep ? (
                                     <>
                                         <Sparkles className='size-4' />
-                                        Lihat Hasil
+                                        {t('buttons.viewResults')}
                                     </>
                                 ) : (
                                     <>
-                                        Lanjut
+                                        {t('buttons.next')}
                                         <ArrowRight className='size-4' />
                                     </>
                                 )}
@@ -132,7 +139,7 @@ export default function QuizFlow({
                         </div>
                         {!currentCatAnswered && (
                             <p className='text-grey-3 mt-4 text-center font-mono text-xs'>
-                                Jawab semua pertanyaan di kategori ini untuk melanjutkan
+                                {t('validation.completeCategory')}
                             </p>
                         )}
                     </section>

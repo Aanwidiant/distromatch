@@ -1,24 +1,26 @@
 import { BadgeCheck, Scale, UserRound } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
-const VALUE_PROPS = [
-    {
-        title: 'Transparan',
-        desc: 'Setiap skor bisa ditelusuri: dari survei hingga utility.',
-        icon: BadgeCheck,
-    },
-    {
-        title: 'Objektif',
-        desc: 'Menggunakan TOPSIS & Bayesian shrinkage untuk hasil yang stabil.',
-        icon: Scale,
-    },
-    {
-        title: 'Personal',
-        desc: 'Penalti simetris memastikan distro cocok dengan levelmu.',
-        icon: UserRound,
-    },
-];
+export default async function ValuePropsSection() {
+    const t = await getTranslations('landing.valuePropsSection');
+    const VALUE_PROPS = [
+        {
+            title: t('items.transparent.title'),
+            desc: t('items.transparent.description'),
+            icon: BadgeCheck,
+        },
+        {
+            title: t('items.objective.title'),
+            desc: t('items.objective.description'),
+            icon: Scale,
+        },
+        {
+            title: t('items.personal.title'),
+            desc: t('items.personal.description'),
+            icon: UserRound,
+        },
+    ];
 
-export default function ValuePropsSection() {
     return (
         <section className='grid gap-6 md:grid-cols-3'>
             {VALUE_PROPS.map((item) => (

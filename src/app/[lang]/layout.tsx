@@ -1,9 +1,10 @@
 import WebFrontLayout from '@/components/layouts/web-front/layout';
 import { NextIntlClientProvider } from 'next-intl';
 import { hasLocale } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/lib/i18n/routing';
-import { loadMessages } from '@/lib/i18n/get-messages';
+import DialogProvider from '@/providers/dialog-provider';
 
 export default async function LocaleLayout({
     children,
@@ -14,11 +15,14 @@ export default async function LocaleLayout({
 }) {
     const { lang } = await params;
     if (!hasLocale(routing.locales, lang)) notFound();
-    const messages = await loadMessages(lang, ['common']);
+    const messages = await getMessages();
 
     return (
         <NextIntlClientProvider locale={lang} messages={messages}>
-            <WebFrontLayout>{children}</WebFrontLayout>
+            <WebFrontLayout>
+                {children}
+                <DialogProvider />
+            </WebFrontLayout>
         </NextIntlClientProvider>
     );
 }

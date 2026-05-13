@@ -1,3 +1,221 @@
 {
-    "test": "test"
+    "resultListPage": {
+        "title": "Your DSS Results",
+        "table": {
+            "id": "ID",
+            "createdAt": "Created At",
+            "action": "Action"
+        },
+        "tooltip": {
+            "viewResult": "View Result",
+            "deleteResult": "Delete Result"
+        },
+        "pagination": {
+            "prev": "Prev",
+            "next": "Next"
+        },
+        "errors": {
+            "failedLoadData": "Failed to load data"
+        }
+    },
+    "resultPage": {
+        "tabs": {
+            "survey": "Survey Result",
+            "distro": "Distro Data",
+            "normalize": "Vector Normalization",
+            "weighted": "Weighted Normalized",
+            "topsis": "TOPSIS Calculation",
+            "bayesian": "Bayesian Calculation",
+            "penalty": "Penalty & Ranking"
+        }
+    },
+
+    "topResult": {
+        "title": "Top {n} Linux Recommendations",
+        "generatedFor": "Generated for",
+        "labels": {
+            "score": "Score",
+            "website": "Website",
+            "reviews": "reviews",
+            "viewDetail": "View details"
+        }
+    },
+    "survey": {
+        "title": "Survey Results",
+        "description": "User preference scoring and calculated weights.",
+        "table": {
+            "columnQuestions": "Questions",
+            "columnAnswer": "Answer",
+            "columnMean": "Mean",
+            "columnWeight": "Weight",
+            "qUx": "User Experience",
+            "qPerformance": "Performance",
+            "qStability": "Stability",
+            "qFeatures": "Features",
+            "qSupport": "Support",
+            "qPreference": "Level pref"
+        },
+        "calculation": {
+            "title": "Survey Calculation",
+            "description": "Formula used to calculate survey averages and weights.",
+            "avgDimension": "Average per Dimension",
+            "totalScore": "Total Score",
+            "weightFormula": "Weight Formula"
+        },
+        "status": {
+            "failed": "Failed to load data"
+        }
+    },
+    "distro": {
+        "dataset": {
+            "title": "Linux Distribution Dataset",
+            "description": "Raw criteria values used in the TOPSIS calculation."
+        },
+        "denominator": {
+            "title": "TOPSIS Denominator",
+            "description": "Vector normalization denominator for each criterion."
+        },
+        "normalization": {
+            "title": "Vector Normalization",
+            "description": "Formula used to calculate the denominator in the TOPSIS normalization process.",
+            "formulaTitle": "Denominator Formula"
+        },
+        "table": {
+            "columnDistro": "Distribution",
+            "columnUx": "UX",
+            "columnPerformance": "Performance",
+            "columnStability": "Stability",
+            "columnFeatures": "Features",
+            "columnSupport": "Support",
+            "columnCriteria": "Criteria",
+            "rowDenominator": "Denominator"
+        },
+        "status": {
+            "failed": "Failed to load data"
+        }
+    },
+    "normalizeVector": {
+        "matrixTitle": "Normalized Decision Matrix",
+        "matrixDescription": "TOPSIS normalized matrix generated from the original decision matrix values.",
+        "normalizationTitle": "Matrix Normalization",
+        "normalizationDescription": "Formula used to normalize the decision matrix in the TOPSIS method.",
+        "formulaLabel": "Normalization Formula",
+        "table": {
+            "columnDistribution": "Distribution",
+            "columnUx": "UX",
+            "columnPerformance": "Performance",
+            "columnStability": "Stability",
+            "columnFeatures": "Features",
+            "columnSupport": "Support"
+        },
+        "status": {
+            "failed": "Failed to load data"
+        }
+    },
+    "weightedData": {
+        "matrixTitle": "Weighted Normalized Matrix",
+        "matrixDescription": "Weighted normalized decision matrix after applying TOPSIS criterion weights.",
+        "idealTitle": "Ideal Solutions",
+        "idealDescription": "Positive and negative ideal solutions used in TOPSIS ranking calculations.",
+        "formulaTitle": "TOPSIS Weighting",
+        "formulaDescription": "Mathematical formulas used for weighted normalization and ideal solution calculation.",
+        "weightedMatrixFormula": "Weighted Matrix Formula",
+        "idealSolutionFormula": "Ideal Solution Formula",
+        "table": {
+            "columnDistribution": "Distribution",
+            "columnType": "Type",
+            "columnUx": "UX",
+            "columnPerformance": "Performance",
+            "columnStability": "Stability",
+            "columnFeatures": "Features",
+            "columnSupport": "Support",
+            "rowPositiveIdeal": "Positive Ideal",
+            "rowNegativeIdeal": "Negative Ideal",
+            "rowCriteriaType": "Criteria Type",
+            "benefit": "BENEFIT"
+        },
+        "status": {
+            "failed": "Failed to load data"
+        }
+    },
+    "topsisResult": {
+        "title": "TOPSIS Final Result",
+        "description": "Final TOPSIS ranking based on distance to positive and negative ideal solutions.",
+        "calculationTitle": "TOPSIS Calculation",
+        "calculationDescription": "Mathematical formulas used to calculate TOPSIS distances and preference scores.",
+        "idealDistanceFormula": "Ideal Distance Formula",
+        "closenessCoefficientFormula": "Closeness Coefficient Formula",
+        "table": {
+            "columnDistribution": "Distribution",
+            "columnPositiveDistance": "Positive Ideal Distance",
+            "columnNegativeDistance": "Negative Ideal Distance",
+            "columnPreferenceScore": "Preference Score (CC)"
+        },
+        "status": {
+            "failed": "Failed to load data"
+        }
+    },
+    "bayesianResult": {
+        "title": "Bayesian Adjustment Result",
+        "description": "Bayesian confidence adjustment applied to TOPSIS preference scores using review reliability.",
+        "formulaTitle": "Bayesian Formula",
+        "formulaDescription": "Mathematical formulas used for Bayesian shrinkage and confidence-adjusted scoring.",
+        "meanObservedFormula": "Mean of Observed Scores",
+        "shrinkageCoefficientFormula": "Shrinkage Coefficient",
+        "confidenceAdjustedFormula": "Confidence Adjusted Score",
+        "table": {
+            "columnDistribution": "Distribution",
+            "columnTotalReviews": "Total Reviews",
+            "columnShrinkage": "Shrinkage Coefficient",
+            "columnConfidenceScore": "Confidence Score"
+        },
+        "status": {
+            "failed": "Failed to load data"
+        }
+    },
+    "penaltyRank": {
+        "title": "Penalty & Utility Ranking",
+        "description": "Final utility calculation using symmetric distance, penalty adjustment, and ranking logic.",
+        "calculationTitle": "Penalty Calculation",
+        "calculationDescription": "Mathematical formulas used for preference mapping, symmetric penalty adjustment, utility scoring, and ranking.",
+        "formula": {
+            "userPreference": "Continuous User Preference",
+            "symmetricDistance": "Symmetric Distance",
+            "distanceNormalization": "Distance Normalization",
+            "powerPenalty": "Power-based Penalty",
+            "utilityFunction": "Utility Function"
+        },
+        "ranking": {
+            "title": "Ranking Rules",
+            "orderingRule": "Descending ordering with review-based tie-breaker",
+            "denseRank": "Dense rank with tolerance"
+        },
+        "table": {
+            "columnDistribution": "Distribution",
+            "columnDistance": "Distance",
+            "columnDistanceNorm": "Distance Norm",
+            "columnPenalty": "Penalty",
+            "columnUtility": "Utility",
+            "columnRank": "Rank"
+        },
+        "status": {
+            "failed": "Failed to load data"
+        }
+    },
+    "deleteResult": {
+        "title": "Delete DSS Result?",
+        "description": "Are you sure you want to delete this DSS result?",
+        "idLabel": "ID",
+        "createdAtLabel": "Created at",
+        "warning": "This action cannot be undone.",
+        "buttons": {
+            "cancel": "Cancel",
+            "confirm": "Delete",
+            "loading": "Deleting..."
+        },
+        "errors": {
+            "failed": "Failed to delete DSS result",
+            "unknown": "Something went wrong"
+        }
+    }
 }

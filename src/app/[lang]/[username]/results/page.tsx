@@ -18,9 +18,9 @@ import { Button } from '@/components/ui/button';
 import { Eye } from 'lucide-react';
 import ConfirmDeleteResult from '@/components/result/delete-result';
 import { formatDateTime } from '@/lib/formate-date';
-import { useLocale } from 'next-intl';
-import LocaleEmptyState from '@/components/globals/locale-empty-state';
+import { useLocale, useTranslations } from 'next-intl';
 import Loading from '@/app/loading';
+import EmptyState from '@/components/globals/empty-state';
 
 type DssRunItem = {
     id: string;
@@ -44,6 +44,7 @@ export default function ResultListPage() {
     const params = useParams();
     const username = params.username as string;
     const locale = useLocale();
+    const t = useTranslations('result.resultListPage');
 
     const [runs, setRuns] = useState<DssRunItem[]>([]);
     const [meta, setMeta] = useState<PaginationMeta | null>(null);
@@ -62,11 +63,11 @@ export default function ResultListPage() {
                 setMeta(res.meta);
                 setError(null);
             } else {
-                setError('Failed to load data');
+                setError(t('errors.failedLoadData'));
             }
         } catch (err) {
             console.error(err);
-            setError('Failed to load data');
+            setError(t('errors.failedLoadData'));
         } finally {
             setLoading(false);
         }
@@ -88,12 +89,12 @@ export default function ResultListPage() {
                     setMeta(res.meta);
                     setError(null);
                 } else {
-                    setError('Failed to load data');
+                    setError(t('errors.failedLoadData'));
                 }
             } catch (err) {
                 if (!ignore) {
                     console.error(err);
-                    setError('Failed to load data');
+                    setError(t('errors.failedLoadData'));
                 }
             } finally {
                 if (!ignore) {
@@ -107,7 +108,7 @@ export default function ResultListPage() {
         return () => {
             ignore = true;
         };
-    }, [page, username]);
+    }, [page, username, t]);
 
     const getPages = () => {
         if (!meta) return [];
@@ -130,23 +131,23 @@ export default function ResultListPage() {
     }
 
     if (runs.length === 0 && meta) {
-        return <LocaleEmptyState variant='empty' />;
+        return <EmptyState variant='empty' />;
     }
 
     if (error || !meta) {
-        return <LocaleEmptyState variant='unauthorized' />;
+        return <EmptyState variant='unauthorized' />;
     }
 
     return (
         <main className='p-6 md:px-12 lg:px-20'>
             <div className='mx-auto max-w-330 space-y-8 overflow-hidden py-6'>
-                <h1 className='text-2xl font-bold'>Your DSS Results</h1>
+                <h1 className='text-2xl font-bold'>{t('title')}</h1>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>ID</TableHead>
-                            <TableHead>Created At</TableHead>
-                            <TableHead className='text-right'>Action</TableHead>
+                            <TableHead>{t('table.id')}</TableHead>
+                            <TableHead>{t('table.createdAt')}</TableHead>
+                            <TableHead className='text-right'>{t('table.action')}</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -165,7 +166,7 @@ export default function ResultListPage() {
                                                 </Button>
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                                <p>View Result</p>
+                                                <p>{t('tooltip.viewResult')}</p>
                                             </TooltipContent>
                                         </Tooltip>
                                         <Tooltip>
@@ -180,7 +181,7 @@ export default function ResultListPage() {
                                             </TooltipTrigger>
 
                                             <TooltipContent>
-                                                <p>Delete Result</p>
+                                                <p>{t('tooltip.deleteResult')}</p>
                                             </TooltipContent>
                                         </Tooltip>
                                     </TooltipProvider>

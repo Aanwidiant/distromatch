@@ -13,7 +13,7 @@ import { Button } from '../ui/button';
 import { useState } from 'react';
 import Fetch from '@/lib/fetch';
 import { toast } from 'sonner';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { formatDateTime } from '@/lib/formate-date';
 
 interface ConfirmDeleteResultProps {
@@ -30,6 +30,7 @@ export default function ConfirmDeleteResult({
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const locale = useLocale();
+    const t = useTranslations('result.deleteResult');
 
     const handleDelete = async () => {
         setLoading(true);
@@ -44,10 +45,10 @@ export default function ConfirmDeleteResult({
 
                 onDeleted?.();
             } else {
-                toast.error(res.message || 'Failed to delete dss run result');
+                toast.error(res.message || t('errors.failed'));
             }
         } catch {
-            toast.error('Something went wrong');
+            toast.error(t('errors.unknown'));
         } finally {
             setLoading(false);
         }
@@ -64,29 +65,29 @@ export default function ConfirmDeleteResult({
                 <DialogHeader>
                     <DialogTitle className='text-red flex items-center gap-2'>
                         <Trash className='size-5' />
-                        Delete DSS Result?
+                        {t('title')}
                     </DialogTitle>
                 </DialogHeader>
                 <div className='space-y-3 text-sm'>
-                    <p>Are you sure you want to delete this DSS result?</p>
+                    <p>{t('description')}</p>
                     <div className='space-y-1'>
                         <p>
-                            <span className='font-medium'>ID:</span>{' '}
+                            <span className='font-medium'>{t('idLabel')}:</span>{' '}
                             <span className='font-mono'>{id}</span>
                         </p>
                         <p>
-                            <span className='font-medium'>Created at:</span>{' '}
+                            <span className='font-medium'>{t('createdAtLabel')}:</span>{' '}
                             <span className='font-medium'>{formatDateTime(createdAt, locale)}</span>
                         </p>
                     </div>
-                    <p className='text-red'>This action cannot be undone.</p>
+                    <p className='text-red'>{t('warning')}</p>
                 </div>
                 <DialogFooter>
                     <Button variant='outline' onClick={() => setOpen(false)} disabled={loading}>
-                        Cancel
+                        {t('buttons.cancel')}
                     </Button>
                     <Button variant='destructive' onClick={handleDelete} disabled={loading}>
-                        {loading ? 'Deleting...' : 'Delete'}
+                        {loading ? t('buttons.loading') : t('buttons.confirm')}
                     </Button>
                 </DialogFooter>
             </DialogContent>

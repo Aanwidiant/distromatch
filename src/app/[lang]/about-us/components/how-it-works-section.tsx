@@ -1,43 +1,43 @@
 import { BarChart3, ClipboardList, LineChart, Scale, ShieldCheck } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
-const STEPS = [
-    {
-        step: '01',
-        title: 'Survey & Bobot',
-        desc: 'Nilai per dimensi dihitung dan dibobotkan sesuai preferensi.',
-        icon: ClipboardList,
-    },
-    {
-        step: '02',
-        title: 'Normalisasi & TOPSIS',
-        desc: 'Matriks ternormalisasi, solusi ideal, dan closeness coefficient.',
-        icon: BarChart3,
-    },
-    {
-        step: '03',
-        title: 'Bayesian Shrinkage',
-        desc: 'Menstabilkan skor jika data review terbatas.',
-        icon: LineChart,
-    },
-    {
-        step: '04',
-        title: 'Penalti Simetris',
-        desc: 'Mengurangi skor bila level distro terlalu jauh dari preferensi.',
-        icon: Scale,
-    },
-    {
-        step: '05',
-        title: 'Utility & Ranking',
-        desc: 'Skor final (0–1) lalu diurutkan dengan tie-breaker review.',
-        icon: ShieldCheck,
-    },
-];
-
-export default function HowItWorksSection() {
+export default async function HowItWorksSection() {
+    const t = await getTranslations('about.howItWorksSection');
+    const STEPS = [
+        {
+            step: '01',
+            title: t('steps.surveyWeight.title'),
+            desc: t('steps.surveyWeight.description'),
+            icon: ClipboardList,
+        },
+        {
+            step: '02',
+            title: t('steps.normalizationTopsis.title'),
+            desc: t('steps.normalizationTopsis.description'),
+            icon: BarChart3,
+        },
+        {
+            step: '03',
+            title: t('steps.bayesianShrinkage.title'),
+            desc: t('steps.bayesianShrinkage.description'),
+            icon: LineChart,
+        },
+        {
+            step: '04',
+            title: t('steps.symmetricPenalty.title'),
+            desc: t('steps.symmetricPenalty.description'),
+            icon: Scale,
+        },
+        {
+            step: '05',
+            title: t('steps.utilityRanking.title'),
+            desc: t('steps.utilityRanking.description'),
+            icon: ShieldCheck,
+        },
+    ];
     return (
         <section className='space-y-6'>
-            <h2 className='text-foreground text-2xl font-semibold'>Langkah-langkah perhitungan</h2>
-
+            <h2 className='text-foreground text-2xl font-semibold'>{t('title')}</h2>
             <div className='grid gap-6 md:grid-cols-3'>
                 {STEPS.map((item) => (
                     <div
@@ -45,7 +45,7 @@ export default function HowItWorksSection() {
                         className='bg-bg-2 border-stroke group relative space-y-4 overflow-hidden rounded-xl border p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md'
                     >
                         <div className='flex items-center gap-3'>
-                            <div className='text-primary/15 font-mono text-4xl font-bold'>
+                            <div className='text-primary/50 font-mono text-4xl font-bold'>
                                 {item.step}
                             </div>
                             <div className='bg-accent-1/40 border-stroke flex h-10 w-10 items-center justify-center rounded-lg border'>

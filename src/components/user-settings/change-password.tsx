@@ -15,11 +15,12 @@ import { Button } from '../ui/button';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '../ui/input-group';
 import { useAuthStore } from '@/stores/auth-store';
 import { useDialog } from '@/hooks/use-dialog';
+import { useTranslations } from 'next-intl';
 
 export default function ChangePassword() {
     const { profile, logout } = useAuthStore();
     const { isOpen, close, closeAll } = useDialog('changePassword');
-
+    const t = useTranslations('common.changePassword');
     const isGoogle = profile?.provider === 'google';
 
     const passwordRegex =
@@ -67,17 +68,17 @@ export default function ChangePassword() {
         const { current_password, password, confirm_password } = formData;
 
         if (!password || !confirm_password) {
-            toast.error('All required fields must be filled.');
+            toast.error(t('validation.requiredAll'));
             return;
         }
 
         if (!isGoogle && !current_password) {
-            toast.error('Current password is required.');
+            toast.error(t('validation.currentRequired'));
             return;
         }
 
         if (password !== confirm_password) {
-            toast.error('Password confirmation does not match.');
+            toast.error(t('validation.mismatch'));
             return;
         }
 
@@ -106,7 +107,7 @@ export default function ChangePassword() {
                 toast.error(res.message);
             }
         } catch {
-            toast.error('Failed to change password');
+            toast.error(t('notifications.failed'));
         } finally {
             setLoading(false);
         }
@@ -154,37 +155,32 @@ export default function ChangePassword() {
                 <DialogHeader>
                     <DialogTitle className='flex items-center gap-2'>
                         <KeyRound className='size-6' />
-                        Change Password
+                        {t('title')}
                     </DialogTitle>
                 </DialogHeader>
 
                 <div className='flex flex-col gap-3'>
                     {!isGoogle &&
-                        renderPasswordField('Current Password', 'current_password', 'current')}
+                        renderPasswordField(t('fields.current'), 'current_password', 'current')}
 
                     <div className='flex flex-col gap-2'>
-                        {renderPasswordField('New Password', 'password', 'new')}
+                        {renderPasswordField(t('fields.new'), 'password', 'new')}
                         {isPasswordWeak && (
-                            <span className='text-red text-sm'>
-                                Password minimal 8 karakter dan harus mengandung huruf besar, huruf
-                                kecil, angka, serta karakter spesial.
-                            </span>
+                            <span className='text-red text-sm'>{t('validation.weakPassword')}</span>
                         )}
                     </div>
 
                     <div className='flex flex-col gap-2'>
-                        {renderPasswordField('Confirm New Password', 'confirm_password', 'confirm')}
+                        {renderPasswordField(t('fields.confirm'), 'confirm_password', 'confirm')}
                         {isConfirmMismatch && (
-                            <span className='text-red text-sm'>
-                                Konfirmasi password tidak sesuai.
-                            </span>
+                            <span className='text-red text-sm'>{t('validation.mismatch')}</span>
                         )}
                     </div>
                 </div>
 
                 <DialogFooter>
                     <Button variant='outline' onClick={handleClose}>
-                        Cancel
+                        {t('buttons.cancel')}
                     </Button>
                     <Button
                         onClick={handleSubmit}
@@ -196,7 +192,7 @@ export default function ChangePassword() {
                             !formData.confirm_password
                         }
                     >
-                        {loading ? 'Updating...' : 'Update Password'}
+                        {loading ? t('buttons.updating') : t('buttons.update')}
                     </Button>
                 </DialogFooter>
             </DialogContent>

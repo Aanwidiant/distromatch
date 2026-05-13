@@ -1,3 +1,114 @@
 {
-    "test": "test"
+    "heroSection": {
+        "badge": "Sistem Pendukung Keputusan • Transparan dan Terukur",
+        "title": {
+            "prefix": "Tentang",
+            "highlight": "Distromatch"
+        },
+        "description": {
+            "first": "Distromatch adalah platform berbasis Sistem Pendukung Keputusan (SPK) yang membantu pengguna menemukan distro Linux paling sesuai melalui proses perhitungan yang transparan dan mudah dipahami.",
+            "second": "Sistem ini menggabungkan TOPSIS, Bayesian shrinkage, dan peringkat berbasis penalti agar rekomendasi tetap objektif, stabil, dan relevan dengan preferensi pengguna."
+        },
+        "placeholder": "Ilustrasi proses perhitungan"
+    },
+    "whatItDoesSection": {
+        "title": "Apa yang dilakukan Distromatch?",
+        "items": {
+            "surveyNeeds": {
+                "title": "Survei Kebutuhan",
+                "description": "Mengubah jawaban pengguna menjadi skor per dimensi kebutuhan."
+            },
+            "decisionAnalysis": {
+                "title": "Analisis SPK",
+                "description": "Mengolah data dengan pembobotan, TOPSIS, dan Bayesian."
+            },
+            "transparentRanking": {
+                "title": "Peringkat Transparan",
+                "description": "Menampilkan skor utilitas dan urutan distro yang jelas."
+            }
+        }
+    },
+    "howItWorksSection": {
+        "title": "Langkah-langkah perhitungan",
+        "steps": {
+            "surveyWeight": {
+                "title": "Survei & Bobot",
+                "description": "Nilai per dimensi dihitung dan dibobotkan sesuai preferensi."
+            },
+            "normalizationTopsis": {
+                "title": "Normalisasi & TOPSIS",
+                "description": "Matriks ternormalisasi, solusi ideal, dan koefisien kedekatan."
+            },
+            "bayesianShrinkage": {
+                "title": "Bayesian Shrinkage",
+                "description": "Menstabilkan skor jika data review terbatas."
+            },
+            "symmetricPenalty": {
+                "title": "Penalti Simetris",
+                "description": "Mengurangi skor bila level distro terlalu jauh dari preferensi."
+            },
+            "utilityRanking": {
+                "title": "Utilitas dan Peringkat",
+                "description": "Skor final (0–1) lalu diurutkan dengan pemecah seri berbasis ulasan."
+            }
+        }
+    },
+    "whySection": {
+        "title": "Kenapa Distromatch dibuat?",
+        "description": {
+            "first": "Banyak pengguna, terutama pemula, bingung memilih distro Linux karena pilihan yang sangat banyak dan informasi yang tersebar.",
+            "second": "Distromatch membantu merapikan proses ini dengan sistem berbasis data yang transparan, sehingga keputusan bisa dibuat dengan lebih jelas dan percaya diri."
+        },
+        "placeholder": "Ilustrasi manfaat"
+    },
+    "statsSection": {
+        "stats": {
+            "quizQuestions": {
+                "value": "12",
+                "label": "Pertanyaan Kuis"
+            },
+            "assessmentDimensions": {
+                "value": "6",
+                "label": "Dimensi Penilaian"
+            },
+            "decisionMethods": {
+                "value": "Multi",
+                "label": "Metode SPK"
+            },
+            "dataDriven": {
+                "value": "100%",
+                "label": "Data-driven"
+            }
+        }
+    },
+    "contactSection": {
+        "title": "Kirim Pesan",
+        "description": "Punya pertanyaan, saran, atau feedback? Kirimkan pesanmu di sini.",
+        "fields": {
+            "name": {
+                "label": "Nama",
+                "placeholder": "Nama kamu"
+            },
+            "email": {
+                "label": "Email",
+                "placeholder": "email@example.com"
+            },
+            "phone": {
+                "label": "Nomor HP",
+                "optional": "(opsional)",
+                "placeholder": "+62 812 xxxx xxxx"
+            },
+            "message": {
+                "label": "Pesan",
+                "placeholder": "Tulis pesan kamu di sini..."
+            }
+        },
+        "button": {
+            "submit": "Kirim Pesan",
+            "loading": "Mengirim..."
+        },
+        "toast": {
+            "development": "Maaf, sedang dalam proses development"
+        }
+    }
 }

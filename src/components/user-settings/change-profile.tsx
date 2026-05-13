@@ -11,8 +11,10 @@ import Fetch from '@/lib/fetch';
 import { useAuthStore } from '@/stores/auth-store';
 import { toast } from 'sonner';
 import { useDialog } from '@/hooks/use-dialog';
+import { useTranslations } from 'next-intl';
 
 export default function ChangeProfilePicture() {
+    const t = useTranslations('common.changeProfilePicture');
     const { isOpen, close } = useDialog('changePhoto');
     const aspectRatio = 1;
     const maxFileSize = 4 * 1024 * 1024;
@@ -53,12 +55,12 @@ export default function ChangeProfilePicture() {
         const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
         if (!validTypes.includes(file.type)) {
-            setError('Invalid file type');
+            setError(t('validation.invalidType'));
             return false;
         }
 
         if (file.size > maxFileSize) {
-            setError('File too large (max 4MB)');
+            setError(t('validation.fileTooLarge'));
             return false;
         }
 
@@ -162,7 +164,7 @@ export default function ChangeProfilePicture() {
                 toast.error(res.message);
             }
         } catch {
-            toast.error('Failed to upload image');
+            toast.error(t('notifications.failed'));
         } finally {
             setLoading(false);
         }
@@ -172,9 +174,7 @@ export default function ChangeProfilePicture() {
         <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
             <DialogContent className='max-h-[90vh] w-full max-w-md overflow-y-auto md:max-w-xl'>
                 <DialogHeader>
-                    <DialogTitle>
-                        {!imageSrc ? 'Upload image' : 'Crop image then click save'}
-                    </DialogTitle>
+                    <DialogTitle>{!imageSrc ? t('title.upload') : t('title.crop')}</DialogTitle>
                 </DialogHeader>
                 {error && <p className='text-red text-sm'>{error}</p>}
                 <input type='file' ref={fileInputRef} className='hidden' onChange={onFileChange} />
@@ -200,7 +200,7 @@ export default function ChangeProfilePicture() {
                         tabIndex={0}
                     >
                         <Gallery className='size-24' />
-                        <span className='py-3 text-sm'>Click to upload image or drag and drop</span>
+                        <span className='py-3 text-sm'>{t('dropzone.instruction')}</span>
                     </div>
                 ) : (
                     <>
@@ -241,11 +241,11 @@ export default function ChangeProfilePicture() {
                     <DialogFooter>
                         <>
                             <Button variant='outline' onClick={() => fileInputRef.current?.click()}>
-                                Change
+                                {t('buttons.change')}
                             </Button>
 
                             <Button onClick={handleSave} disabled={loading}>
-                                {loading ? 'Saving...' : 'Save'}
+                                {loading ? t('buttons.saving') : t('buttons.save')}
                             </Button>
                         </>
                     </DialogFooter>

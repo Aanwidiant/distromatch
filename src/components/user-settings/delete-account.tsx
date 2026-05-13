@@ -15,9 +15,11 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { useAuthStore } from '@/stores/auth-store';
 import { useDialog } from '@/hooks/use-dialog';
+import { useTranslations } from 'next-intl';
 
 export default function ConfirmDeleteAccount() {
     const { isOpen, close, closeAll } = useDialog('deleteAccount');
+    const t = useTranslations('common.deleteAccount');
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const { logout } = useAuthStore();
@@ -27,12 +29,12 @@ export default function ConfirmDeleteAccount() {
 
     const handleDeleteAccount = async () => {
         if (!email) {
-            toast.error('Email confirmation is required.');
+            toast.error(t('validation.emailRequired'));
             return;
         }
 
         if (!emailRegex.test(email)) {
-            toast.error('Please enter a valid email address.');
+            toast.error(t('validation.emailInvalid'));
             return;
         }
 
@@ -48,7 +50,7 @@ export default function ConfirmDeleteAccount() {
                 toast.error(res.message);
             }
         } catch {
-            toast.error('Failed to delete account.');
+            toast.error(t('notifications.failed'));
         } finally {
             setLoading(false);
         }
@@ -60,17 +62,14 @@ export default function ConfirmDeleteAccount() {
                 <DialogHeader>
                     <DialogTitle className='text-red flex items-center gap-2'>
                         <Trash className='size-6' />
-                        Delete Account
+                        {t('title')}
                     </DialogTitle>
                 </DialogHeader>
                 <div className='space-y-4'>
-                    <p className='text-sm text-gray-600'>
-                        This action is permanent and cannot be undone. Please type your email to
-                        confirm.
-                    </p>
+                    <p className='text-sm text-gray-600'>{t('description')}</p>
                     <Input
                         type='email'
-                        placeholder='Enter your email to confirm'
+                        placeholder={t('placeholder')}
                         value={email}
                         className={!isValidEmail && email ? 'error-input' : ''}
                         onChange={(e) => setEmail(e.target.value)}
@@ -78,14 +77,14 @@ export default function ConfirmDeleteAccount() {
                 </div>
                 <DialogFooter>
                     <Button variant='outline' onClick={() => close()}>
-                        Cancel
+                        {t('buttons.cancel')}
                     </Button>
                     <Button
                         variant='destructive'
                         onClick={handleDeleteAccount}
                         disabled={loading || !isValidEmail}
                     >
-                        {loading ? 'Deleting...' : 'Delete Permanently'}
+                        {loading ? t('buttons.deleting') : t('buttons.delete')}
                     </Button>
                 </DialogFooter>
             </DialogContent>

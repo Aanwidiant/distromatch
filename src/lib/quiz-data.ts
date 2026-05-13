@@ -12,105 +12,92 @@ export type Category = {
     questions: Question[];
 };
 
-export const ANSWER_OPTIONS = [
-    { value: 1, label: 'Tidak penting' },
-    { value: 2, label: 'Kurang penting' },
-    { value: 3, label: 'Cukup penting' },
-    { value: 4, label: 'Penting' },
-    { value: 5, label: 'Sangat penting' },
-] as const;
+type QuizCategoryConfig = {
+    id: number;
+    key:
+        | 'userExperience'
+        | 'performance'
+        | 'stability'
+        | 'features'
+        | 'support'
+        | 'targetUserLevel';
+    questions: { key: QuestionKey; tKey: string }[];
+};
 
-export const CATEGORIES: Category[] = [
+const QUIZ_CATEGORY_CONFIG: QuizCategoryConfig[] = [
     {
         id: 1,
-        title: 'User Experience',
-        subtitle: 'Kemudahan penggunaan sehari-hari',
+        key: 'userExperience',
         questions: [
-            {
-                key: 'q1_ux',
-                text: 'Seberapa penting antarmuka yang mudah dipahami untuk pemakaian harian?',
-            },
-            {
-                key: 'q2_ux',
-                text: 'Seberapa penting proses instalasi dan konfigurasi awal yang mudah?',
-            },
+            { key: 'q1_ux', tKey: 'quizData.categories.userExperience.questions.q1' },
+            { key: 'q2_ux', tKey: 'quizData.categories.userExperience.questions.q2' },
         ],
     },
     {
         id: 2,
-        title: 'Performance',
-        subtitle: 'Kecepatan dan efisiensi sistem',
+        key: 'performance',
         questions: [
-            {
-                key: 'q3_performance',
-                text: 'Seberapa penting sistem terasa cepat/responsif saat dipakai?',
-            },
-            {
-                key: 'q4_performance',
-                text: 'Seberapa penting penggunaan resource (RAM/CPU) yang efisien (ringan)?',
-            },
+            { key: 'q3_performance', tKey: 'quizData.categories.performance.questions.q1' },
+            { key: 'q4_performance', tKey: 'quizData.categories.performance.questions.q2' },
         ],
     },
     {
         id: 3,
-        title: 'Stability',
-        subtitle: 'Keandalan dan keamanan update',
+        key: 'stability',
         questions: [
-            {
-                key: 'q5_stability',
-                text: 'Seberapa penting kestabilan (minim crash/bug) saat digunakan?',
-            },
-            {
-                key: 'q6_stability',
-                text: 'Seberapa penting update yang aman dan tidak sering menyebabkan masalah?',
-            },
+            { key: 'q5_stability', tKey: 'quizData.categories.stability.questions.q1' },
+            { key: 'q6_stability', tKey: 'quizData.categories.stability.questions.q2' },
         ],
     },
     {
         id: 4,
-        title: 'Features',
-        subtitle: 'Kelengkapan fitur dan software',
+        key: 'features',
         questions: [
-            {
-                key: 'q7_features',
-                text: 'Seberapa penting ketersediaan fitur bawaan/aplikasi dasar yang lengkap?',
-            },
-            {
-                key: 'q8_features',
-                text: 'Seberapa penting kemudahan menambah aplikasi/software sesuai kebutuhan (repositori/package manager)?',
-            },
+            { key: 'q7_features', tKey: 'quizData.categories.features.questions.q1' },
+            { key: 'q8_features', tKey: 'quizData.categories.features.questions.q2' },
         ],
     },
     {
         id: 5,
-        title: 'Support',
-        subtitle: 'Komunitas dan dokumentasi',
+        key: 'support',
         questions: [
-            {
-                key: 'q9_support',
-                text: 'Seberapa penting dukungan komunitas dan dokumentasi yang banyak?',
-            },
-            {
-                key: 'q10_support',
-                text: 'Seberapa penting kemudahan mencari solusi saat ada error (tutorial, forum, Q&A)?',
-            },
+            { key: 'q9_support', tKey: 'quizData.categories.support.questions.q1' },
+            { key: 'q10_support', tKey: 'quizData.categories.support.questions.q2' },
         ],
     },
     {
         id: 6,
-        title: 'Target User Level',
-        subtitle: 'Kesesuaian untuk tingkat penggunaan',
+        key: 'targetUserLevel',
         questions: [
-            {
-                key: 'q11_level_pref',
-                text: 'Seberapa penting distro yang ramah pemula (minim perintah terminal)?',
-            },
-            {
-                key: 'q12_level_pref',
-                text: "Seberapa penting sistem yang 'langsung bisa dipakai' tanpa banyak tweak/oprek?",
-            },
+            { key: 'q11_level_pref', tKey: 'quizData.categories.targetUserLevel.questions.q1' },
+            { key: 'q12_level_pref', tKey: 'quizData.categories.targetUserLevel.questions.q2' },
         ],
     },
 ];
 
-export const TOTAL_QUESTIONS = CATEGORIES.reduce((acc, cat) => acc + cat.questions.length, 0);
+export const buildQuizData = (t: (key: string) => string) => {
+    const categories: Category[] = QUIZ_CATEGORY_CONFIG.map((cat) => {
+        const baseKey = `quizData.categories.${cat.key}`;
+        return {
+            id: cat.id,
+            title: t(`${baseKey}.title`),
+            subtitle: t(`${baseKey}.subtitle`),
+            questions: cat.questions.map((q) => ({ key: q.key, text: t(q.tKey) })),
+        };
+    });
+
+    const answerOptions = [
+        { value: 1, label: t('quizData.answerOptions.1') },
+        { value: 2, label: t('quizData.answerOptions.2') },
+        { value: 3, label: t('quizData.answerOptions.3') },
+        { value: 4, label: t('quizData.answerOptions.4') },
+        { value: 5, label: t('quizData.answerOptions.5') },
+    ] as const;
+
+    return { categories, answerOptions };
+};
+
+export const TOTAL_QUESTIONS = QUIZ_CATEGORY_CONFIG.reduce(
+    (acc, cat) => acc + cat.questions.length,
+    0
+);

@@ -1,3 +1,120 @@
 {
-    "test": "test"
+    "heroSection": {
+        "badge": "Sistem Pendukung Keputusan",
+        "title": {
+            "prefix": "Rekomendasi distro Linux berbasis",
+            "highlight": "perhitungan nyata"
+        },
+        "description": "Distromatch memetakan kebutuhanmu, menimbang tiap kriteria, lalu memberi peringkat distro paling sesuai, transparan dan bisa dijelaskan.",
+        "features": {
+            "finalUtilityScore": "Skor utilitas final 0–1",
+            "criteriaBreakdown": "Rincian kontribusi kriteria",
+            "auditableRanking": "Peringkat mudah diaudit",
+            "measurableDecisionMethod": "Metode SPK terukur"
+        },
+        "buttons": {
+            "startQuiz": "Mulai Kuis",
+            "learnMore": "Pelajari Lebih Lanjut"
+        },
+        "visualization": "Pengganti visualisasi alur perhitungan"
+    },
+    "valuePropsSection": {
+        "items": {
+            "transparent": {
+                "title": "Transparan",
+                "description": "Setiap skor bisa ditelusuri dari survei hingga utilitas."
+            },
+            "objective": {
+                "title": "Objektif",
+                "description": "Menggunakan TOPSIS & Bayesian shrinkage untuk hasil yang stabil."
+            },
+            "personal": {
+                "title": "Personal",
+                "description": "Penalti simetris memastikan distro cocok dengan levelmu."
+            }
+        }
+    },
+    "howItWorksSection": {
+        "title": "Bagaimana perhitungannya?",
+        "description": "Alur dari data survei sampai peringkat distro.",
+        "stepLabel": "Langkah",
+        "steps": {
+            "surveyWeight": {
+                "title": "Survei & Bobot",
+                "description": "Nilai kebutuhan dihitung per dimensi, lalu dibobotkan."
+            },
+            "topsis": {
+                "title": "TOPSIS",
+                "description": "Normalisasi, solusi ideal, dan koefisien kedekatan."
+            },
+            "bayesianPenalty": {
+                "title": "Bayesian + Penalti",
+                "description": "Penyusutan kepercayaan dan penalti level untuk utilitas akhir."
+            }
+        }
+    },
+    "previewSection": {
+        "label": "Pratinjau hasil peringkat dan audit",
+        "title": "Peringkat yang transparan dan dapat diaudit",
+        "description": "Hasil rekomendasi menampilkan urutan distro beserta skor utilitas final. Setiap skor bisa ditelusuri lewat ringkasan kontribusi kriteria, sehingga keputusan tetap transparan dan bisa diaudit.",
+        "highlights": {
+            "finalUtilityScore": "Skor utilitas final yang jelas",
+            "criteriaBreakdown": "Rincian kontribusi kriteria",
+            "verifiableRanking": "Peringkat mudah diverifikasi"
+        }
+    },
+    "targetUsersSection": {
+        "title": "Cocok untuk siapa?",
+        "users": {
+            "linuxBeginner": {
+                "title": "Pemula Linux",
+                "description": "Butuh rekomendasi yang jelas dan mudah dipahami."
+            },
+            "itStudent": {
+                "title": "Mahasiswa IT",
+                "description": "Mencari distro yang cocok untuk belajar dan praktikum."
+            },
+            "developer": {
+                "title": "Developer",
+                "description": "Perlu workflow cepat dengan tools yang stabil."
+            }
+        }
+    },
+    "faqSection": {
+        "title": "Pertanyaan yang Sering Diajukan",
+        "items": {
+            "whatIsDistromatch": {
+                "question": "Apa itu Distromatch?",
+                "answer": "Distromatch adalah platform rekomendasi distro Linux berbasis Sistem Pendukung Keputusan (SPK) yang transparan dan terukur."
+            },
+            "whyTopsisBayesian": {
+                "question": "Mengapa menggunakan TOPSIS dan Bayesian shrinkage?",
+                "answer": "TOPSIS menilai kedekatan terhadap solusi ideal, sedangkan Bayesian shrinkage menstabilkan skor ketika data terbatas."
+            },
+            "howPenaltyWorks": {
+                "question": "Bagaimana penalti level diterapkan?",
+                "answer": "Penalti simetris menurunkan skor jika level distro terlalu jauh dari preferensi pengguna sehingga rekomendasi tetap relevan."
+            },
+            "recommendationExplainable": {
+                "question": "Apakah hasil rekomendasi dapat dijelaskan?",
+                "answer": "Ya. Setiap skor dapat ditelusuri melalui ringkasan kontribusi kriteria hingga utilitas akhir."
+            },
+            "freeToUse": {
+                "question": "Apakah Distromatch dapat digunakan secara gratis?",
+                "answer": "Saat ini Distromatch dapat digunakan secara gratis oleh seluruh pengguna."
+            },
+            "needRegistration": {
+                "question": "Apakah saya perlu mendaftar untuk menggunakan Distromatch?",
+                "answer": "Ya. Pendaftaran dan login diperlukan agar hasil rekomendasi dapat disimpan serta diaudit."
+            }
+        }
+    },
+    "ctaSection": {
+        "title": "Siap menemukan distro Linux terbaikmu?",
+        "description": "Mulai sekarang dan dapatkan rekomendasi berbasis perhitungan dalam hitungan menit.",
+        "button": {
+            "startQuiz": "Mulai Kuis Sekarang"
+        },
+        "placeholder": "Pengganti image CTA"
+    }
 }

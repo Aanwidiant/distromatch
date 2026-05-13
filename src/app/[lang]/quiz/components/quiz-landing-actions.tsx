@@ -5,11 +5,13 @@ import { Play, RotateCcw } from 'lucide-react';
 import { useAuthStore } from '@/stores/auth-store';
 import { useQuizStore } from '@/stores/quiz-store';
 import { useParams, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function QuizLandingActions() {
     const router = useRouter();
     const params = useParams();
     const lang = params.lang as string;
+    const t = useTranslations('quiz.quizLandingActions');
 
     const { isAuthenticated } = useAuthStore();
 
@@ -47,7 +49,7 @@ export default function QuizLandingActions() {
                 <div className='flex flex-col gap-3 sm:flex-row'>
                     <Button size='xl' onClick={handleStart} className='w-full sm:w-auto'>
                         <Play className='mr-2 size-4' />
-                        Lanjutkan
+                        {t('buttons.continue')}
                     </Button>
                     <Button
                         size='xl'
@@ -56,18 +58,18 @@ export default function QuizLandingActions() {
                         className='w-full sm:w-auto'
                     >
                         <RotateCcw className='mr-2 size-4' />
-                        Mulai Ulang
+                        {t('buttons.restart')}
                     </Button>
                 </div>
             ) : (
                 <Button size='xl' onClick={handleStart} className='w-full sm:w-auto'>
                     <Play className='mr-2 size-4' />
-                    Mulai Quiz
+                    {t('buttons.startQuiz')}
                 </Button>
             )}
             {hasProgress && (
                 <p className='text-grey-2 text-center font-mono text-sm sm:text-left'>
-                    Progress tersimpan — {answeredCount()}/12 pertanyaan terjawab
+                    {t('progress', { answered: answeredCount() })}
                 </p>
             )}
         </div>

@@ -1,7 +1,7 @@
 {
     "linuxDistributionsExplorer": "Penjelajah Distribusi Linux",
     "searchAndExploreLinuxDistributions": "Cari dan jelajahi berbagai distribusi Linux.",
-    "searchDistro": "Cari Distro ...",
+    "searchDistro": "Cari distro...",
     "detail": "Detail",
     "prev": "Sebelumnya",
     "next": "Selanjutnya",
@@ -21,7 +21,7 @@
         "officialWebsite": "Situs Web Resmi",
         "reviews": "{count, plural, other {# ulasan}}",
         "ratings": {
-            "ux": "Antarmuka (UX)",
+            "ux": "Pengalaman Pengguna (UX)",
             "performance": "Performa",
             "stability": "Stabilitas",
             "features": "Fitur",

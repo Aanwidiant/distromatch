@@ -1,3 +1,123 @@
 {
-    "test": "test"
+    "quizPage": {
+        "badge": "Survey → Weighting → TOPSIS → Bayesian → Penalty → Ranking",
+        "title": {
+            "prefix": "Find the Linux distro",
+            "highlight": "most aligned",
+            "suffix": "with your needs."
+        },
+        "description": "Answer 12 short questions. Our system transforms your answers into weights, calculates ideal solutions, stabilizes scores with Bayesian methods, then provides a transparent final ranking.",
+        "highlights": {
+            "finalUtility": "Final utility score from 0 to 1",
+            "criteriaBreakdown": "Criteria contribution breakdown",
+            "auditableRanking": "Easily auditable rankings",
+            "consistentResults": "Consistent and measurable results"
+        },
+        "stats": {
+            "questions": {
+                "value": "12",
+                "label": "Questions"
+            },
+            "dimensions": {
+                "value": "6",
+                "label": "Dimensions"
+            },
+            "minutes": {
+                "value": "3",
+                "label": "Minutes"
+            }
+        },
+        "placeholder": "Calculation process visualization"
+    },
+    "quizLandingActions": {
+        "buttons": {
+            "continue": "Continue",
+            "restart": "Restart",
+            "startQuiz": "Start Quiz"
+        },
+        "progress": "Progress saved: {answered}/12 questions answered"
+    },
+    "quizFlow": {
+        "categoryList": "Category List",
+        "categoryLabel": "Category {current} of {total}",
+        "buttons": {
+            "previous": "Previous",
+            "next": "Continue",
+            "viewResults": "View Results"
+        },
+        "loading": {
+            "analyzing": "Analyzing..."
+        },
+        "validation": {
+            "completeCategory": "Answer all questions in this category to continue"
+        }
+    },
+    "quizData": {
+        "answerOptions": {
+            "1": "Not important",
+            "2": "Slightly important",
+            "3": "Moderately important",
+            "4": "Important",
+            "5": "Very important"
+        },
+        "categories": {
+            "userExperience": {
+                "title": "User Experience",
+                "subtitle": "Ease of daily use",
+                "questions": {
+                    "q1": "How important is an easy-to-understand interface for daily use?",
+                    "q2": "How important is an easy installation and initial setup process?"
+                }
+            },
+            "performance": {
+                "title": "Performance",
+                "subtitle": "System speed and efficiency",
+                "questions": {
+                    "q1": "How important is a fast/responsive system experience?",
+                    "q2": "How important is efficient resource usage (RAM/CPU)?"
+                }
+            },
+            "stability": {
+                "title": "Stability",
+                "subtitle": "Reliability and update security",
+                "questions": {
+                    "q1": "How important is system stability (minimal crashes/bugs)?",
+                    "q2": "How important are safe updates that rarely cause issues?"
+                }
+            },
+            "features": {
+                "title": "Features",
+                "subtitle": "Feature and software completeness",
+                "questions": {
+                    "q1": "How important is the availability of complete built-in features/basic applications?",
+                    "q2": "How important is the ease of installing additional applications/software as needed (repository/package manager)?"
+                }
+            },
+            "support": {
+                "title": "Support",
+                "subtitle": "Community and documentation",
+                "questions": {
+                    "q1": "How important are strong community support and extensive documentation?",
+                    "q2": "How important is the ease of finding solutions when errors occur (tutorials, forums, Q&A)?"
+                }
+            },
+            "targetUserLevel": {
+                "title": "Target User Level",
+                "subtitle": "Suitability for user skill level",
+                "questions": {
+                    "q1": "How important is a beginner-friendly distro (minimal terminal commands)?",
+                    "q2": "How important is a system that 'just works' without much tweaking/customization?"
+                }
+            }
+        }
+    },
+    "quizProgress": {
+        "progress": "Progress",
+        "quizProgress": "Quiz Progress",
+        "questions": "{answered}/{total} questions"
+    },
+    "categoryCard": {
+        "question": "Question {number}",
+        "answered": "Answered"
+    }
 }

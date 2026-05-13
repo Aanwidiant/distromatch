@@ -10,6 +10,7 @@ import {
 import { BlockMath } from 'react-katex';
 import { FORMULAS } from '@/lib/formulas';
 import 'katex/dist/katex.min.css';
+import { getTranslations } from 'next-intl/server';
 
 type BayesianRow = {
     distro: string;
@@ -46,41 +47,39 @@ async function getBayesian(runId: string): Promise<BayesianRow[]> {
 
 export default async function BayesianResult({ runId }: Props) {
     const rows = await getBayesian(runId);
+    const t = await getTranslations('result.bayesianResult');
 
     if (!rows.length) {
-        return <div>Failed to load data</div>;
+        return <div>{t('status.failed')}</div>;
     }
 
     return (
         <div className='grid gap-6 lg:grid-cols-3'>
             {/* TABLE SECTION */}
-            <div className='lg:col-span-2'>
-                <div className='bg-background border-stroke overflow-x-auto rounded-2xl border'>
+            <div className='overflow-x-auto lg:col-span-2'>
+                <div className='bg-background border-stroke rounded-2xl border'>
                     <div className='border-stroke border-b p-5'>
-                        <h2 className='text-xl font-semibold'>Bayesian Adjustment Result</h2>
+                        <h2 className='text-xl font-semibold'>{t('title')}</h2>
 
-                        <p className='text-muted-foreground mt-1 text-sm'>
-                            Bayesian confidence adjustment applied to TOPSIS preference scores using
-                            review reliability.
-                        </p>
+                        <p className='text-muted-foreground mt-1 text-sm'>{t('description')}</p>
                     </div>
                     <Table>
                         <TableHeader>
                             <TableRow className='bg-bg-2 hover:bg-bg-2'>
                                 <TableHead className='min-w-45 font-semibold'>
-                                    Distribution
+                                    {t('table.columnDistribution')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Total Reviews
+                                    {t('table.columnTotalReviews')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Shrinkage Coefficient
+                                    {t('table.columnShrinkage')}
                                 </TableHead>
 
                                 <TableHead className='text-right font-semibold'>
-                                    Confidence Score
+                                    {t('table.columnConfidenceScore')}
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
@@ -113,19 +112,16 @@ export default async function BayesianResult({ runId }: Props) {
             </div>
 
             {/* FORMULA SECTION */}
-            <div className='space-y-5'>
+            <div className='space-y-5 overflow-x-auto'>
                 <div className='bg-background border-stroke rounded-2xl border p-5'>
-                    <h2 className='text-xl font-semibold'>Bayesian Formula</h2>
+                    <h2 className='text-xl font-semibold'>{t('formulaTitle')}</h2>
 
-                    <p className='text-muted-foreground mt-1 text-sm'>
-                        Mathematical formulas used for Bayesian shrinkage and confidence-adjusted
-                        scoring.
-                    </p>
+                    <p className='text-muted-foreground mt-1 text-sm'>{t('formulaDescription')}</p>
                 </div>
 
                 <div className='bg-background border-stroke space-y-6 rounded-2xl border p-5'>
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Mean of Observed Scores</h3>
+                        <h3 className='text-base font-semibold'>{t('meanObservedFormula')}</h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.bayesMeanCc} />
@@ -133,7 +129,9 @@ export default async function BayesianResult({ runId }: Props) {
                     </div>
 
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Shrinkage Coefficient</h3>
+                        <h3 className='text-base font-semibold'>
+                            {t('shrinkageCoefficientFormula')}
+                        </h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.bayesShrinkage} />
@@ -141,7 +139,9 @@ export default async function BayesianResult({ runId }: Props) {
                     </div>
 
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Confidence Adjusted Score</h3>
+                        <h3 className='text-base font-semibold'>
+                            {t('confidenceAdjustedFormula')}
+                        </h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.bayesConfidenceAdjusted} />

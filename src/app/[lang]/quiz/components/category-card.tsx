@@ -1,9 +1,10 @@
 'use client';
-// components/quiz/CategoryCard.tsx
-import { Category, ANSWER_OPTIONS } from '@/lib/quiz-data';
+
+import { Category, buildQuizData } from '@/lib/quiz-data';
 import { QuestionKey, useQuizStore } from '@/stores/quiz-store';
 import AnswerOption from './answer-options';
 import { CircleCheck } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 type Props = {
     category: Category;
@@ -11,6 +12,8 @@ type Props = {
 
 export default function CategoryCard({ category }: Props) {
     const { answers, setAnswer } = useQuizStore();
+    const t = useTranslations('quiz');
+    const { answerOptions } = buildQuizData(t);
 
     return (
         <div className='space-y-10'>
@@ -23,12 +26,12 @@ export default function CategoryCard({ category }: Props) {
                         <div className='mb-5'>
                             <div className='mb-3 flex items-center gap-2'>
                                 <span className='text-grey-3 bg-accent-1 border-stroke rounded-md border px-2 py-0.5 font-mono text-xs'>
-                                    Question {globalIdx}
+                                    {t('categoryCard.question', { number: globalIdx })}
                                 </span>
                                 {selected !== undefined && (
                                     <span className='text-green inline-flex items-center gap-1 font-mono text-xs'>
                                         <CircleCheck className='size-5' />
-                                        Terjawab
+                                        {t('categoryCard.answered')}
                                     </span>
                                 )}
                             </div>
@@ -37,7 +40,7 @@ export default function CategoryCard({ category }: Props) {
                             </p>
                         </div>
                         <div className='grid grid-cols-1 gap-2.5 md:grid-cols-5'>
-                            {ANSWER_OPTIONS.map((opt) => (
+                            {answerOptions.map((opt) => (
                                 <AnswerOption
                                     key={opt.value}
                                     value={opt.value}

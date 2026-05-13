@@ -11,8 +11,10 @@ import { useAuthStore } from '@/stores/auth-store';
 import { Input } from '../ui/input';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '../ui/input-group';
 import { useDialog } from '@/hooks/use-dialog';
+import { useTranslations } from 'next-intl';
 
 export default function ProfileModal() {
+    const t = useTranslations('common.profile');
     const { isOpen, close } = useDialog('profile');
     const deleteDialog = useDialog('deleteAccount');
     const changePassword = useDialog('changePassword');
@@ -38,7 +40,7 @@ export default function ProfileModal() {
 
     const handleSave = async () => {
         if (!currentName.trim()) {
-            toast.error('Name is required');
+            toast.error(t('form.validation.nameRequired'));
             return;
         }
         setIsLoading(true);
@@ -57,7 +59,7 @@ export default function ProfileModal() {
                 toast.error(res.message);
             }
         } catch {
-            toast.error('Failed to update profile');
+            toast.error(t('notifications.failed'));
         } finally {
             setIsLoading(false);
         }
@@ -82,7 +84,7 @@ export default function ProfileModal() {
             <DialogContent className='max-h-[90vh] w-full max-w-md overflow-y-auto md:max-w-2xl'>
                 <DialogHeader>
                     <DialogTitle className='flex items-center gap-2'>
-                        <CircleUserRound className='size-6' /> <span>User Profile</span>
+                        <CircleUserRound className='size-6' /> <span>{t('title')}</span>
                     </DialogTitle>
                 </DialogHeader>
                 <div className='space-y-6'>
@@ -94,23 +96,23 @@ export default function ProfileModal() {
                                 size='xl'
                             />
                             <div>
-                                <p className='text-sm font-semibold'>Profile Picture</p>
-                                <p className='text-xs'>PNG, JPG under 4MB</p>
+                                <p className='text-sm font-semibold'>{t('photoSection.label')}</p>
+                                <p className='text-xs'>{t('photoSection.hint')}</p>
                             </div>
                         </div>
                         <div className='flex flex-wrap gap-2 sm:justify-end'>
                             <Button variant='outline' onClick={changePhoto.open}>
-                                Change Profile Picture
+                                {t('photoSection.change')}
                             </Button>
                             <Button variant='destructive' onClick={deletePhoto.open}>
-                                Delete Profile Picture
+                                {t('photoSection.delete')}
                             </Button>
                         </div>
                     </div>
                     <div className='bg-muted/10 space-y-4 rounded-lg border p-5'>
                         <div className='grid gap-2 sm:grid-cols-[160px_1fr] sm:items-center'>
                             <label className='text-sm font-medium' htmlFor='name'>
-                                Name
+                                {t('form.name')}
                             </label>
                             <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
                                 <InputGroup>
@@ -134,16 +136,16 @@ export default function ProfileModal() {
                                     )}
                                 </InputGroup>
                                 <Button onClick={handleSave} disabled={isLoading || !isChanged}>
-                                    {isLoading ? 'Saving...' : 'Save'}
+                                    {isLoading ? t('form.buttons.saving') : t('form.buttons.save')}
                                 </Button>
                             </div>
                         </div>
                         <div className='grid gap-2 sm:grid-cols-[160px_1fr] sm:items-center'>
-                            <label className='text-sm font-medium'>Username</label>
+                            <label className='text-sm font-medium'>{t('form.username')}</label>
                             <Input value={currentUsername} disabled />
                         </div>
                         <div className='grid gap-2 sm:grid-cols-[160px_1fr] sm:items-center'>
-                            <label className='text-sm font-medium'>Email</label>
+                            <label className='text-sm font-medium'>{t('form.email')}</label>
                             <Input value={currentEmail} disabled />
                         </div>
                         <div className='flex flex-wrap justify-end gap-3'>
@@ -152,27 +154,27 @@ export default function ProfileModal() {
                                 onClick={changeEmail.open}
                                 className='w-full md:w-fit'
                             >
-                                Change Email
+                                {t('form.buttons.changeEmail')}
                             </Button>
                             <Button onClick={changePassword.open} className='w-full md:w-fit'>
-                                Change Password
+                                {t('form.buttons.changePassword')}
                             </Button>
                         </div>
                     </div>
                     <div className='space-y-2 border-t pt-4'>
                         <button
                             onClick={() => setDangerOpen(!dangerOpen)}
-                            className='flex items-center gap-2 font-semibold text-red-500'
+                            className='text-red flex items-center gap-2 font-semibold'
                         >
                             <ChevronRight
                                 className={`h-5 w-5 transition ${dangerOpen ? 'rotate-90' : ''}`}
                             />
-                            Danger Zone
+                            {t('dangerZone.title')}
                         </button>
                         {dangerOpen && (
-                            <div className='flex justify-center rounded-md border border-red-300 bg-red-50 p-4'>
+                            <div className='border-red bg-red/5 flex justify-center rounded-md border p-4'>
                                 <Button variant='destructive' onClick={deleteDialog.open}>
-                                    Delete Account
+                                    {t('dangerZone.button')}
                                 </Button>
                             </div>
                         )}

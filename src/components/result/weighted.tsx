@@ -10,6 +10,7 @@ import {
 import { BlockMath } from 'react-katex';
 import { FORMULAS } from '@/lib/formulas';
 import 'katex/dist/katex.min.css';
+import { getTranslations } from 'next-intl/server';
 
 type WeightedRow = {
     distro: string;
@@ -72,23 +73,23 @@ async function getIdeal(runId: string): Promise<IdealResponse | null> {
 
 export default async function WeightedData({ runId }: Props) {
     const [rows, ideal] = await Promise.all([getWeighted(runId), getIdeal(runId)]);
+    const t = await getTranslations('result.weightedData');
 
     if (!rows.length || !ideal) {
-        return <div>Failed to load data</div>;
+        return <div>{t('status.failed')}</div>;
     }
 
     return (
         <div className='grid gap-6 lg:grid-cols-3'>
             {/* TABLE SECTION */}
-            <div className='space-y-6 lg:col-span-2'>
+            <div className='space-y-6 overflow-x-auto lg:col-span-2'>
                 {/* WEIGHTED MATRIX */}
-                <div className='bg-background border-stroke overflow-x-auto rounded-2xl border'>
+                <div className='bg-background border-stroke rounded-2xl border'>
                     <div className='border-stroke border-b p-5'>
-                        <h2 className='text-xl font-semibold'>Weighted Normalized Matrix</h2>
+                        <h2 className='text-xl font-semibold'>{t('matrixTitle')}</h2>
 
                         <p className='text-muted-foreground mt-1 text-sm'>
-                            Weighted normalized decision matrix after applying TOPSIS criterion
-                            weights.
+                            {t('matrixDescription')}
                         </p>
                     </div>
 
@@ -96,24 +97,28 @@ export default async function WeightedData({ runId }: Props) {
                         <TableHeader>
                             <TableRow className='bg-bg-2 hover:bg-bg-2'>
                                 <TableHead className='min-w-45 font-semibold'>
-                                    Distribution
-                                </TableHead>
-
-                                <TableHead className='text-center font-semibold'>UX</TableHead>
-
-                                <TableHead className='text-center font-semibold'>
-                                    Performance
+                                    {t('table.columnDistribution')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Stability
+                                    {t('table.columnUx')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Features
+                                    {t('table.columnPerformance')}
                                 </TableHead>
 
-                                <TableHead className='text-center font-semibold'>Support</TableHead>
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnStability')}
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnFeatures')}
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnSupport')}
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
 
@@ -140,41 +145,46 @@ export default async function WeightedData({ runId }: Props) {
                 {/* IDEAL SOLUTION */}
                 <div className='bg-background border-stroke overflow-x-auto rounded-2xl border'>
                     <div className='border-stroke border-b p-5'>
-                        <h2 className='text-xl font-semibold'>Ideal Solutions</h2>
+                        <h2 className='text-xl font-semibold'>{t('idealTitle')}</h2>
 
                         <p className='text-muted-foreground mt-1 text-sm'>
-                            Positive and negative ideal solutions used in TOPSIS ranking
-                            calculations.
+                            {t('idealDescription')}
                         </p>
                     </div>
 
                     <Table>
                         <TableHeader>
                             <TableRow className='bg-bg-2 hover:bg-bg-2'>
-                                <TableHead className='min-w-55 font-semibold'>Type</TableHead>
-
-                                <TableHead className='text-center font-semibold'>UX</TableHead>
-
-                                <TableHead className='text-center font-semibold'>
-                                    Performance
+                                <TableHead className='min-w-55 font-semibold'>
+                                    {t('table.columnType')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Stability
+                                    {t('table.columnUx')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Features
+                                    {t('table.columnPerformance')}
                                 </TableHead>
 
-                                <TableHead className='text-center font-semibold'>Support</TableHead>
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnStability')}
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnFeatures')}
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnSupport')}
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
 
                         <TableBody>
                             <TableRow>
                                 <TableCell className='text-green font-medium'>
-                                    Positive Ideal
+                                    {t('table.rowPositiveIdeal')}
                                 </TableCell>
 
                                 <TableCell className='text-center'>{ideal.positive.ux}</TableCell>
@@ -198,7 +208,7 @@ export default async function WeightedData({ runId }: Props) {
 
                             <TableRow>
                                 <TableCell className='text-red font-medium'>
-                                    Negative Ideal
+                                    {t('table.rowNegativeIdeal')}
                                 </TableCell>
 
                                 <TableCell className='text-center'>{ideal.negative.ux}</TableCell>
@@ -221,17 +231,19 @@ export default async function WeightedData({ runId }: Props) {
                             </TableRow>
 
                             <TableRow>
-                                <TableCell className='font-medium'>Criteria Type</TableCell>
+                                <TableCell className='font-medium'>
+                                    {t('table.rowCriteriaType')}
+                                </TableCell>
 
-                                <TableCell className='text-center'>BENEFIT</TableCell>
+                                <TableCell className='text-center'>{t('table.benefit')}</TableCell>
 
-                                <TableCell className='text-center'>BENEFIT</TableCell>
+                                <TableCell className='text-center'>{t('table.benefit')}</TableCell>
 
-                                <TableCell className='text-center'>BENEFIT</TableCell>
+                                <TableCell className='text-center'>{t('table.benefit')}</TableCell>
 
-                                <TableCell className='text-center'>BENEFIT</TableCell>
+                                <TableCell className='text-center'>{t('table.benefit')}</TableCell>
 
-                                <TableCell className='text-center'>BENEFIT</TableCell>
+                                <TableCell className='text-center'>{t('table.benefit')}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
@@ -241,17 +253,14 @@ export default async function WeightedData({ runId }: Props) {
             {/* FORMULA SECTION */}
             <div className='space-y-5'>
                 <div className='bg-background border-stroke rounded-2xl border p-5'>
-                    <h2 className='text-xl font-semibold'>TOPSIS Weighting</h2>
+                    <h2 className='text-xl font-semibold'>{t('formulaTitle')}</h2>
 
-                    <p className='text-muted-foreground mt-1 text-sm'>
-                        Mathematical formulas used for weighted normalization and ideal solution
-                        calculation.
-                    </p>
+                    <p className='text-muted-foreground mt-1 text-sm'>{t('formulaDescription')}</p>
                 </div>
 
                 <div className='bg-background border-stroke space-y-6 rounded-2xl border p-5'>
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Weighted Matrix Formula</h3>
+                        <h3 className='text-base font-semibold'>{t('weightedMatrixFormula')}</h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.topsisWeighted} />
@@ -259,7 +268,7 @@ export default async function WeightedData({ runId }: Props) {
                     </div>
 
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Ideal Solution Formula</h3>
+                        <h3 className='text-base font-semibold'>{t('idealSolutionFormula')}</h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.topsisIdeals} />

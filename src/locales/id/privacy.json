@@ -27,8 +27,8 @@
             "title": "3. Penggunaan Data",
             "items": [
                 "Data nama dan email digunakan untuk keperluan pendaftaran, login, dan identifikasi pengguna yang sah.",
-                "Hasil DSS (Decision Support System) disimpan untuk keperluan analisis sistem dan audit perhitungan.",
-                "Hasil DSS dapat dibagikan secara publik melalui tautan khusus, yang hanya menampilkan perhitungan tanpa data pribadi pengguna."
+                "Hasil SPK (Sistem Pendukung Keputusan) disimpan untuk keperluan analisis sistem dan audit perhitungan.",
+                "Hasil SPK dapat dibagikan secara publik melalui tautan khusus, yang hanya menampilkan perhitungan tanpa data pribadi pengguna."
             ]
         },
         {

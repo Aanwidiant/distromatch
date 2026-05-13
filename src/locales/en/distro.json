@@ -1,9 +1,9 @@
 {
     "linuxDistributionsExplorer": "Linux Distributions Explorer",
-    "searchAndExploreLinuxDistributions": "searchAndExploreLinuxDistributions",
-    "searchDistro": "Search Distro ...",
-    "detail": "Detail",
-    "prev": "Prev",
+    "searchAndExploreLinuxDistributions": "Search and explore various Linux distributions.",
+    "searchDistro": "Search distro...",
+    "detail": "Details",
+    "prev": "Previous",
     "next": "Next",
     "failedToLoadData": "Failed to load data",
     "anErrorOccurredWhileLoadingDataPleaseTryAgainLater": "An error occurred while loading data. Please try again later.",

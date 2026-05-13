@@ -4,17 +4,28 @@ import { routing } from './lib/i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
-export default function middleware(req: NextRequest) {
+export default function proxy(req: NextRequest) {
     const { pathname } = req.nextUrl;
 
-    if (pathname.startsWith('/admin')) {
-        return NextResponse.next();
+    if (pathname.startsWith('/admin/dss')) {
+        const requestHeaders = new Headers(req.headers);
+
+        requestHeaders.set('x-pathname', pathname);
+
+        requestHeaders.set('x-next-intl-locale', 'en');
+
+        return NextResponse.next({
+            request: {
+                headers: requestHeaders,
+            },
+        });
     }
 
-    if (pathname.startsWith('/verify')) {
-        return NextResponse.next();
-    }
-    if (pathname.startsWith('/reset-password')) {
+    if (
+        pathname.startsWith('/admin') ||
+        pathname.startsWith('/verify') ||
+        pathname.startsWith('/reset-password')
+    ) {
         return NextResponse.next();
     }
 
@@ -22,11 +33,15 @@ export default function middleware(req: NextRequest) {
 
     const isProtectedRoute = /^\/[^/]+\/[^/]+\/results/.test(pathname);
 
+    const response = intlMiddleware(req);
+
+    response.headers.set('x-pathname', pathname);
+
     if (isProtectedRoute && !hasRefreshToken) {
-        return intlMiddleware(req);
+        return response;
     }
 
-    return intlMiddleware(req);
+    return response;
 }
 
 export const config = {

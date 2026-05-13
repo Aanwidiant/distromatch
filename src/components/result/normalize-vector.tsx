@@ -10,6 +10,7 @@ import {
 import { BlockMath } from 'react-katex';
 import { FORMULAS } from '@/lib/formulas';
 import 'katex/dist/katex.min.css';
+import { getTranslations } from 'next-intl/server';
 
 type NormalizeRow = {
     distro: string;
@@ -48,22 +49,22 @@ async function getNormalize(runId: string): Promise<NormalizeRow[]> {
 
 export default async function NormalizeVector({ runId }: Props) {
     const rows = await getNormalize(runId);
+    const t = await getTranslations('result.normalizeVector');
 
     if (!rows.length) {
-        return <div>Failed to load data</div>;
+        return <div>{t('status.failed')}</div>;
     }
 
     return (
         <div className='grid gap-6 lg:grid-cols-3'>
             {/* TABLE SECTION */}
-            <div className='lg:col-span-2'>
-                <div className='bg-background border-stroke overflow-x-auto rounded-2xl border'>
+            <div className='overflow-x-auto lg:col-span-2'>
+                <div className='bg-background border-stroke rounded-2xl border'>
                     <div className='border-stroke border-b p-5'>
-                        <h2 className='text-xl font-semibold'>Normalized Decision Matrix</h2>
+                        <h2 className='text-xl font-semibold'>{t('matrixTitle')}</h2>
 
                         <p className='text-muted-foreground mt-1 text-sm'>
-                            TOPSIS normalized matrix generated from the original decision matrix
-                            values.
+                            {t('matrixDescription')}
                         </p>
                     </div>
 
@@ -71,24 +72,28 @@ export default async function NormalizeVector({ runId }: Props) {
                         <TableHeader>
                             <TableRow className='bg-bg-2 hover:bg-bg-2'>
                                 <TableHead className='min-w-45 font-semibold'>
-                                    Distribution
-                                </TableHead>
-
-                                <TableHead className='text-center font-semibold'>UX</TableHead>
-
-                                <TableHead className='text-center font-semibold'>
-                                    Performance
+                                    {t('table.columnDistribution')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Stability
+                                    {t('table.columnUx')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Features
+                                    {t('table.columnPerformance')}
                                 </TableHead>
 
-                                <TableHead className='text-center font-semibold'>Support</TableHead>
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnStability')}
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnFeatures')}
+                                </TableHead>
+
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnSupport')}
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
 
@@ -116,16 +121,16 @@ export default async function NormalizeVector({ runId }: Props) {
             {/* FORMULA SECTION */}
             <div className='space-y-5'>
                 <div className='bg-background border-stroke rounded-2xl border p-5'>
-                    <h2 className='text-xl font-semibold'>Matrix Normalization</h2>
+                    <h2 className='text-xl font-semibold'>{t('normalizationTitle')}</h2>
 
                     <p className='text-muted-foreground mt-1 text-sm'>
-                        Formula used to normalize the decision matrix in the TOPSIS method.
+                        {t('normalizationDescription')}
                     </p>
                 </div>
 
                 <div className='bg-background border-stroke rounded-2xl border p-5'>
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Normalization Formula</h3>
+                        <h3 className='text-base font-semibold'>{t('formulaLabel')}</h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.topsisNormalized} />

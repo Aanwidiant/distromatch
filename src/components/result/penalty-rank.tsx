@@ -10,6 +10,7 @@ import {
 import { InlineMath, BlockMath } from 'react-katex';
 import { FORMULAS } from '@/lib/formulas';
 import 'katex/dist/katex.min.css';
+import { getTranslations } from 'next-intl/server';
 
 type PenaltyRow = {
     distro: string;
@@ -48,45 +49,49 @@ async function getPenalty(runId: string): Promise<PenaltyRow[]> {
 
 export default async function PenaltyRank({ runId }: Props) {
     const rows = await getPenalty(runId);
+    const t = await getTranslations('result.penaltyRank');
 
     if (!rows.length) {
-        return <div>Failed to load data</div>;
+        return <div>{t('status.failed')}</div>;
     }
 
     return (
         <div className='grid gap-6 lg:grid-cols-3'>
             {/* TABLE SECTION */}
-            <div className='lg:col-span-2'>
-                <div className='bg-background border-stroke overflow-x-auto rounded-2xl border'>
+            <div className='overflow-x-auto lg:col-span-2'>
+                <div className='bg-background border-stroke rounded-2xl border'>
                     <div className='border-stroke border-b p-5'>
-                        <h2 className='text-xl font-semibold'>Penalty & Utility Ranking</h2>
+                        <h2 className='text-xl font-semibold'>{t('title')}</h2>
 
-                        <p className='text-muted-foreground mt-1 text-sm'>
-                            Final utility calculation using symmetric distance, penalty adjustment,
-                            and ranking logic.
-                        </p>
+                        <p className='text-muted-foreground mt-1 text-sm'>{t('description')}</p>
                     </div>
 
                     <Table>
                         <TableHeader>
                             <TableRow className='bg-bg-2 hover:bg-bg-2'>
                                 <TableHead className='min-w-45 font-semibold'>
-                                    Distribution
+                                    {t('table.columnDistribution')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Distance
+                                    {t('table.columnDistance')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Distance Norm
+                                    {t('table.columnDistanceNorm')}
                                 </TableHead>
 
-                                <TableHead className='text-center font-semibold'>Penalty</TableHead>
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnPenalty')}
+                                </TableHead>
 
-                                <TableHead className='text-right font-semibold'>Utility</TableHead>
+                                <TableHead className='text-right font-semibold'>
+                                    {t('table.columnUtility')}
+                                </TableHead>
 
-                                <TableHead className='text-center font-semibold'>Rank</TableHead>
+                                <TableHead className='text-center font-semibold'>
+                                    {t('table.columnRank')}
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
 
@@ -126,19 +131,18 @@ export default async function PenaltyRank({ runId }: Props) {
             </div>
 
             {/* FORMULA SECTION */}
-            <div className='space-y-5'>
+            <div className='space-y-5 overflow-x-auto'>
                 <div className='bg-background border-stroke rounded-2xl border p-5'>
-                    <h2 className='text-xl font-semibold'>Penalty Calculation</h2>
+                    <h2 className='text-xl font-semibold'>{t('calculationTitle')}</h2>
 
                     <p className='text-muted-foreground mt-1 text-sm'>
-                        Mathematical formulas used for preference mapping, symmetric penalty
-                        adjustment, utility scoring, and ranking.
+                        {t('calculationDescription')}
                     </p>
                 </div>
 
                 <div className='bg-background border-stroke space-y-6 rounded-2xl border p-5'>
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Continuous User Preference</h3>
+                        <h3 className='text-base font-semibold'>{t('formula.userPreference')}</h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.prefRaw} />
@@ -146,7 +150,9 @@ export default async function PenaltyRank({ runId }: Props) {
                     </div>
 
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Symmetric Distance</h3>
+                        <h3 className='text-base font-semibold'>
+                            {t('formula.symmetricDistance')}
+                        </h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.symmetricDistance} />
@@ -154,7 +160,9 @@ export default async function PenaltyRank({ runId }: Props) {
                     </div>
 
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Distance Normalization</h3>
+                        <h3 className='text-base font-semibold'>
+                            {t('formula.distanceNormalization')}
+                        </h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.distanceNorm} />
@@ -162,7 +170,7 @@ export default async function PenaltyRank({ runId }: Props) {
                     </div>
 
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Power-based Penalty</h3>
+                        <h3 className='text-base font-semibold'>{t('formula.powerPenalty')}</h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.penalty} />
@@ -170,7 +178,7 @@ export default async function PenaltyRank({ runId }: Props) {
                     </div>
 
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Utility Function</h3>
+                        <h3 className='text-base font-semibold'>{t('formula.utilityFunction')}</h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.utility} />
@@ -178,13 +186,11 @@ export default async function PenaltyRank({ runId }: Props) {
                     </div>
 
                     <div className='border-stroke border-t pt-4'>
-                        <h3 className='mb-3 text-lg font-semibold'>Ranking Rules</h3>
+                        <h3 className='mb-3 text-lg font-semibold'>{t('ranking.title')}</h3>
 
                         <div className='space-y-5'>
                             <div className='space-y-2'>
-                                <p className='text-sm font-medium'>
-                                    Descending ordering with review-based tie-breaker
-                                </p>
+                                <p className='text-sm font-medium'>{t('ranking.orderingRule')}</p>
 
                                 <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                                     <BlockMath math={FORMULAS.orderingRule} />
@@ -193,7 +199,7 @@ export default async function PenaltyRank({ runId }: Props) {
 
                             <div className='space-y-2'>
                                 <p className='text-sm font-medium'>
-                                    Dense rank with tolerance <InlineMath math='\varepsilon' />
+                                    {t('ranking.denseRank')} <InlineMath math='\varepsilon' />
                                 </p>
 
                                 <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>

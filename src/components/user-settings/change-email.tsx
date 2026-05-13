@@ -14,9 +14,11 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Mail } from 'lucide-react';
 import { useDialog } from '@/hooks/use-dialog';
+import { useTranslations } from 'next-intl';
 
 export default function ChangeEmail() {
     const { isOpen, close, closeAll } = useDialog('changeEmail');
+    const t = useTranslations('common.changeEmail');
     const [newEmail, setNewEmail] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -25,12 +27,12 @@ export default function ChangeEmail() {
 
     const handleChangeEmail = async () => {
         if (!newEmail) {
-            toast.error('New email is required.');
+            toast.error(t('validation.emailRequired'));
             return;
         }
 
         if (!isValidEmail) {
-            toast.error('Please enter a valid email address.');
+            toast.error(t('validation.emailInvalid'));
             return;
         }
 
@@ -49,7 +51,7 @@ export default function ChangeEmail() {
                 toast.error(res.message);
             }
         } catch {
-            toast.error('Failed to request email change.');
+            toast.error(t('notifications.failed'));
         } finally {
             setLoading(false);
         }
@@ -61,17 +63,14 @@ export default function ChangeEmail() {
                 <DialogHeader>
                     <DialogTitle className='flex items-center gap-2'>
                         <Mail className='size-6' />
-                        Change Email
+                        {t('title')}
                     </DialogTitle>
                 </DialogHeader>
                 <div className='space-y-4'>
-                    <p className='text-sm text-gray-600'>
-                        Enter your new email address. We will send a verification link to confirm
-                        the change.
-                    </p>
+                    <p className='text-grey-2 text-sm'>{t('description')}</p>
                     <Input
                         type='email'
-                        placeholder='Enter your new email'
+                        placeholder={t('placeholder')}
                         value={newEmail}
                         className={!isValidEmail && newEmail ? 'error-input' : ''}
                         onChange={(e) => setNewEmail(e.target.value)}
@@ -79,10 +78,10 @@ export default function ChangeEmail() {
                 </div>
                 <DialogFooter>
                     <Button variant='outline' onClick={() => close()}>
-                        Cancel
+                        {t('buttons.cancel')}
                     </Button>
                     <Button onClick={handleChangeEmail} disabled={loading || !isValidEmail}>
-                        {loading ? 'Sending request...' : 'Send Verification Email'}
+                        {loading ? t('buttons.sending') : t('buttons.sendVerification')}
                     </Button>
                 </DialogFooter>
             </DialogContent>

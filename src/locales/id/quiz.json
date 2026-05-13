@@ -1,3 +1,123 @@
 {
-    "test": "test"
+    "quizPage": {
+        "badge": "Survei → Bobot → TOPSIS → Bayesian → Penalti → Peringkat",
+        "title": {
+            "prefix": "Temukan distro Linux",
+            "highlight": "paling selaras",
+            "suffix": "dengan kebutuhanmu."
+        },
+        "description": "Jawab 12 pertanyaan singkat. Sistem kami mengubah jawabanmu menjadi bobot, menghitung solusi ideal, menstabilkan skor dengan Bayesian, lalu memberi peringkat akhir yang transparan.",
+        "highlights": {
+            "finalUtility": "Skor utilitas final 0 sampai 1",
+            "criteriaBreakdown": "Rincian kontribusi kriteria",
+            "auditableRanking": "Peringkat mudah diaudit",
+            "consistentResults": "Hasil konsisten dan terukur"
+        },
+        "stats": {
+            "questions": {
+                "value": "12",
+                "label": "Pertanyaan"
+            },
+            "dimensions": {
+                "value": "6",
+                "label": "Dimensi"
+            },
+            "minutes": {
+                "value": "3",
+                "label": "Menit"
+            }
+        },
+        "placeholder": "Visualisasi proses perhitungan"
+    },
+    "quizLandingActions": {
+        "buttons": {
+            "continue": "Lanjutkan",
+            "restart": "Mulai Ulang",
+            "startQuiz": "Mulai Kuis"
+        },
+        "progress": "Progres tersimpan: {answered}/12 pertanyaan terjawab"
+    },
+    "quizFlow": {
+        "categoryList": "Daftar Kategori",
+        "categoryLabel": "Kategori {current} dari {total}",
+        "buttons": {
+            "previous": "Sebelumnya",
+            "next": "Lanjut",
+            "viewResults": "Lihat Hasil"
+        },
+        "loading": {
+            "analyzing": "Menganalisis..."
+        },
+        "validation": {
+            "completeCategory": "Jawab semua pertanyaan di kategori ini untuk melanjutkan"
+        }
+    },
+    "quizData": {
+        "answerOptions": {
+            "1": "Tidak penting",
+            "2": "Kurang penting",
+            "3": "Cukup penting",
+            "4": "Penting",
+            "5": "Sangat penting"
+        },
+        "categories": {
+            "userExperience": {
+                "title": "Pengalaman Pengguna (UX)",
+                "subtitle": "Kemudahan penggunaan sehari-hari",
+                "questions": {
+                    "q1": "Seberapa penting antarmuka yang mudah dipahami untuk pemakaian harian?",
+                    "q2": "Seberapa penting proses instalasi dan konfigurasi awal yang mudah?"
+                }
+            },
+            "performance": {
+                "title": "Performa",
+                "subtitle": "Kecepatan dan efisiensi sistem",
+                "questions": {
+                    "q1": "Seberapa penting sistem terasa cepat/responsif saat dipakai?",
+                    "q2": "Seberapa penting penggunaan resource (RAM/CPU) yang efisien (ringan)?"
+                }
+            },
+            "stability": {
+                "title": "Stabilitas",
+                "subtitle": "Keandalan dan keamanan update",
+                "questions": {
+                    "q1": "Seberapa penting kestabilan (minim crash/bug) saat digunakan?",
+                    "q2": "Seberapa penting update yang aman dan tidak sering menyebabkan masalah?"
+                }
+            },
+            "features": {
+                "title": "Fitur",
+                "subtitle": "Kelengkapan fitur dan software",
+                "questions": {
+                    "q1": "Seberapa penting ketersediaan fitur bawaan/aplikasi dasar yang lengkap?",
+                    "q2": "Seberapa penting kemudahan menambah aplikasi/software sesuai kebutuhan (repositori/package manager)?"
+                }
+            },
+            "support": {
+                "title": "Dukungan",
+                "subtitle": "Komunitas dan dokumentasi",
+                "questions": {
+                    "q1": "Seberapa penting dukungan komunitas dan dokumentasi yang banyak?",
+                    "q2": "Seberapa penting kemudahan mencari solusi saat ada error (tutorial, forum, Q&A)?"
+                }
+            },
+            "targetUserLevel": {
+                "title": "Tingkat Pengguna",
+                "subtitle": "Kesesuaian untuk tingkat penggunaan",
+                "questions": {
+                    "q1": "Seberapa penting distro yang ramah pemula (minim perintah terminal)?",
+                    "q2": "Seberapa penting sistem yang 'langsung bisa dipakai' tanpa banyak tweak/oprek?"
+                }
+            }
+        }
+    },
+    "quizProgress": {
+        "progress": "Progres",
+        "quizProgress": "Progres Kuis",
+        "questions": "{answered}/{total} pertanyaan"
+    },
+    "categoryCard": {
+        "question": "Pertanyaan {number}",
+        "answered": "Terjawab"
+    }
 }

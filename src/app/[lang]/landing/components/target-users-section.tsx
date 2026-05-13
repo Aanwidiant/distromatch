@@ -1,28 +1,30 @@
 import { Code2, Compass, GraduationCap } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
-const TARGET_USERS = [
-    {
-        title: 'Pemula Linux',
-        desc: 'Butuh rekomendasi yang jelas dan mudah dipahami.',
-        icon: Compass,
-    },
-    {
-        title: 'Mahasiswa IT',
-        desc: 'Mencari distro yang cocok untuk belajar dan praktikum.',
-        icon: GraduationCap,
-    },
-    {
-        title: 'Developer',
-        desc: 'Perlu workflow cepat dengan tools yang stabil.',
-        icon: Code2,
-    },
-];
+export default async function TargetUsersSection() {
+    const t = await getTranslations('landing.targetUsersSection');
+    const TARGET_USERS = [
+        {
+            title: t('users.linuxBeginner.title'),
+            desc: t('users.linuxBeginner.description'),
+            icon: Compass,
+        },
+        {
+            title: t('users.itStudent.title'),
+            desc: t('users.itStudent.description'),
+            icon: GraduationCap,
+        },
+        {
+            title: t('users.developer.title'),
+            desc: t('users.developer.description'),
+            icon: Code2,
+        },
+    ];
 
-export default function TargetUsersSection() {
     return (
         <section className='space-y-8'>
             <div className='space-y-2 text-center'>
-                <h2 className='text-foreground text-3xl font-semibold'>Cocok untuk siapa?</h2>
+                <h2 className='text-foreground text-3xl font-semibold'>{t('title')}</h2>
             </div>
             <div className='grid gap-6 md:grid-cols-3'>
                 {TARGET_USERS.map((item) => (

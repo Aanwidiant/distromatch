@@ -1,3 +1,114 @@
 {
-    "test": "test"
+    "heroSection": {
+        "badge": "Decision Support System • Transparent and Measurable",
+        "title": {
+            "prefix": "About",
+            "highlight": "Distromatch"
+        },
+        "description": {
+            "first": "Distromatch is a Decision Support System (DSS)-based platform that helps users find the most suitable Linux distro through a transparent and easy-to-understand calculation process.",
+            "second": "The system combines TOPSIS, Bayesian shrinkage, and penalty-based ranking to ensure recommendations remain objective, stable, and relevant to user preferences."
+        },
+        "placeholder": "Calculation process illustration"
+    },
+    "whatItDoesSection": {
+        "title": "What does Distromatch do?",
+        "items": {
+            "surveyNeeds": {
+                "title": "Needs Survey",
+                "description": "Transforms user answers into scores for each need dimension."
+            },
+            "decisionAnalysis": {
+                "title": "Decision Analysis",
+                "description": "Processes data using weighting, TOPSIS, and Bayesian methods."
+            },
+            "transparentRanking": {
+                "title": "Transparent Ranking",
+                "description": "Displays clear utility scores and distro rankings."
+            }
+        }
+    },
+    "howItWorksSection": {
+        "title": "Calculation Steps",
+        "steps": {
+            "surveyWeight": {
+                "title": "Survey & Weighting",
+                "description": "Scores for each dimension are calculated and weighted based on preferences."
+            },
+            "normalizationTopsis": {
+                "title": "Normalization & TOPSIS",
+                "description": "Normalized matrix, ideal solutions, and closeness coefficient."
+            },
+            "bayesianShrinkage": {
+                "title": "Bayesian Shrinkage",
+                "description": "Stabilizes scores when review data is limited."
+            },
+            "symmetricPenalty": {
+                "title": "Symmetric Penalty",
+                "description": "Reduces scores when distro levels are too far from user preferences."
+            },
+            "utilityRanking": {
+                "title": "Utility & Ranking",
+                "description": "Final scores (0–1) are ranked with review-based tie-breakers."
+            }
+        }
+    },
+    "whySection": {
+        "title": "Why was Distromatch created?",
+        "description": {
+            "first": "Many users, especially beginners, struggle to choose a Linux distro because of the overwhelming number of options and scattered information.",
+            "second": "Distromatch helps simplify this process with a transparent data-driven system, allowing decisions to be made more clearly and confidently."
+        },
+        "placeholder": "Benefits illustration"
+    },
+    "statsSection": {
+        "stats": {
+            "quizQuestions": {
+                "value": "12",
+                "label": "Quiz Questions"
+            },
+            "assessmentDimensions": {
+                "value": "6",
+                "label": "Assessment Dimensions"
+            },
+            "decisionMethods": {
+                "value": "Multi",
+                "label": "DSS Methods"
+            },
+            "dataDriven": {
+                "value": "100%",
+                "label": "Data-driven"
+            }
+        }
+    },
+    "contactSection": {
+        "title": "Send a Message",
+        "description": "Have questions, suggestions, or feedback? Send us your message here.",
+        "fields": {
+            "name": {
+                "label": "Name",
+                "placeholder": "Your name"
+            },
+            "email": {
+                "label": "Email",
+                "placeholder": "email@example.com"
+            },
+            "phone": {
+                "label": "Phone Number",
+                "optional": "(optional)",
+                "placeholder": "+62 812 xxxx xxxx"
+            },
+            "message": {
+                "label": "Message",
+                "placeholder": "Write your message here..."
+            }
+        },
+        "button": {
+            "submit": "Send Message",
+            "loading": "Sending..."
+        },
+        "toast": {
+            "development": "Sorry, this feature is still under development"
+        }
+    }
 }

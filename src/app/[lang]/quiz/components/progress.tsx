@@ -1,4 +1,5 @@
 import { TOTAL_QUESTIONS } from '@/lib/quiz-data';
+import { useTranslations } from 'next-intl';
 
 type Props = {
     answeredCount: number;
@@ -12,6 +13,7 @@ export default function QuizProgress({ answeredCount }: Props) {
     const radius = (size - strokeWidth) / 2;
     const circumference = 2 * Math.PI * radius;
     const offset = circumference - (percent / 100) * circumference;
+    const t = useTranslations('quiz.quizProgress');
 
     return (
         <div className='border-stroke bg-bg-2 flex items-center gap-3 rounded-xl border p-4'>
@@ -45,15 +47,18 @@ export default function QuizProgress({ answeredCount }: Props) {
                 </svg>
                 <div className='absolute inset-0 flex flex-col items-center justify-center'>
                     <span className='text-foreground text-lg font-bold'>{percent}%</span>
-                    <span className='text-grey-3 text-[10px]'>Progress</span>
+                    <span className='text-grey-3 text-[10px]'>{t('progress')}</span>
                 </div>
             </div>
             <div className='space-y-1'>
                 <div className='text-grey-3 font-mono text-xs tracking-widest uppercase'>
-                    Progress Quiz
+                    {t('quizProgress')}
                 </div>
                 <div className='text-foreground text-sm font-semibold'>
-                    {answeredCount}/{TOTAL_QUESTIONS} pertanyaan
+                    {t('questions', {
+                        answered: answeredCount,
+                        total: TOTAL_QUESTIONS,
+                    })}
                 </div>
             </div>
         </div>

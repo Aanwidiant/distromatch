@@ -24,7 +24,7 @@ export default function ThemeTransition() {
                             animate={{ clipPath: 'circle(150% at 50% 50%)' }}
                             exit={{ clipPath: 'circle(0% at 50% 50%)' }}
                             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-                            style={{ background: toDark ? '#0F0F14' : '#FFFFFF' }}
+                            style={{ background: toDark ? '#0b111f' : '#f3f5f9' }}
                         />
                     </motion.div>
 
@@ -35,7 +35,7 @@ export default function ThemeTransition() {
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.25 }}
                         style={{
-                            background: toDark ? 'rgba(255,255,255,0.16)' : 'rgba(0,0,0,0.16)',
+                            background: toDark ? '#0b111f' : '#f3f5f9',
                         }}
                     >
                         <motion.div

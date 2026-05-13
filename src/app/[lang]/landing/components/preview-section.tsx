@@ -1,18 +1,19 @@
 import { CircleCheck } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
-const PREVIEW_CONTENT = {
-    label: 'Preview hasil ranking & audit',
-    title: 'Ranking yang transparan dan dapat diaudit',
-    description:
-        'Hasil rekomendasi menampilkan urutan distro beserta skor utility final. Setiap skor bisa ditelusuri lewat ringkasan kontribusi kriteria, sehingga keputusan tetap transparan dan bisa diaudit.',
-    highlights: [
-        'Skor utility final yang jelas',
-        'Breakdown kontribusi kriteria',
-        'Ranking mudah diverifikasi',
-    ],
-};
+export default async function PreviewSection() {
+    const t = await getTranslations('landing.previewSection');
+    const PREVIEW_CONTENT = {
+        label: t('label'),
+        title: t('title'),
+        description: t('description'),
+        highlights: [
+            t('highlights.finalUtilityScore'),
+            t('highlights.criteriaBreakdown'),
+            t('highlights.verifiableRanking'),
+        ],
+    };
 
-export default function PreviewSection() {
     return (
         <section className='grid gap-12 md:grid-cols-2 md:items-center'>
             <div className='bg-primary/10 border-stroke h-75 w-full rounded-2xl border p-6'>

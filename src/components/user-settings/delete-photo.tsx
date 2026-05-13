@@ -14,10 +14,12 @@ import Fetch from '@/lib/fetch';
 import { toast } from 'sonner';
 import { useAuthStore } from '@/stores/auth-store';
 import { useDialog } from '@/hooks/use-dialog';
+import { useTranslations } from 'next-intl';
 
 export default function ConfirmDeletePhoto() {
     const { isOpen, close } = useDialog('deletePhoto');
     const [loading, setLoading] = useState(false);
+    const t = useTranslations('common.deletePhoto');
 
     const updateProfile = useAuthStore((s) => s.updateProfile);
 
@@ -28,14 +30,14 @@ export default function ConfirmDeletePhoto() {
             const res = await Fetch.DELETE('/users');
 
             if (res.success) {
-                toast.success(res.message || 'Profile photo deleted');
+                toast.success(res.message || t('notifications.success'));
                 updateProfile({ photo: null });
                 close();
             } else {
-                toast.error(res.message || 'Failed to delete photo');
+                toast.error(res.message || t('notifications.failed'));
             }
         } catch {
-            toast.error('Something went wrong');
+            toast.error(t('notifications.error'));
         } finally {
             setLoading(false);
         }
@@ -47,19 +49,16 @@ export default function ConfirmDeletePhoto() {
                 <DialogHeader>
                     <DialogTitle className='text-red flex items-center gap-2'>
                         <Trash className='size-6' />
-                        Delete Profile Picture?
+                        {t('title')}
                     </DialogTitle>
                 </DialogHeader>
-                <p className='text-sm'>
-                    Are you sure you want to delete your profile picture? This action cannot be
-                    undone.
-                </p>
+                <p className='text-sm'>{t('description')}</p>
                 <DialogFooter>
                     <Button variant='outline' onClick={() => close()}>
-                        Cancel
+                        {t('buttons.cancel')}
                     </Button>
                     <Button variant='destructive' onClick={handleDelete} disabled={loading}>
-                        {loading ? 'Deleting...' : 'Delete'}
+                        {loading ? t('buttons.deleting') : t('buttons.delete')}
                     </Button>
                 </DialogFooter>
             </DialogContent>

@@ -47,23 +47,19 @@ instance.interceptors.response.use(
 
         const status = error.response?.status;
 
-        // Jika bukan 401 atau sudah pernah retry, langsung reject
         if (status !== 401 || originalRequest._retry) {
             return Promise.reject(error);
         }
 
-        // Jangan lakukan refresh jika error terjadi di endpoint login
         if (originalRequest.url?.includes('/login')) {
             return Promise.reject(error);
         }
 
         const { logout, login } = useAuthStore.getState();
 
-        // Jika sedang dalam proses refresh, masukkan request ke antrean
         if (isRefreshing) {
             return new Promise((resolve, reject) => {
                 failedQueue.push({
-                    // Resolve tanpa parameter token karena kita pakai Cookie
                     resolve: () => resolve(instance(originalRequest)),
                     reject,
                 });
@@ -74,8 +70,6 @@ instance.interceptors.response.use(
         isRefreshing = true;
 
         try {
-            // Panggil endpoint refresh
-            // Backend akan otomatis set-cookie access_token baru
             const res = await axios.post<RefreshResponse>(
                 `${process.env.NEXT_PUBLIC_FETCH_URL}/auth/token/refresh`,
                 {},
@@ -84,17 +78,14 @@ instance.interceptors.response.use(
 
             const user = res.data.user;
 
-            // Update Zustand: isAuthenticated jadi true & simpan data user terbaru
             login(user);
 
-            // Kosongkan antrean (berhasil)
             processQueue(null, 'success');
 
-            // Ulangi request asli (otomatis membawa cookie baru dari browser)
             return instance(originalRequest);
         } catch (refreshError) {
             processQueue(refreshError, null);
-            logout(); // Hapus state user & isAuthenticated di Zustand
+            logout();
             return Promise.reject(refreshError);
         } finally {
             isRefreshing = false;

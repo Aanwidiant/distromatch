@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from 'react';
 interface LoadingAnimationProps {
     size?: number;
     showLoadingText?: boolean;
-    text?: string;
+    lang?: string;
 }
 
 const PATH_1 =
@@ -13,12 +13,18 @@ const PATH_1 =
 const PATH_2 =
     'M183.986 94.85L210.457 82.5634L199.134 211.981C198.364 220.784 190.603 227.296 181.801 226.526L147.162 223.495L159.884 78.0889L159.969 78.0964L183.986 94.85Z';
 
+const translations: Record<string, string> = {
+    id: 'Mohon tunggu sebentar…',
+    en: 'Please wait a moment…',
+};
+
 const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
     size = 128,
     showLoadingText = true,
-    text,
+    lang,
 }) => {
-    const strokeColor = '#0086FF';
+    const text = translations[lang ?? 'en'] ?? translations['en'];
+    const strokeColor = '#315FCF';
     const loopDuration = 0.75;
 
     const pathRefs = useRef<SVGPathElement[]>([]);
@@ -105,9 +111,7 @@ const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
             </svg>
 
             {showLoadingText && (
-                <p className='my-3 text-center font-semibold tracking-wide'>
-                    {text ?? 'Please wait a moment…'}
-                </p>
+                <p className='my-3 text-center font-semibold tracking-wide'>{text}</p>
             )}
         </div>
     );

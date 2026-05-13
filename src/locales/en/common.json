@@ -47,5 +47,158 @@
         "invalidEmail": "Please enter a valid email address.",
         "invalidPassword": "Must be at least 8 characters and include uppercase, lowercase, number, and special character."
     },
-    "loading": "Please wait a moment…"
+    "userDropdown": {
+        "menu": {
+            "adminDashboard": "Admin Dashboard",
+            "recommendationResults": "Recommendation Results",
+            "profile": "Profile",
+            "logout": "Logout"
+        },
+        "notifications": {
+            "logoutSuccess": "Logout successful",
+            "logoutFailed": "Logout failed"
+        },
+        "accessibility": {
+            "triggerLabel": "User menu"
+        }
+    },
+    "forgotPassword": {
+        "title": "Forgot Password",
+        "description": "Enter your email address and we will send you a password reset link.",
+        "placeholder": "Enter your email",
+        "validation": {
+            "emailRequired": "Email is required.",
+            "emailInvalid": "Please enter a valid email address."
+        },
+        "buttons": {
+            "cancel": "Cancel",
+            "sendLink": "Send Reset Link",
+            "sending": "Sending..."
+        },
+        "notifications": {
+            "success": "Reset link sent successfully.",
+            "failed": "Failed to request password reset."
+        }
+    },
+    "changeEmail": {
+        "title": "Change Email",
+        "description": "Enter your new email address. We will send a verification link to confirm the change.",
+        "placeholder": "Enter your new email",
+        "validation": {
+            "emailRequired": "New email is required.",
+            "emailInvalid": "Please enter a valid email address."
+        },
+        "buttons": {
+            "cancel": "Cancel",
+            "sendVerification": "Send Verification Email",
+            "sending": "Sending request..."
+        },
+        "notifications": {
+            "failed": "Failed to request email change."
+        }
+    },
+    "changePassword": {
+        "title": "Change Password",
+        "fields": {
+            "current": "Current Password",
+            "new": "New Password",
+            "confirm": "Confirm New Password"
+        },
+        "validation": {
+            "requiredAll": "All required fields must be filled.",
+            "currentRequired": "Current password is required.",
+            "mismatch": "Password confirmation does not match.",
+            "weakPassword": "Password must be at least 8 characters and include uppercase, lowercase, numbers, and special characters."
+        },
+        "buttons": {
+            "cancel": "Cancel",
+            "update": "Update Password",
+            "updating": "Updating..."
+        },
+        "notifications": {
+            "failed": "Failed to change password"
+        }
+    },
+    "changeProfilePicture": {
+        "title": {
+            "upload": "Upload image",
+            "crop": "Crop image then click save"
+        },
+        "dropzone": {
+            "instruction": "Click to upload image or drag and drop"
+        },
+        "validation": {
+            "invalidType": "Invalid file type",
+            "fileTooLarge": "File too large (max 4MB)"
+        },
+        "buttons": {
+            "change": "Change",
+            "save": "Save",
+            "saving": "Saving..."
+        },
+        "notifications": {
+            "failed": "Failed to upload image"
+        }
+    },
+    "deleteAccount": {
+        "title": "Delete Account",
+        "description": "This action is permanent and cannot be undone. Please type your email to confirm.",
+        "placeholder": "Enter your email to confirm",
+        "validation": {
+            "emailRequired": "Email confirmation is required.",
+            "emailInvalid": "Please enter a valid email address."
+        },
+        "buttons": {
+            "cancel": "Cancel",
+            "delete": "Delete Permanently",
+            "deleting": "Deleting..."
+        },
+        "notifications": {
+            "failed": "Failed to delete account."
+        }
+    },
+    "deletePhoto": {
+        "title": "Delete Profile Picture?",
+        "description": "Are you sure you want to delete your profile picture? This action cannot be undone.",
+        "buttons": {
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "deleting": "Deleting..."
+        },
+        "notifications": {
+            "success": "Profile photo deleted",
+            "failed": "Failed to delete photo",
+            "error": "Something went wrong"
+        }
+    },
+    "profile": {
+        "title": "User Profile",
+        "photoSection": {
+            "label": "Profile Picture",
+            "hint": "PNG, JPG under 4MB",
+            "change": "Change Profile Picture",
+            "delete": "Delete Profile Picture"
+        },
+        "form": {
+            "name": "Name",
+            "username": "Username",
+            "email": "Email",
+            "buttons": {
+                "save": "Save",
+                "saving": "Saving...",
+                "changeEmail": "Change Email",
+                "changePassword": "Change Password"
+            },
+            "validation": {
+                "nameRequired": "Name is required"
+            }
+        },
+        "dangerZone": {
+            "title": "Danger Zone",
+            "button": "Delete Account"
+        },
+        "notifications": {
+            "failed": "Failed to update profile"
+        }
+    }
 }

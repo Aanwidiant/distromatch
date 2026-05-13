@@ -19,7 +19,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { Google } from '../icons';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '../ui/input-group';
 import { Eye, EyeOff } from 'lucide-react';
-import { Link } from '@/lib/i18n/navigation';
+import { Link, useRouter } from '@/lib/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import ForgotPasswordDialog from './forgot-password';
 
@@ -43,6 +43,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
     const [showPassword, setShowPassword] = useState(false);
     const [isSubmitAttempted, setIsSubmitAttempted] = useState(false);
     const closeModal = () => onOpenChange(false);
+    const router = useRouter();
 
     const [loading, setLoading] = useState(false);
 
@@ -100,6 +101,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
 
             toast.success(data.message);
             resetForm();
+            router.refresh();
         } catch (err: unknown) {
             handleError(err);
         } finally {
@@ -192,6 +194,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                 }
 
                 toast.success(response.message);
+                router.refresh();
                 resetForm();
             } catch (err: unknown) {
                 handleError(err);

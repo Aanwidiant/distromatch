@@ -15,11 +15,13 @@ import { toast } from 'sonner';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Mail } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function ForgotPasswordDialog() {
     const [open, setOpen] = useState(false);
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
+    const t = useTranslations('common.forgotPassword');
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isValidEmail = emailRegex.test(email);
@@ -35,12 +37,12 @@ export default function ForgotPasswordDialog() {
 
     const handleForgotPassword = async () => {
         if (!email) {
-            toast.error('Email is required.');
+            toast.error(t('validation.emailRequired'));
             return;
         }
 
         if (!isValidEmail) {
-            toast.error('Please enter a valid email address.');
+            toast.error(t('validation.emailInvalid'));
             return;
         }
 
@@ -52,14 +54,14 @@ export default function ForgotPasswordDialog() {
             });
 
             if (!res.success) {
-                toast.error(res.message || 'Failed to send reset link.');
+                toast.error(res.message || t('notifications.failed'));
                 return;
             }
 
-            toast.success(res.message);
+            toast.success(res.message || t('notifications.success'));
             handleClose();
         } catch {
-            toast.error('Failed to request password reset.');
+            toast.error(t('notifications.failed'));
         } finally {
             setLoading(false);
         }
@@ -68,44 +70,40 @@ export default function ForgotPasswordDialog() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant='link'>Forgot password?</Button>
+                <Button variant='link'>{t('title')}?</Button>
             </DialogTrigger>
 
             <DialogContent className='w-full md:max-w-md'>
                 <DialogHeader>
                     <DialogTitle className='flex items-center gap-2'>
                         <Mail className='size-5' />
-                        Forgot Password
+                        {t('title')}
                     </DialogTitle>
 
-                    <DialogDescription>
-                        Enter your email address and we will send you a password reset link.
-                    </DialogDescription>
+                    <DialogDescription>{t('description')}</DialogDescription>
                 </DialogHeader>
 
                 <div className='space-y-4'>
                     <Input
                         type='email'
-                        placeholder='Enter your email'
+                        placeholder={t('placeholder')}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         aria-invalid={!isValidEmail && email.length > 0}
                     />
 
                     {!isValidEmail && email.length > 0 && (
-                        <p className='text-destructive text-sm'>
-                            Please enter a valid email address.
-                        </p>
+                        <p className='text-destructive text-sm'>{t('validation.emailInvalid')}</p>
                     )}
                 </div>
 
                 <DialogFooter>
                     <Button variant='outline' onClick={handleClose} disabled={loading}>
-                        Cancel
+                        {t('buttons.cancel')}
                     </Button>
 
                     <Button onClick={handleForgotPassword} disabled={loading || !isValidEmail}>
-                        {loading ? 'Sending...' : 'Send Reset Link'}
+                        {loading ? t('buttons.sending') : t('buttons.sendLink')}
                     </Button>
                 </DialogFooter>
             </DialogContent>

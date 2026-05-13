@@ -1,12 +1,13 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { CATEGORIES } from '@/lib/quiz-data';
+import { buildQuizData } from '@/lib/quiz-data';
 import { useQuizStore, QUESTION_KEYS } from '@/stores/quiz-store';
 import { useAuthStore } from '@/stores/auth-store';
 import Fetch from '@/lib/fetch';
 import { toast } from 'sonner';
 import QuizFlow from '@/app/[lang]/quiz/components/quiz-flow';
+import { useTranslations } from 'next-intl';
 
 export default function QuizFlowController() {
     const router = useRouter();
@@ -24,16 +25,18 @@ export default function QuizFlowController() {
     } = useQuizStore();
 
     const { isAuthenticated, profile } = useAuthStore();
+    const t = useTranslations('quiz');
+    const { categories } = buildQuizData(t);
 
-    const category = CATEGORIES[currentStep];
-    const answeredByCategory = CATEGORIES.map((cat) =>
+    const category = categories[currentStep];
+    const answeredByCategory = categories.map((cat) =>
         cat.questions.every((q) => answers[q.key] !== undefined)
     );
     const currentCatAnswered = answeredByCategory[currentStep] ?? false;
-    const isLastStep = currentStep === CATEGORIES.length - 1;
+    const isLastStep = currentStep === categories.length - 1;
     const firstUnansweredIndex = answeredByCategory.findIndex((done) => !done);
     const maxReachableStep =
-        firstUnansweredIndex === -1 ? CATEGORIES.length - 1 : firstUnansweredIndex;
+        firstUnansweredIndex === -1 ? categories.length - 1 : firstUnansweredIndex;
 
     const handleNext = () => {
         if (!currentCatAnswered) return;
@@ -86,6 +89,7 @@ export default function QuizFlowController() {
 
     return (
         <QuizFlow
+            categories={categories}
             category={category}
             currentStep={currentStep}
             answeredByCategory={answeredByCategory}

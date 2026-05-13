@@ -1,43 +1,56 @@
 import QuizAuthModal from './components/quiz-auth-modal';
 import QuizLandingActions from './components/quiz-landing-actions';
-import { CATEGORIES } from '@/lib/quiz-data';
+import { buildQuizData } from '@/lib/quiz-data';
 import { CATEGORY_ICONS } from './components/category-icons';
 import { CircleCheck, Clock3, Layers, ListChecks, Sparkles } from 'lucide-react';
+import { getMessages, getTranslations } from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
 
-const QUIZ_STATS = [
-    { value: '12', label: 'Pertanyaan', icon: ListChecks },
-    { value: '6', label: 'Dimensi', icon: Layers },
-    { value: '3', label: 'Menit', icon: Clock3 },
-];
+export default async function QuizPage() {
+    const messages = await getMessages();
+    const t = await getTranslations('quiz.quizPage');
+    const quizT = await getTranslations('quiz');
+    const { categories } = buildQuizData(quizT);
 
-export default function QuizPage() {
+    const QUIZ_STATS = [
+        {
+            value: t('stats.questions.value'),
+            label: t('stats.questions.label'),
+            icon: ListChecks,
+        },
+        {
+            value: t('stats.dimensions.value'),
+            label: t('stats.dimensions.label'),
+            icon: Layers,
+        },
+        {
+            value: t('stats.minutes.value'),
+            label: t('stats.minutes.label'),
+            icon: Clock3,
+        },
+    ];
+
     return (
-        <>
+        <NextIntlClientProvider messages={messages}>
             <main className='flex flex-col gap-12 p-6 md:flex-row md:px-12 lg:px-20'>
                 <div className='mx-auto w-full max-w-330 space-y-10 overflow-hidden py-6 md:w-1/2'>
                     <div className='space-y-8'>
-                        <span className='bg-accent-1 text-secondary inline-flex w-fit items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold'>
+                        <span className='bg-accent-1 text-primary inline-flex w-fit items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold'>
                             <Sparkles className='size-4' />
-                            Survey → Bobot → TOPSIS → Bayesian → Penalti → Ranking
+                            {t('badge')}
                         </span>
-
                         <h1 className='text-foreground text-4xl leading-tight font-bold md:text-5xl'>
-                            Temukan distro Linux{' '}
-                            <span className='text-primary'>paling selaras</span> dengan kebutuhanmu.
+                            {t('title.prefix')}{' '}
+                            <span className='text-primary'>{t('title.highlight')}</span>{' '}
+                            {t('title.suffix')}
                         </h1>
-
-                        <p className='text-grey-2 text-lg leading-relaxed'>
-                            Jawab 12 pertanyaan singkat. Sistem kami mengubah jawabanmu menjadi
-                            bobot, menghitung solusi ideal, menstabilkan skor dengan Bayesian, lalu
-                            memberi ranking akhir yang transparan.
-                        </p>
-
+                        <p className='text-grey-2 text-lg leading-relaxed'>{t('description')}</p>
                         <ul className='text-foreground/80 grid gap-2 text-sm sm:grid-cols-2'>
                             {[
-                                'Skor utility final 0 sampai 1',
-                                'Breakdown kontribusi kriteria',
-                                'Ranking mudah diaudit',
-                                'Hasil konsisten dan terukur',
+                                t('highlights.finalUtility'),
+                                t('highlights.criteriaBreakdown'),
+                                t('highlights.auditableRanking'),
+                                t('highlights.consistentResults'),
                             ].map((item) => (
                                 <li key={item} className='flex items-start gap-2'>
                                     <CircleCheck className='text-primary mt-0.5 size-4 shrink-0' />
@@ -45,10 +58,8 @@ export default function QuizPage() {
                                 </li>
                             ))}
                         </ul>
-
                         <QuizLandingActions />
                     </div>
-
                     <div className='grid grid-cols-3 gap-3 md:gap-4'>
                         {QUIZ_STATS.map((stat) => (
                             <div
@@ -70,9 +81,8 @@ export default function QuizPage() {
                             </div>
                         ))}
                     </div>
-
                     <div className='flex flex-wrap gap-3'>
-                        {CATEGORIES.map((cat) => {
+                        {categories.map((cat) => {
                             const Icon = CATEGORY_ICONS[cat.id as keyof typeof CATEGORY_ICONS];
                             return (
                                 <span
@@ -86,16 +96,15 @@ export default function QuizPage() {
                         })}
                     </div>
                 </div>
-
                 <div className='bg-primary/10 border-stroke relative hidden h-[calc(100vh-10rem)] w-1/2 overflow-hidden rounded-2xl border p-6 md:block'>
                     <div className='bg-accent-2/50 text-secondary flex h-full items-center justify-center rounded-xl text-sm font-medium'>
-                        Visualisasi proses perhitungan
+                        {t('placeholder')}
                     </div>
                     <span className='bg-primary/10 absolute -top-10 -right-10 h-32 w-32 rounded-full blur-2xl' />
                     <span className='bg-accent-1/30 absolute -bottom-12 -left-8 h-32 w-32 rounded-full blur-2xl' />
                 </div>
             </main>
             <QuizAuthModal />
-        </>
+        </NextIntlClientProvider>
     );
 }

@@ -8,17 +8,20 @@ import TopsisResult from '@/components/result/topsis';
 import WeightedData from '@/components/result/weighted';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Fetch from '@/lib/fetch';
+import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 type Props = {
     params: {
         username: string;
         id: string;
+        lang: string;
     };
 };
 
 export default async function ResultPage({ params }: Props) {
-    const { username, id } = await params;
+    const { username, id, lang } = await params;
+    const t = await getTranslations('result.resultPage.tabs');
 
     let isValid = false;
 
@@ -39,17 +42,17 @@ export default async function ResultPage({ params }: Props) {
     return (
         <main className='p-6 md:px-12 lg:px-20'>
             <div className='mx-auto max-w-330 space-y-8 overflow-hidden py-6'>
-                <TopResult runId={id} />
+                <TopResult runId={id} lang={lang} />
                 <Tabs defaultValue='survey' className='space-y-3'>
                     <div className='overflow-x-auto overflow-y-hidden'>
                         <TabsList variant='line' className='flex h-fit w-max min-w-full gap-2'>
-                            <TabsTrigger value='survey'>Survey Result</TabsTrigger>
-                            <TabsTrigger value='distro'>Distro Data</TabsTrigger>
-                            <TabsTrigger value='normalize'>Vector Normalization</TabsTrigger>
-                            <TabsTrigger value='norm-weight'>Weighted Normalized</TabsTrigger>
-                            <TabsTrigger value='topsis'>TOPSIS Calculation</TabsTrigger>
-                            <TabsTrigger value='bayesian'>Bayesian Calculation</TabsTrigger>
-                            <TabsTrigger value='penalty'>Penalty & Rank</TabsTrigger>
+                            <TabsTrigger value='survey'>{t('survey')}</TabsTrigger>
+                            <TabsTrigger value='distro'>{t('distro')}</TabsTrigger>
+                            <TabsTrigger value='normalize'>{t('normalize')}</TabsTrigger>
+                            <TabsTrigger value='norm-weight'>{t('weighted')}</TabsTrigger>
+                            <TabsTrigger value='topsis'>{t('topsis')}</TabsTrigger>
+                            <TabsTrigger value='bayesian'>{t('bayesian')}</TabsTrigger>
+                            <TabsTrigger value='penalty'>{t('penalty')}</TabsTrigger>
                         </TabsList>
                     </div>
                     <TabsContent value='survey'>

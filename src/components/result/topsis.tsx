@@ -10,6 +10,7 @@ import {
 import { BlockMath } from 'react-katex';
 import { FORMULAS } from '@/lib/formulas';
 import 'katex/dist/katex.min.css';
+import { getTranslations } from 'next-intl/server';
 
 type TopsisRow = {
     distro: string;
@@ -46,42 +47,40 @@ async function getTopsis(runId: string): Promise<TopsisRow[]> {
 
 export default async function TopsisResult({ runId }: Props) {
     const rows = await getTopsis(runId);
+    const t = await getTranslations('result.topsisResult');
 
     if (!rows.length) {
-        return <div>Failed to load data</div>;
+        return <div>{t('status.failed')}</div>;
     }
 
     return (
         <div className='grid gap-6 lg:grid-cols-3'>
             {/* TABLE SECTION */}
-            <div className='lg:col-span-2'>
-                <div className='bg-background border-stroke overflow-x-auto rounded-2xl border'>
+            <div className='overflow-x-auto lg:col-span-2'>
+                <div className='bg-background border-stroke rounded-2xl border'>
                     <div className='border-stroke border-b p-5'>
-                        <h2 className='text-xl font-semibold'>TOPSIS Final Result</h2>
+                        <h2 className='text-xl font-semibold'>{t('title')}</h2>
 
-                        <p className='text-muted-foreground mt-1 text-sm'>
-                            Final TOPSIS ranking based on distance to positive and negative ideal
-                            solutions.
-                        </p>
+                        <p className='text-muted-foreground mt-1 text-sm'>{t('description')}</p>
                     </div>
 
                     <Table>
                         <TableHeader>
                             <TableRow className='bg-bg-2 hover:bg-bg-2'>
                                 <TableHead className='min-w-45 font-semibold'>
-                                    Distribution
+                                    {t('table.columnDistribution')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Positive Ideal Distance
+                                    {t('table.columnPositiveDistance')}
                                 </TableHead>
 
                                 <TableHead className='text-center font-semibold'>
-                                    Negative Ideal Distance
+                                    {t('table.columnNegativeDistance')}
                                 </TableHead>
 
                                 <TableHead className='text-right font-semibold'>
-                                    Preference Score (CC)
+                                    {t('table.columnPreferenceScore')}
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
@@ -116,17 +115,16 @@ export default async function TopsisResult({ runId }: Props) {
             {/* FORMULA SECTION */}
             <div className='space-y-5'>
                 <div className='bg-background border-stroke rounded-2xl border p-5'>
-                    <h2 className='text-xl font-semibold'>TOPSIS Calculation</h2>
+                    <h2 className='text-xl font-semibold'>{t('calculationTitle')}</h2>
 
                     <p className='text-muted-foreground mt-1 text-sm'>
-                        Mathematical formulas used to calculate TOPSIS distances and preference
-                        scores.
+                        {t('calculationDescription')}
                     </p>
                 </div>
 
                 <div className='bg-background border-stroke space-y-6 rounded-2xl border p-5'>
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Ideal Distance Formula</h3>
+                        <h3 className='text-base font-semibold'>{t('idealDistanceFormula')}</h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.topsisDistances} />
@@ -134,7 +132,9 @@ export default async function TopsisResult({ runId }: Props) {
                     </div>
 
                     <div className='space-y-3'>
-                        <h3 className='text-base font-semibold'>Closeness Coefficient Formula</h3>
+                        <h3 className='text-base font-semibold'>
+                            {t('closenessCoefficientFormula')}
+                        </h3>
 
                         <div className='bg-bg-2 overflow-x-auto rounded-xl p-4'>
                             <BlockMath math={FORMULAS.topsisCcScore} />

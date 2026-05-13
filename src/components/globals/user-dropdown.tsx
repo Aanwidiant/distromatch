@@ -16,20 +16,23 @@ import { useDialog } from '@/hooks/use-dialog';
 import { useRouter } from '@/lib/i18n/navigation';
 import { SquareChartGantt, User, LogOut, ShieldUser } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export default function UserDropdown() {
     const { user, profile, logout } = useAuthStore();
     const profileDialog = useDialog('profile');
     const router = useRouter();
     const isAdmin = user?.role === 'ADMIN';
+    const t = useTranslations('common.userDropdown');
 
     const handleLogout = async () => {
         try {
-            await Fetch.DELETE<LogoutResponse>('/auth/logout');
+            const res = await Fetch.DELETE<LogoutResponse>('/auth/logout');
             logout();
-            toast.success('Logout berhasil');
+            router.refresh();
+            toast.success(res.message || t('logoutSuccess'));
         } catch (err) {
-            let message = 'Gagal logout';
+            let message = t('Logout failed');
 
             if (err instanceof AxiosError) {
                 const data = err.response?.data as { message?: string } | undefined;
@@ -57,7 +60,7 @@ export default function UserDropdown() {
                     <DropdownMenuItem asChild>
                         <Link href='/admin/dashboard' className='flex items-center gap-2'>
                             <ShieldUser className='size-4' />
-                            Admin Dashboard
+                            {t('menu.adminDashboard')}
                         </Link>
                     </DropdownMenuItem>
                 )}
@@ -66,18 +69,18 @@ export default function UserDropdown() {
                     className='flex items-center gap-2'
                 >
                     <SquareChartGantt className='size-4' />
-                    Hasil Rekomendasi
+                    {t('menu.recommendationResults')}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={profileDialog.open} className='flex items-center gap-2'>
                     <User className='size-4' />
-                    Profile
+                    {t('menu.profile')}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     onClick={handleLogout}
                     className='flex items-center gap-2 text-red-500'
                 >
                     <LogOut className='size-4' />
-                    Logout
+                    {t('menu.logout')}
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

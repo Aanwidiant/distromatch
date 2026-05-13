@@ -1,3 +1,220 @@
 {
-    "test": "test"
+    "resultListPage": {
+        "title": "Hasil SPK Anda",
+        "table": {
+            "id": "ID",
+            "createdAt": "Dibuat Pada",
+            "action": "Aksi"
+        },
+        "tooltip": {
+            "viewResult": "Lihat Hasil",
+            "deleteResult": "Hapus Hasil"
+        },
+        "pagination": {
+            "prev": "Sebelumnya",
+            "next": "Selanjutnya"
+        },
+        "errors": {
+            "failedLoadData": "Gagal memuat data"
+        }
+    },
+    "resultPage": {
+        "tabs": {
+            "survey": "Hasil Survei",
+            "distro": "Data Distro",
+            "normalize": "Normalisasi Vektor",
+            "weighted": "Normalisasi Terbobot",
+            "topsis": "Perhitungan TOPSIS",
+            "bayesian": "Perhitungan Bayesian",
+            "penalty": "Penalti & Peringkat"
+        }
+    },
+    "topResult": {
+        "title": "Top {n} Rekomendasi Linux",
+        "generatedFor": "Dibuat untuk",
+        "labels": {
+            "score": "Skor",
+            "website": "Situs Web",
+            "reviews": "ulasan",
+            "viewDetail": "Lihat detail"
+        }
+    },
+    "survey": {
+        "title": "Hasil Survei",
+        "description": "Penilaian preferensi pengguna dan bobot yang dihitung.",
+        "table": {
+            "columnQuestions": "Pertanyaan",
+            "columnAnswer": "Jawaban",
+            "columnMean": "Rata-rata",
+            "columnWeight": "Bobot",
+            "qUx": "Pengalaman Pengguna (UX)",
+            "qPerformance": "Performa",
+            "qStability": "Stabilitas",
+            "qFeatures": "Fitur",
+            "qSupport": "Dukungan",
+            "qPreference": "Preferensi Level"
+        },
+        "calculation": {
+            "title": "Kalkulasi Survei",
+            "description": "Rumus yang digunakan untuk menghitung rata-rata dan bobot survei.",
+            "avgDimension": "Rata-rata per Dimensi",
+            "totalScore": "Skor Total",
+            "weightFormula": "Rumus Bobot"
+        },
+        "status": {
+            "failed": "Gagal memuat data"
+        }
+    },
+    "distro": {
+        "dataset": {
+            "title": "Dataset Distribusi Linux",
+            "description": "Nilai kriteria mentah yang digunakan dalam kalkulasi TOPSIS."
+        },
+        "denominator": {
+            "title": "Penyebut TOPSIS",
+            "description": "Penyebut normalisasi vektor untuk setiap kriteria."
+        },
+        "normalization": {
+            "title": "Normalisasi Vektor",
+            "description": "Rumus yang digunakan untuk menghitung penyebut dalam proses normalisasi TOPSIS.",
+            "formulaTitle": "Rumus Penyebut"
+        },
+        "table": {
+            "columnDistro": "Distribusi",
+            "columnUx": "Pengalaman Pengguna (UX)",
+            "columnPerformance": "Performa",
+            "columnStability": "Stabilitas",
+            "columnFeatures": "Fitur",
+            "columnSupport": "Dukungan",
+            "columnCriteria": "Kriteria",
+            "rowDenominator": "Penyebut"
+        },
+        "status": {
+            "failed": "Gagal memuat data"
+        }
+    },
+    "normalizeVector": {
+        "matrixTitle": "Matriks Keputusan Ternormalisasi",
+        "matrixDescription": "Matriks normalisasi TOPSIS yang dihasilkan dari nilai matriks keputusan asli.",
+        "normalizationTitle": "Normalisasi Matriks",
+        "normalizationDescription": "Rumus yang digunakan untuk menormalisasi matriks keputusan dalam metode TOPSIS.",
+        "formulaLabel": "Rumus Normalisasi",
+        "table": {
+            "columnDistribution": "Distribusi",
+            "columnUx": "Pengalaman Pengguna (UX)",
+            "columnPerformance": "Performa",
+            "columnStability": "Stabilitas",
+            "columnFeatures": "Fitur",
+            "columnSupport": "Dukungan"
+        },
+        "status": {
+            "failed": "Gagal memuat data"
+        }
+    },
+    "weightedData": {
+        "matrixTitle": "Matriks Terbobot Ternormalisasi",
+        "matrixDescription": "Matriks keputusan ternormalisasi bobot setelah menerapkan bobot kriteria TOPSIS.",
+        "idealTitle": "Solusi Ideal",
+        "idealDescription": "Solusi ideal positif dan negatif yang digunakan dalam perhitungan peringkat TOPSIS.",
+        "formulaTitle": "Pembobotan TOPSIS",
+        "formulaDescription": "Rumus matematika yang digunakan untuk normalisasi terbobot dan perhitungan solusi ideal.",
+        "weightedMatrixFormula": "Rumus Matriks Terbobot",
+        "idealSolutionFormula": "Rumus Solusi Ideal",
+        "table": {
+            "columnDistribution": "Distribusi",
+            "columnType": "Tipe",
+            "columnUx": "Pengalaman Pengguna (UX)",
+            "columnPerformance": "Performa",
+            "columnStability": "Stabilitas",
+            "columnFeatures": "Fitur",
+            "columnSupport": "Dukungan",
+            "rowPositiveIdeal": "Ideal Positif",
+            "rowNegativeIdeal": "Ideal Negatif",
+            "rowCriteriaType": "Tipe Kriteria",
+            "benefit": "MANFAAT"
+        },
+        "status": {
+            "failed": "Gagal memuat data"
+        }
+    },
+    "topsisResult": {
+        "title": "Hasil Akhir TOPSIS",
+        "description": "Peringkat akhir TOPSIS berdasarkan jarak ke solusi ideal positif dan negatif.",
+        "calculationTitle": "Kalkulasi TOPSIS",
+        "calculationDescription": "Rumus matematika yang digunakan untuk menghitung jarak TOPSIS dan skor preferensi.",
+        "idealDistanceFormula": "Rumus Jarak Ideal",
+        "closenessCoefficientFormula": "Rumus Koefisien Kedekatan",
+        "table": {
+            "columnDistribution": "Distribusi",
+            "columnPositiveDistance": "Jarak Ideal Positif",
+            "columnNegativeDistance": "Jarak Ideal Negatif",
+            "columnPreferenceScore": "Skor Preferensi (CC)"
+        },
+        "status": {
+            "failed": "Gagal memuat data"
+        }
+    },
+    "bayesianResult": {
+        "title": "Hasil Penyesuaian Bayesian",
+        "description": "Penyesuaian kepercayaan Bayesian yang diterapkan pada skor preferensi TOPSIS menggunakan reliabilitas ulasan.",
+        "formulaTitle": "Rumus Bayesian",
+        "formulaDescription": "Rumus matematika yang digunakan untuk penyusutan (shrinkage) Bayesian dan penilaian yang disesuaikan dengan kepercayaan.",
+        "meanObservedFormula": "Rata-rata Skor Terobservasi",
+        "shrinkageCoefficientFormula": "Koefisien Penyusutan (Shrinkage)",
+        "confidenceAdjustedFormula": "Skor Penyesuaian Kepercayaan",
+        "table": {
+            "columnDistribution": "Distribusi",
+            "columnTotalReviews": "Total Ulasan",
+            "columnShrinkage": "Koefisien Penyusutan",
+            "columnConfidenceScore": "Skor Kepercayaan"
+        },
+        "status": {
+            "failed": "Gagal memuat data"
+        }
+    },
+    "penaltyRank": {
+        "title": "Peringkat Penalti & Utilitas",
+        "description": "Kalkulasi utilitas akhir menggunakan jarak simetris, penyesuaian penalti, dan logika perangkingan.",
+        "calculationTitle": "Kalkulasi Penalti",
+        "calculationDescription": "Rumus matematika yang digunakan untuk pemetaan preferensi, penyesuaian penalti simetris, skor utilitas, dan peringkat.",
+        "formula": {
+            "userPreference": "Preferensi Pengguna Kontinu",
+            "symmetricDistance": "Jarak Simetris",
+            "distanceNormalization": "Normalisasi Jarak",
+            "powerPenalty": "Penalti Berbasis Power",
+            "utilityFunction": "Fungsi Utilitas"
+        },
+        "ranking": {
+            "title": "Aturan Peringkat",
+            "orderingRule": "Pengurutan menurun dengan pemecah seri berbasis ulasan",
+            "denseRank": "Peringkat rapat dengan toleransi"
+        },
+        "table": {
+            "columnDistribution": "Distribusi",
+            "columnDistance": "Jarak",
+            "columnDistanceNorm": "Norma Jarak",
+            "columnPenalty": "Penalti",
+            "columnUtility": "Utilitas",
+            "columnRank": "Peringkat"
+        },
+        "status": {
+            "failed": "Gagal memuat data"
+        }
+    },
+    "deleteResult": {
+        "title": "Hapus Hasil SPK?",
+        "description": "Apakah Anda yakin ingin menghapus hasil SPK ini?",
+        "idLabel": "ID",
+        "createdAtLabel": "Dibuat pada",
+        "warning": "Tindakan ini tidak dapat dibatalkan.",
+        "buttons": {
+            "cancel": "Batal",
+            "confirm": "Hapus",
+            "loading": "Menghapus..."
+        },
+        "errors": {
+            "failed": "Gagal menghapus hasil SPK",
+            "unknown": "Terjadi kesalahan"
+        }
+    }
 }
