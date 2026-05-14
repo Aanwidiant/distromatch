@@ -5,7 +5,7 @@ export type VerifyEmailProps = {
 
 const EMAIL_LOGO_URL =
     process.env.EMAIL_LOGO_URL ??
-    'https://rnogbzxoyfknjpdfhbjw.supabase.co/storage/v1/object/public/media/distro-match-logo.png';
+    'https://cdn.distromatch.tech/logos/distromatch-logo.png';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
