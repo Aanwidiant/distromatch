@@ -44,7 +44,7 @@ export default async function ResultPage({ params }: Props) {
             <div className='mx-auto max-w-330 space-y-8 overflow-hidden py-6'>
                 <TopResult runId={id} lang={lang} />
                 <Tabs defaultValue='survey' className='space-y-3'>
-                    <div className='overflow-x-auto overflow-y-hidden'>
+                    <div className='no-scrollbar overflow-x-auto overflow-y-hidden'>
                         <TabsList variant='line' className='flex h-fit w-max min-w-full gap-2'>
                             <TabsTrigger value='survey'>{t('survey')}</TabsTrigger>
                             <TabsTrigger value='distro'>{t('distro')}</TabsTrigger>

@@ -75,7 +75,7 @@ export default function DetailSetting({ id }: DetailSettingProps) {
                     <Eye />
                 </Button>
             </DialogTrigger>
-            <DialogContent className='max-h-[90vh] w-full overflow-y-auto md:max-w-xl'>
+            <DialogContent className='w-full md:max-w-xl'>
                 <DialogHeader>
                     <DialogTitle className='flex items-center gap-2'>
                         <Eye className='size-5' />
@@ -91,7 +91,7 @@ export default function DetailSetting({ id }: DetailSettingProps) {
                     <div className='text-muted-foreground py-10 text-center text-sm'>No data</div>
                 ) : (
                     <div className='space-y-6'>
-                        <div className='grid gap-4 sm:grid-cols-2'>
+                        <div className='grid max-h-[60vh] gap-4 overflow-y-auto sm:grid-cols-2'>
                             <div>
                                 <p className='text-muted-foreground text-sm'>Name</p>
                                 <p className='font-medium'>{data.name || '-'}</p>
@@ -103,6 +103,10 @@ export default function DetailSetting({ id }: DetailSettingProps) {
                             <div>
                                 <p className='text-muted-foreground text-sm'>Max Distance</p>
                                 <p className='font-medium break-all'>{data.max_distance || '-'}</p>
+                            </div>
+                            <div>
+                                <p className='text-muted-foreground text-sm'>Prior Count</p>
+                                <p className='font-medium'>{data.prior_count || '-'}</p>
                             </div>
                             <div>
                                 <p className='text-muted-foreground text-sm'>Scale</p>

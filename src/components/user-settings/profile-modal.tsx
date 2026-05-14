@@ -81,13 +81,13 @@ export default function ProfileModal() {
 
     return (
         <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-            <DialogContent className='max-h-[90vh] w-full max-w-md overflow-y-auto md:max-w-2xl'>
+            <DialogContent className='w-full max-w-md overflow-y-auto md:max-w-2xl'>
                 <DialogHeader>
                     <DialogTitle className='flex items-center gap-2'>
                         <CircleUserRound className='size-6' /> <span>{t('title')}</span>
                     </DialogTitle>
                 </DialogHeader>
-                <div className='space-y-6'>
+                <div className='no-scrollbar max-h-[80vh] space-y-6 overflow-y-auto'>
                     <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
                         <div className='flex items-center gap-4'>
                             <ProfilePicture

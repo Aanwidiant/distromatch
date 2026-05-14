@@ -16,6 +16,16 @@
         },
         "errors": {
             "failedLoadData": "Gagal memuat data"
+        },
+        "empty": {
+            "noData": {
+                "title": "Data Tidak Ditemukan",
+                "description": "Belum ada data yang bisa ditampilkan."
+            },
+            "accessDenied": {
+                "title": "Akses Ditolak",
+                "description": "Anda tidak memiliki izin untuk mengakses halaman ini."
+            }
         }
     },
     "resultPage": {

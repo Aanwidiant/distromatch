@@ -211,7 +211,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className='sm:max-w-3xl'>
+            <DialogContent className='no-scrollbar max-h-[90vh] overflow-y-scroll sm:max-w-3xl'>
                 <div className='grid gap-6 md:grid-cols-2'>
                     {!isLogin && (
                         <div className='bg-accent-1 text-secondary hidden items-center justify-center rounded-xl p-6 text-sm md:flex'>

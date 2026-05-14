@@ -153,11 +153,11 @@ export default function UpdateSetting({ id, onUpdated }: UpdateSettingProps) {
                         Update System Setting
                     </DialogTitle>
                 </DialogHeader>
-                <div className='grid grid-cols-1 gap-3 md:grid-cols-2'>
+                <div className='grid max-h-[60vh] grid-cols-1 gap-3 overflow-y-auto p-1 md:grid-cols-2'>
                     <div className='space-y-1'>
                         <Label>Name</Label>
                         <Input
-                            placeholder='Linux Mint'
+                            placeholder='Enter setting name'
                             value={form.name}
                             onChange={(e) => update('name', e.target.value)}
                         />
@@ -166,7 +166,7 @@ export default function UpdateSetting({ id, onUpdated }: UpdateSettingProps) {
                         <Label>Lambda Param</Label>
                         <Input
                             type='number'
-                            placeholder='326'
+                            placeholder='Enter lambda param'
                             value={form.lambda_param}
                             onChange={(e) => update('lambda_param', e.target.value)}
                         />
@@ -175,7 +175,7 @@ export default function UpdateSetting({ id, onUpdated }: UpdateSettingProps) {
                         <Label>Max Distance</Label>
                         <Input
                             type='number'
-                            placeholder='326'
+                            placeholder='Enter max distance'
                             value={form.max_distance}
                             onChange={(e) => update('max_distance', e.target.value)}
                         />
@@ -184,16 +184,25 @@ export default function UpdateSetting({ id, onUpdated }: UpdateSettingProps) {
                         <Label>Prior Count</Label>
                         <Input
                             type='number'
-                            placeholder='326'
+                            placeholder='Enter prior count'
                             value={form.prior_count}
                             onChange={(e) => update('prior_count', e.target.value)}
+                        />
+                    </div>
+                    <div className='space-y-1'>
+                        <Label>Scale</Label>
+                        <Input
+                            type='number'
+                            placeholder='Enter scale'
+                            value={form.scale}
+                            onChange={(e) => update('scale', e.target.value)}
                         />
                     </div>
                     <div className='space-y-1'>
                         <Label>Total Distro</Label>
                         <Input
                             type='number'
-                            placeholder='326'
+                            placeholder='Enter total distro'
                             value={form.total_distros}
                             onChange={(e) => update('total_distros', e.target.value)}
                         />
@@ -202,7 +211,7 @@ export default function UpdateSetting({ id, onUpdated }: UpdateSettingProps) {
                         <Label>Top N Recommendations</Label>
                         <Input
                             type='number'
-                            placeholder='326'
+                            placeholder='Enter top N recommendations'
                             value={form.top_n_recommendations}
                             onChange={(e) => update('top_n_recommendations', e.target.value)}
                         />

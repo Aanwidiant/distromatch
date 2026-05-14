@@ -16,6 +16,16 @@
         },
         "errors": {
             "failedLoadData": "Failed to load data"
+        },
+        "empty": {
+            "noData": {
+                "title": "No Data Found",
+                "description": "There is nothing to show here yet."
+            },
+            "accessDenied": {
+                "title": "Access Denied",
+                "description": "You do not have permission to access this page."
+            }
         }
     },
     "resultPage": {

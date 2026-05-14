@@ -399,6 +399,7 @@ export async function loginByGoogle(c: Context) {
                     username: username,
                     password: '',
                     photo: filename,
+                    provider: 'GOOGLE',
                     email_verified: true,
                 })
                 .returning();

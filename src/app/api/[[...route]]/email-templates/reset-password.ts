@@ -4,8 +4,7 @@ export type ResetPasswordProps = {
 };
 
 const EMAIL_LOGO_URL =
-    process.env.EMAIL_LOGO_URL ??
-    'https://cdn.distromatch.tech/logos/distromatch-logo.png';
+    process.env.EMAIL_LOGO_URL ?? 'https://cdn.distromatch.tech/logos/distromatch-logo.png';
 
 const CURRENT_YEAR = new Date().getFullYear();
 

@@ -66,7 +66,9 @@ export default async function DistroListPage({
     const apiParams = new URLSearchParams({ page: String(page), limit: String(LIMIT) });
     if (search) apiParams.set('search', search);
 
-    const res = await Fetch.GET<Response>(`/distros/list?${apiParams.toString()}`);
+    const res = await Fetch.GET<Response>(
+        `/distros/list?sort_by=name&sort_order=asc&${apiParams.toString()}`
+    );
 
     const data: Distros[] = res.data;
     const meta: Pagination = res.meta;

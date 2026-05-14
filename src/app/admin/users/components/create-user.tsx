@@ -91,12 +91,12 @@ export default function CreateUser({ onCreated }: CreateUserProps) {
                         Create User
                     </DialogTitle>
                 </DialogHeader>
-                <div className='flex flex-col gap-3'>
+                <div className='flex max-h-[60vh] flex-col gap-3 overflow-y-auto p-1'>
                     <div className='space-y-1'>
                         <Label>Email</Label>
                         <Input
                             type='text'
-                            placeholder='326'
+                            placeholder='Enter email address'
                             value={form.email}
                             onChange={(e) => update('email', e.target.value)}
                         />
@@ -104,7 +104,7 @@ export default function CreateUser({ onCreated }: CreateUserProps) {
                     <div className='space-y-1 md:col-span-2'>
                         <Label>Name</Label>
                         <Input
-                            placeholder='Linux Mint'
+                            placeholder='Enter full name'
                             value={form.name}
                             onChange={(e) => update('name', e.target.value)}
                         />
@@ -113,7 +113,7 @@ export default function CreateUser({ onCreated }: CreateUserProps) {
                         <Label>Password</Label>
                         <Input
                             type='password'
-                            placeholder='326'
+                            placeholder='Enter password'
                             value={form.password}
                             onChange={(e) => update('password', e.target.value)}
                         />

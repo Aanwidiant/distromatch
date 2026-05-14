@@ -48,7 +48,7 @@ export default function ConfirmDelete({
                         Delete {title}?
                     </DialogTitle>
                 </DialogHeader>
-                <div className='space-y-3 text-sm'>
+                <div className='max-h-[60vh] space-y-3 overflow-y-auto text-sm'>
                     <p>Are you sure you want to delete?</p>
                     <div className='space-y-1'>
                         <p>

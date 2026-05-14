@@ -131,11 +131,23 @@ export default function ResultListPage() {
     }
 
     if (runs.length === 0 && meta) {
-        return <EmptyState variant='empty' />;
+        return (
+            <EmptyState
+                variant='empty'
+                title={t('empty.noData.title')}
+                description={t('empty.noData.description')}
+            />
+        );
     }
 
     if (error || !meta) {
-        return <EmptyState variant='unauthorized' />;
+        return (
+            <EmptyState
+                variant='unauthorized'
+                title={t('empty.accessDenied.title')}
+                description={t('empty.accessDenied.description')}
+            />
+        );
     }
 
     return (

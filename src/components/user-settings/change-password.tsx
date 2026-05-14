@@ -21,7 +21,7 @@ export default function ChangePassword() {
     const { profile, logout } = useAuthStore();
     const { isOpen, close, closeAll } = useDialog('changePassword');
     const t = useTranslations('common.changePassword');
-    const isGoogle = profile?.provider === 'google';
+    const isGoogle = profile?.provider === 'GOOGLE';
 
     const passwordRegex =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#()[\]{}\-_=+|\\/.,:;]).{8,}$/;
@@ -159,7 +159,7 @@ export default function ChangePassword() {
                     </DialogTitle>
                 </DialogHeader>
 
-                <div className='flex flex-col gap-3'>
+                <div className='no-scrollbar flex max-h-[60vh] flex-col gap-3 overflow-y-auto'>
                     {!isGoogle &&
                         renderPasswordField(t('fields.current'), 'current_password', 'current')}
 

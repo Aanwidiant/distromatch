@@ -31,7 +31,7 @@ export default async function DssAuditDetail({ params }: Props) {
                     <div className='space-y-6 p-6'>
                         <DssMeta id={id} username={username} />
                         <Tabs defaultValue='survey' className='space-y-3'>
-                            <div className='overflow-x-auto overflow-y-hidden'>
+                            <div className='no-scrollbar overflow-x-auto overflow-y-hidden'>
                                 <TabsList
                                     variant='line'
                                     className='flex h-fit w-max min-w-full gap-2'

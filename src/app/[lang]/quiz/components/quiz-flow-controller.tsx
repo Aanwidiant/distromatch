@@ -8,6 +8,7 @@ import Fetch from '@/lib/fetch';
 import { toast } from 'sonner';
 import QuizFlow from '@/app/[lang]/quiz/components/quiz-flow';
 import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 
 export default function QuizFlowController() {
     const router = useRouter();
@@ -44,21 +45,18 @@ export default function QuizFlowController() {
             handleSubmit();
         } else {
             setStep(currentStep + 1);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
     const handlePrev = () => {
         if (currentStep > 0) {
             setStep(currentStep - 1);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
     const handleStepChange = (step: number) => {
         if (step > maxReachableStep) return;
         setStep(step);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handleSubmit = async () => {
@@ -86,6 +84,10 @@ export default function QuizFlowController() {
             setSubmitting(false);
         }
     };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [currentStep]);
 
     return (
         <QuizFlow

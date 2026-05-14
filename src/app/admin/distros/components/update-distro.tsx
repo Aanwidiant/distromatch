@@ -266,11 +266,11 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                         Update Distro
                     </DialogTitle>
                 </DialogHeader>
-                <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4'>
+                <div className='no-scrollbar grid max-h-[60vh] grid-cols-1 gap-3 overflow-y-auto p-1 sm:grid-cols-2 md:grid-cols-4'>
                     <div className='space-y-1'>
                         <Label>Name</Label>
                         <Input
-                            placeholder='Linux Mint'
+                            placeholder='Enter distro name'
                             value={form.name}
                             onChange={(e) => update('name', e.target.value)}
                         />
@@ -280,7 +280,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                         <Label>Total Reviews</Label>
                         <Input
                             type='number'
-                            placeholder='326'
+                            placeholder='Enter total reviews'
                             value={form.total_reviews}
                             onChange={(e) => update('total_reviews', e.target.value)}
                         />
@@ -291,7 +291,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                         <Input
                             type='number'
                             step='0.1'
-                            placeholder='4.7'
+                            placeholder='Enter rating'
                             value={form.ux_rating}
                             onChange={(e) => update('ux_rating', e.target.value)}
                         />
@@ -302,7 +302,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                         <Input
                             type='number'
                             step='0.1'
-                            placeholder='4.2'
+                            placeholder='Enter rating'
                             value={form.performance_rating}
                             onChange={(e) => update('performance_rating', e.target.value)}
                         />
@@ -313,7 +313,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                         <Input
                             type='number'
                             step='0.1'
-                            placeholder='4.6'
+                            placeholder='Enter rating'
                             value={form.stability_rating}
                             onChange={(e) => update('stability_rating', e.target.value)}
                         />
@@ -324,7 +324,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                         <Input
                             type='number'
                             step='0.1'
-                            placeholder='4.5'
+                            placeholder='Enter rating'
                             value={form.features_rating}
                             onChange={(e) => update('features_rating', e.target.value)}
                         />
@@ -335,7 +335,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                         <Input
                             type='number'
                             step='0.1'
-                            placeholder='4.5'
+                            placeholder='Enter rating'
                             value={form.support_rating}
                             onChange={(e) => update('support_rating', e.target.value)}
                         />
@@ -378,7 +378,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                     <div className='space-y-1'>
                         <Label>Distro Type</Label>
                         <Input
-                            placeholder='Linux'
+                            placeholder='Enter distro type'
                             value={form.distro_type}
                             onChange={(e) => update('distro_type', e.target.value)}
                         />
@@ -386,7 +386,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                     <div className='space-y-1 sm:col-span-2'>
                         <Label>Based On</Label>
                         <Input
-                            placeholder='Debian (Stable), Ubuntu (LTS)'
+                            placeholder='Enter base distros (comma-separated)'
                             value={form.based_on}
                             onChange={(e) => update('based_on', e.target.value)}
                         />
@@ -394,7 +394,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                     <div className='space-y-1 sm:col-span-2'>
                         <Label>Homepage URL</Label>
                         <Input
-                            placeholder='https://...'
+                            placeholder='Enter homepage URL'
                             value={form.homepage_url}
                             onChange={(e) => update('homepage_url', e.target.value)}
                         />
@@ -402,7 +402,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                     <div className='space-y-1 sm:col-span-2'>
                         <Label>Docs URL</Label>
                         <Input
-                            placeholder='https://..., https://...'
+                            placeholder='Enter docs URLs (comma-separated)'
                             value={form.docs_url}
                             onChange={(e) => update('docs_url', e.target.value)}
                         />
@@ -410,7 +410,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                     <div className='space-y-1'>
                         <Label>Origin Country</Label>
                         <Input
-                            placeholder='Ireland'
+                            placeholder='Enter origin country'
                             value={form.origin_country}
                             onChange={(e) => update('origin_country', e.target.value)}
                         />
@@ -418,7 +418,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                     <div className='space-y-1 sm:col-span-2 md:col-span-3'>
                         <Label>Architectures</Label>
                         <Input
-                            placeholder='i686, x86_64'
+                            placeholder='Enter architectures (comma-separated)'
                             value={form.architectures}
                             onChange={(e) => update('architectures', e.target.value)}
                         />
@@ -426,7 +426,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                     <div className='space-y-1 sm:col-span-2'>
                         <Label>Desktop Environments</Label>
                         <Input
-                            placeholder='Cinnamon, MATE, Xfce'
+                            placeholder='Enter desktop environments (comma-separated)'
                             value={form.desktop_environments}
                             onChange={(e) => update('desktop_environments', e.target.value)}
                         />
@@ -434,7 +434,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                     <div className='space-y-1 sm:col-span-2'>
                         <Label>Categories</Label>
                         <Input
-                            placeholder='Beginners, Desktop, Live Medium'
+                            placeholder='Enter categories (comma-separated)'
                             value={form.categories}
                             onChange={(e) => update('categories', e.target.value)}
                         />
@@ -442,7 +442,7 @@ export default function UpdateDistro({ slug, onUpdated }: UpdateDistroProps) {
                     <div className='space-y-1 sm:col-span-2 md:col-span-3'>
                         <Label>Source URL</Label>
                         <Input
-                            placeholder='https://..., https://...'
+                            placeholder='Enter source URLs (comma-separated)'
                             value={form.source_url}
                             onChange={(e) => update('source_url', e.target.value)}
                         />

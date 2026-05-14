@@ -98,7 +98,7 @@ export default function UpdateUser({ user, onUpdated }: UpdateSettingProps) {
                         Update User
                     </DialogTitle>
                 </DialogHeader>
-                <div className='flex flex-col gap-3'>
+                <div className='flex max-h-[60vh] flex-col gap-3 overflow-y-auto p-1'>
                     <div>
                         <p className='text-muted-foreground text-sm'>User</p>
                         <div className='flex items-center gap-3'>

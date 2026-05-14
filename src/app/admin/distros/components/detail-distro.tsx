@@ -92,7 +92,7 @@ export default function DetailDistro({ slug }: DetailDistroProps) {
                     <Eye />
                 </Button>
             </DialogTrigger>
-            <DialogContent className='max-h-[90vh] w-full overflow-y-auto md:max-w-4xl'>
+            <DialogContent className='w-full md:max-w-4xl'>
                 <DialogHeader>
                     <DialogTitle className='flex items-center gap-2'>
                         <Eye className='size-5' />
@@ -107,7 +107,7 @@ export default function DetailDistro({ slug }: DetailDistroProps) {
                 ) : !data ? (
                     <div className='text-muted-foreground py-10 text-center text-sm'>No data</div>
                 ) : (
-                    <div className='space-y-6'>
+                    <div className='no-scrollbar max-h-[70vh] space-y-6 overflow-y-auto p-1'>
                         <div className='grid gap-4 sm:grid-cols-2'>
                             <div>
                                 <p className='text-muted-foreground text-sm'>Name</p>
