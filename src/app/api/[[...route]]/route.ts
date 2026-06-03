@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { auth, distros, dss, system, users } from './routes';
+import { auth, distros, dss, general, system, users } from './routes';
 
 const app = new Hono().basePath('/api');
 
@@ -16,6 +16,7 @@ app.route('/auth', auth);
 app.route('/distros', distros);
 app.route('/system', system);
 app.route('/dss', dss);
+app.route('/general', general);
 
 export async function GET(request: Request) {
     return app.fetch(request);

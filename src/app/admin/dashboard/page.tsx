@@ -92,7 +92,7 @@ export default function AdminDashboard() {
 
     const fetchDashboard = useCallback(async () => {
         try {
-            const res = await Fetch.GET<DashboardResponse>('/users/dashboard');
+            const res = await Fetch.GET<DashboardResponse>('/general/dashboard');
             if (res.success) {
                 setData(res.data);
             } else {

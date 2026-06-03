@@ -151,7 +151,7 @@ export default function ResultListPage() {
     }
 
     return (
-        <main className='p-6 md:px-12 lg:px-20'>
+        <main className='min-h-[calc(100vh-22rem)] p-6 md:px-12 lg:px-20'>
             <div className='mx-auto max-w-330 space-y-8 overflow-hidden py-6'>
                 <h1 className='text-2xl font-bold'>{t('title')}</h1>
                 <Table>
@@ -202,48 +202,50 @@ export default function ResultListPage() {
                         ))}
                     </TableBody>
                 </Table>
-                <div className='flex flex-wrap items-center justify-center gap-2'>
-                    <Button
-                        variant='outline'
-                        disabled={page === 1}
-                        onClick={() => setPage((p) => p - 1)}
-                    >
-                        Prev
-                    </Button>
-
-                    {page > 3 && (
-                        <>
-                            <Button variant='outline' onClick={() => setPage(1)}>
-                                1
-                            </Button>
-                            <span>...</span>
-                        </>
-                    )}
-                    {getPages().map((p) => (
+                {meta.totalPages > 1 && (
+                    <div className='flex flex-wrap items-center justify-center gap-2'>
                         <Button
-                            key={p}
-                            variant={p === page ? 'default' : 'outline'}
-                            onClick={() => setPage(p)}
+                            variant='outline'
+                            disabled={page === 1}
+                            onClick={() => setPage((p) => p - 1)}
                         >
-                            {p}
+                            Prev
                         </Button>
-                    ))}
-                    {meta.totalPages - page > 2 && (
-                        <>
-                            <span>...</span>
-                            <Button variant='outline' onClick={() => setPage(meta.totalPages)}>
-                                {meta.totalPages}
+
+                        {page > 3 && (
+                            <>
+                                <Button variant='outline' onClick={() => setPage(1)}>
+                                    1
+                                </Button>
+                                <span>...</span>
+                            </>
+                        )}
+                        {getPages().map((p) => (
+                            <Button
+                                key={p}
+                                variant={p === page ? 'default' : 'outline'}
+                                onClick={() => setPage(p)}
+                            >
+                                {p}
                             </Button>
-                        </>
-                    )}
-                    <Button
-                        variant='outline'
-                        disabled={page === meta.totalPages}
-                        onClick={() => setPage((p) => p + 1)}
-                    >
-                        Next
-                    </Button>
-                </div>
+                        ))}
+                        {meta.totalPages - page > 2 && (
+                            <>
+                                <span>...</span>
+                                <Button variant='outline' onClick={() => setPage(meta.totalPages)}>
+                                    {meta.totalPages}
+                                </Button>
+                            </>
+                        )}
+                        <Button
+                            variant='outline'
+                            disabled={page === meta.totalPages}
+                            onClick={() => setPage((p) => p + 1)}
+                        >
+                            Next
+                        </Button>
+                    </div>
+                )}
             </div>
         </main>
     );

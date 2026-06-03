@@ -6,6 +6,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
+import Fetch from '@/lib/fetch';
+import axios from 'axios';
 
 export default function ContactSection() {
     const t = useTranslations('about.contactSection');
@@ -13,22 +15,42 @@ export default function ContactSection() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         setLoading(true);
 
-        const form = new FormData(e.currentTarget);
+        const form = e.currentTarget;
+
+        const formData = new FormData(form);
 
         const payload = {
-            name: form.get('name'),
-            email: form.get('email'),
-            phone: form.get('phone'),
-            message: form.get('message'),
+            name: String(formData.get('name') || ''),
+            email: String(formData.get('email') || ''),
+            phone: String(formData.get('phone') || ''),
+            subject: String(formData.get('subject') || ''),
+            message: String(formData.get('message') || ''),
         };
 
         try {
-            void payload;
-            toast.error(t('toast.development'));
-        } catch {
-            toast.error(t('toast.development'));
+            const res = await Fetch.POST<{
+                success: boolean;
+                message: string;
+            }>('/general/message', payload);
+
+            if (res.success) {
+                toast.success(res.message);
+
+                form.reset();
+
+                return;
+            }
+
+            toast.error(res.message);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message || t('toast.error'));
+                return;
+            }
+            toast.error(t('toast.error'));
         } finally {
             setLoading(false);
         }
@@ -66,11 +88,15 @@ export default function ContactSection() {
                     </div>
                 </div>
                 <div className='space-y-2'>
+                    <div className='space-y-2'>
+                        <label className='text-sm font-medium'>{t('fields.subject.label')}</label>
+                        <Input name='subject' placeholder={t('fields.subject.placeholder')} />
+                    </div>
                     <label className='text-sm font-medium'>{t('fields.message.label')}</label>
                     <Textarea
                         name='message'
                         placeholder={t('fields.message.placeholder')}
-                        rows={8}
+                        rows={5}
                         required
                     />
                 </div>

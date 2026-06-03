@@ -98,6 +98,10 @@
                 "optional": "(optional)",
                 "placeholder": "+62 812 xxxx xxxx"
             },
+            "subject": {
+                "label": "Subject",
+                "placeholder": "Write your subject here..."
+            },
             "message": {
                 "label": "Message",
                 "placeholder": "Write your message here..."

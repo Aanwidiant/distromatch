@@ -250,7 +250,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                         )}
                         <form onSubmit={handleSubmit} className='space-y-4'>
                             {mode === 'register' && (
-                                <div className='space-y-2'>
+                                <div className='flex flex-col gap-3'>
                                     <label htmlFor='auth-name' className='text-sm font-medium'>
                                         {t('name')}
                                     </label>
@@ -262,7 +262,7 @@ export default function AuthDialog({ open, onOpenChange, mode, setMode }: AuthDi
                                     />
                                 </div>
                             )}
-                            <div className='space-y-2'>
+                            <div className='flex flex-col gap-3'>
                                 <label htmlFor='auth-email' className='text-sm font-medium'>
                                     {t('email')}
                                 </label>

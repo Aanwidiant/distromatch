@@ -98,6 +98,10 @@
                 "optional": "(opsional)",
                 "placeholder": "+62 812 xxxx xxxx"
             },
+            "subject": {
+                "label": "Subjek",
+                "placeholder": "Tulis subjek Anda di sini..."
+            },
             "message": {
                 "label": "Pesan",
                 "placeholder": "Tulis pesan kamu di sini..."

@@ -14,18 +14,51 @@ import {
     verifyChangeEmail,
     verifyEmail,
 } from '../handlers';
-import { protect } from '../middlewares';
+import { protect, rateLimit } from '../middlewares';
 
 const auth = new Hono();
 
-auth.post('/register', register);
-auth.post('/login', loginBySystem);
-auth.post('/login/google', loginByGoogle);
+auth.post(
+    '/register',
+    rateLimit({
+        keyPrefix: 'register',
+        max: 3,
+        windowSec: 60 * 60,
+    }),
+    register
+);
+
+auth.post(
+    '/login',
+    rateLimit({
+        keyPrefix: 'login',
+        max: 5,
+        windowSec: 60 * 5,
+    }),
+    loginBySystem
+);
+auth.post(
+    '/login/google',
+    rateLimit({
+        keyPrefix: 'login-google',
+        max: 10,
+        windowSec: 60 * 10,
+    }),
+    loginByGoogle
+);
 
 auth.post('/email/resend-verification', resendVerification);
 auth.get('/email/verify', verifyEmail);
 
-auth.post('/password/forgot', forgotPassword);
+auth.post(
+    '/password/forgot',
+    rateLimit({
+        keyPrefix: 'forgot-password',
+        max: 3,
+        windowSec: 60 * 60,
+    }),
+    forgotPassword
+);
 auth.post('/password/reset', resetPassword);
 auth.post('/password/change', protect, changePassword);
 

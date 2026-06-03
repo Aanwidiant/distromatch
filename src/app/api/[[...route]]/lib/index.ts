@@ -4,6 +4,5 @@ export * from './password';
 export * from './jwt';
 export * from './username';
 export * from './mailer';
-export * from './rate-limit';
 export * from './download-image';
 export * from './paginate';
