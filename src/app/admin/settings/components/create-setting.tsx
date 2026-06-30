@@ -27,6 +27,7 @@ type FormState = {
     max_distance: string;
     prior_count: string;
     scale: string;
+    exponent: string;
     total_distros: string;
     top_n_recommendations: string;
     status: string;
@@ -38,6 +39,7 @@ const initialState: FormState = {
     max_distance: '',
     prior_count: '',
     scale: '',
+    exponent: '',
     total_distros: '',
     top_n_recommendations: '',
     status: 'ACTIVE',
@@ -64,6 +66,7 @@ export default function CreateSetting({ onCreated }: CreateSettingProps) {
                 max_distance: Number(form.max_distance),
                 prior_count: Number(form.prior_count),
                 scale: Number(form.scale),
+                exponent: Number(form.exponent),
                 total_distros: Number(form.total_distros),
                 top_n_recommendations: Number(form.top_n_recommendations),
                 status: form.status,
@@ -146,6 +149,15 @@ export default function CreateSetting({ onCreated }: CreateSettingProps) {
                             placeholder='Enter scale'
                             value={form.scale}
                             onChange={(e) => update('scale', e.target.value)}
+                        />
+                    </div>
+                    <div className='space-y-1'>
+                        <Label>Exponent</Label>
+                        <Input
+                            type='number'
+                            placeholder='Enter exponent'
+                            value={form.exponent}
+                            onChange={(e) => update('exponent', e.target.value)}
                         />
                     </div>
                     <div className='space-y-1'>

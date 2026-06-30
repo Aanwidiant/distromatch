@@ -120,6 +120,20 @@
             "when": 1778165428944,
             "tag": "0016_married_doctor_strange",
             "breakpoints": true
+        },
+        {
+            "idx": 17,
+            "version": "7",
+            "when": 1782715792191,
+            "tag": "0017_majestic_maestro",
+            "breakpoints": true
+        },
+        {
+            "idx": 18,
+            "version": "7",
+            "when": 1782717052432,
+            "tag": "0018_colorful_starfox",
+            "breakpoints": true
         }
     ]
 }

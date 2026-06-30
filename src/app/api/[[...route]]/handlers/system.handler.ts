@@ -55,16 +55,21 @@ export async function createSystemSetting(c: Context) {
         const lambdaStr = lambdaNum.toFixed(2);
 
         let priorCount =
-            typeof data.prior_count === 'number'
-                ? Math.floor(data.prior_count)
-                : Number(data.prior_count ?? 5);
-        if (!Number.isFinite(priorCount) || priorCount < 1) priorCount = 5;
+            typeof data.prior_count === 'number' ? data.prior_count : Number(data.prior_count ?? 5);
+        if (!Number.isFinite(priorCount) || priorCount < 1) {
+            priorCount = 5;
+        }
+        const priorCountStr = priorCount.toFixed(2);
 
         let scaleNum = typeof data.scale === 'number' ? data.scale : Number(data.scale ?? 1.0);
         if (!Number.isFinite(scaleNum)) scaleNum = 1.0;
         scaleNum = Math.min(10, Math.max(0, scaleNum));
         const scaleStr = scaleNum.toFixed(3);
 
+        const exponent =
+            typeof data.exponent === 'number'
+                ? Math.floor(data.exponent)
+                : Number(data.exponent ?? 2);
         const maxDistance =
             typeof data.max_distance === 'number'
                 ? Math.floor(data.max_distance)
@@ -82,8 +87,9 @@ export async function createSystemSetting(c: Context) {
             name: data.name,
             lambda_param: lambdaStr,
             max_distance: maxDistance,
-            prior_count: priorCount,
+            prior_count: priorCountStr,
             scale: scaleStr,
+            exponent: exponent,
             total_distros: totalDistros,
             top_n_recommendations: topN,
             status: (data.status as 'ACTIVE' | 'INACTIVE') ?? 'ACTIVE',
@@ -187,6 +193,7 @@ export async function getSystemSettingById(c: Context) {
                 prior_count: system_settings.prior_count,
                 lambda_param: system_settings.lambda_param,
                 scale: system_settings.scale,
+                exponent: system_settings.exponent,
                 total_distros: system_settings.total_distros,
                 top_n_recommendations: system_settings.top_n_recommendations,
                 status: system_settings.status,
@@ -285,13 +292,19 @@ export async function updateSystemSetting(c: Context) {
             typeof existingById.prior_count === 'number'
                 ? existingById.prior_count
                 : Number(existingById.prior_count ?? 5);
+
         let priorCount =
             typeof data.prior_count === 'number'
-                ? Math.floor(data.prior_count)
+                ? data.prior_count
                 : Number.isFinite(existingPrior)
-                  ? Math.floor(existingPrior)
+                  ? existingPrior
                   : 5;
-        if (!Number.isFinite(priorCount) || priorCount < 1) priorCount = 5;
+
+        if (!Number.isFinite(priorCount) || priorCount < 1) {
+            priorCount = 5;
+        }
+
+        const priorCountStr = priorCount.toFixed(2);
 
         const existingScale = Number(existingById.scale ?? 1.0);
         let scaleNum =
@@ -313,6 +326,17 @@ export async function updateSystemSetting(c: Context) {
                 ? Math.floor(data.max_distance)
                 : Number.isFinite(existingMaxDistance)
                   ? Math.floor(existingMaxDistance)
+                  : 2;
+
+        const existingExponent =
+            typeof existingById.exponent === 'number'
+                ? existingById.exponent
+                : Number(existingById.exponent ?? 2);
+        const exponent =
+            typeof data.exponent === 'number'
+                ? Math.floor(data.exponent)
+                : Number.isFinite(existingExponent)
+                  ? Math.floor(existingExponent)
                   : 2;
 
         const existingTotalDistros =
@@ -341,8 +365,9 @@ export async function updateSystemSetting(c: Context) {
             name: data.name,
             lambda_param: lambdaStr,
             max_distance: maxDistance,
-            prior_count: priorCount,
+            prior_count: priorCountStr,
             scale: scaleStr,
+            exponent: exponent,
             total_distros: totalDistros,
             top_n_recommendations: topN,
             status: (data.status as 'ACTIVE' | 'INACTIVE') ?? existingById.status,

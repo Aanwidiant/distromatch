@@ -136,14 +136,27 @@ function rankByScore<T extends { distro_id: number; score: number }>(
     });
 
     let lastScore: number | null = null;
+    let lastTie: number | null = null;
     let lastRank = 0;
+
     return sorted.map((item, idx) => {
         const score = Number(item.score ?? 0);
-        if (lastScore === null || Math.abs(score - lastScore) > eps) {
+        const tie = tieBreaker ? Number(tieBreaker(item) ?? 0) : null;
+
+        const sameScore = lastScore !== null && Math.abs(score - lastScore) <= eps;
+
+        const sameTie = tie === lastTie;
+
+        if (!(sameScore && sameTie)) {
             lastRank = idx + 1;
             lastScore = score;
+            lastTie = tie;
         }
-        return { ...item, rank: lastRank };
+
+        return {
+            ...item,
+            rank: lastRank,
+        };
     });
 }
 
@@ -352,6 +365,9 @@ export async function runDssPipelineTest(ctx: Context) {
         const lambdaParam = sys ? parseNum(sys.lambda_param) : -0.5;
         const priorCount = sys ? parseNum(sys.prior_count ?? 5) : 5;
         const scale = sys ? parseNum(sys.scale ?? 1) : 1;
+        const exponent = sys ? parseNum(sys.exponent ?? 2) : 2;
+
+        console.log(exponent);
 
         // --- BAYESIAN (use cc_score as observed) ---
         // 15) fetch cc_scores to compute mean and bayes
@@ -400,7 +416,7 @@ export async function runDssPipelineTest(ctx: Context) {
             // use continuous + directional distance
             const dist = getDistanceSymmetric(userPrefRaw, targetLevelNum);
             const distNorm = getDistanceNorm(dist);
-            const penalty = getPenalty(distNorm, lambdaParam); // exponent default 2
+            const penalty = getPenalty(distNorm, lambdaParam, exponent);
             const confAdj = parseNum(bp.confidence_adjusted_score);
             const util = getUtilityFromConfAdj(confAdj, penalty, scale);
 
@@ -784,7 +800,7 @@ export async function getDssRunRecommendations(c: Context) {
             data: {
                 run_id: runId,
                 run_created_at: run.created_at,
-                user_name: run.user_name, // ✅ expose ke FE
+                user_name: run.user_name,
                 top_n: topN,
                 recommendations,
             },
@@ -1066,6 +1082,7 @@ export async function getTopsisCalc(c: Context) {
         const rows = await db.query.topsis_result.findMany({
             where: (b, { eq }) => eq(b.dss_run_id, runId),
             with: { distro: true },
+            orderBy: (b) => [desc(b.cc_score)],
         });
 
         const rows_map = rows.map((r) => ({
@@ -1101,6 +1118,7 @@ export async function getBayesianCalc(c: Context) {
         const rows = await db.query.bayesian_results.findMany({
             where: (b, { eq }) => eq(b.dss_run_id, runId),
             with: { distro: true },
+            orderBy: (b) => [desc(b.confidence_adjusted_score)],
         });
 
         const rows_map = rows.map((r) => ({

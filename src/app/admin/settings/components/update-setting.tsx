@@ -27,6 +27,7 @@ type FormState = {
     max_distance: string;
     prior_count: string;
     scale: string;
+    exponent: string;
     total_distros: string;
     top_n_recommendations: string;
     status: string;
@@ -38,6 +39,7 @@ type Setting = {
     max_distance: number;
     prior_count: number;
     scale: string;
+    exponent: number;
     total_distros: number;
     top_n_recommendations: number;
     status: string;
@@ -55,6 +57,7 @@ const initialState: FormState = {
     max_distance: '',
     prior_count: '',
     scale: '',
+    exponent: '',
     total_distros: '',
     top_n_recommendations: '',
     status: 'INACTIVE',
@@ -83,6 +86,7 @@ export default function UpdateSetting({ id, onUpdated }: UpdateSettingProps) {
                     max_distance: String(res.data.max_distance ?? ''),
                     prior_count: String(res.data.prior_count ?? ''),
                     scale: res.data.scale ?? String(res.data.scale ?? ''),
+                    exponent: String(res.data.exponent ?? ''),
                     total_distros: String(res.data.total_distros ?? ''),
                     top_n_recommendations: String(res.data.top_n_recommendations ?? ''),
                     status: res.data.status ?? 'INACTIVE',
@@ -116,6 +120,7 @@ export default function UpdateSetting({ id, onUpdated }: UpdateSettingProps) {
                 max_distance: Number(form.max_distance),
                 prior_count: Number(form.prior_count),
                 scale: Number(form.scale),
+                exponent: Number(form.exponent),
                 total_distros: Number(form.total_distros),
                 top_n_recommendations: Number(form.top_n_recommendations),
                 status: form.status,
@@ -196,6 +201,15 @@ export default function UpdateSetting({ id, onUpdated }: UpdateSettingProps) {
                             placeholder='Enter scale'
                             value={form.scale}
                             onChange={(e) => update('scale', e.target.value)}
+                        />
+                    </div>
+                    <div className='space-y-1'>
+                        <Label>Exponent</Label>
+                        <Input
+                            type='number'
+                            placeholder='Enter exponent'
+                            value={form.exponent}
+                            onChange={(e) => update('exponent', e.target.value)}
                         />
                     </div>
                     <div className='space-y-1'>

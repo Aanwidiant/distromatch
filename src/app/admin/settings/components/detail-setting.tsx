@@ -19,6 +19,7 @@ type Setting = {
     max_distance: number;
     prior_count: number;
     scale: string;
+    exponent: number;
     total_distros: number;
     top_n_recommendations: number;
     status: string;
@@ -111,6 +112,10 @@ export default function DetailSetting({ id }: DetailSettingProps) {
                             <div>
                                 <p className='text-muted-foreground text-sm'>Scale</p>
                                 <p className='font-medium'>{data.scale || '-'}</p>
+                            </div>
+                            <div>
+                                <p className='text-muted-foreground text-sm'>Exponent</p>
+                                <p className='font-medium'>{data.exponent ?? '-'}</p>
                             </div>
                             <div>
                                 <p className='text-muted-foreground text-sm'>Total Distro</p>
